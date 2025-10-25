@@ -826,7 +826,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Product Ecosystem Section */}
+      {/* Product Ecosystem Section - Real Product Showcase */}
       <section className="relative py-32 bg-gradient-to-b from-background to-charcoal overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
@@ -902,144 +902,512 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Complete autonomous defense ecosystem protecting Africa's critical infrastructure
+              Complete autonomous defense ecosystem protecting Africa's critical infrastructure with real-world deployments
             </motion.p>
           </motion.div>
 
-          {/* Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "ArtemisOS",
-                title: "AI-Powered Central Intelligence Platform",
-                description: "Central intelligence platform for all autonomous systems with real-time threat detection and fleet management",
-                features: ["Autonomous Mission Planning", "Real-Time Threat Detection", "Fleet Coordination", "AES-256 Encryption"],
-                icon: "🧠",
-                color: "from-purple-500 to-indigo-600",
-                glowColor: "rgba(147, 51, 234, 0.3)"
-              },
-              {
-                name: "Archer VTOL",
-                title: "Modular Multi-Mission UAV Platform",
-                description: "Modular, quiet, and mass-producible UAV platform with enhanced terrain performance and AI-assisted operations",
-                features: ["3K Carbon Fiber Frame", "4kg Payload Capacity", "34min Flight Time", "15km Range"],
-                icon: "🚁",
-                color: "from-blue-500 to-cyan-600",
-                glowColor: "rgba(59, 130, 246, 0.3)"
-              },
-              {
-                name: "Iroko UAV",
-                title: "First Response Quadcopter - 90 Second Deployment",
-                description: "Modular, mass-producible quadcopter purpose-built for first response and infrastructure inspection",
-                features: ["90 Second Deployment", "50min Endurance", "70km/h Max Speed", "1.5kg Payload"],
-                icon: "🚁",
-                color: "from-green-500 to-emerald-600",
-                glowColor: "rgba(16, 185, 129, 0.3)"
-              },
-              {
-                name: "Duma UGV",
-                title: "Ground Surveillance Platform",
-                description: "Modular, mass-producible UGV platform for ground surveillance and site protection in hazardous environments",
-                features: ["IP54 Protection", "4K Video Recording", "4kg Payload", "15km Range"],
-                icon: "🤖",
-                color: "from-orange-500 to-red-600",
-                glowColor: "rgba(249, 115, 22, 0.3)"
-              },
-              {
-                name: "Kallon Tower",
-                title: "AI-Powered Sentry System - 3km Detection Range",
-                description: "Solar-powered, AI-enabled sentry tower with 24/7 surveillance and multi-tower coordination capabilities",
-                features: ["3km Detection Range", "Solar Powered", "30x Optical Zoom", "IP67 Weather Resistance"],
-                icon: "🗼",
-                color: "from-yellow-500 to-orange-600",
-                glowColor: "rgba(245, 158, 11, 0.3)"
-              }
-            ].map((product, index) => (
-              <motion.div
-                key={index}
-                className="group relative"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-              >
-                {/* Card Container */}
-                <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden h-full">
-                  {/* Animated Border */}
+          {/* Product Showcase */}
+          <div className="space-y-24">
+            {/* ArtemisOS */}
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-8">
+                <div className="flex items-center gap-4">
                   <motion.div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${product.glowColor}, transparent, ${product.glowColor})`,
-                      padding: '2px'
-                    }}
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 flex items-center justify-center text-3xl"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
+                    🧠
                   </motion.div>
-
-                  {/* Content */}
-                  <div className="relative z-10 h-full flex flex-col">
-                    {/* Icon and Name */}
-                    <div className="flex items-center gap-4 mb-6">
+                  <div>
+                    <h3 className="text-4xl font-bold text-foreground">ArtemisOS</h3>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-sm font-medium">
                       <motion.div
-                        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {product.icon}
-                      </motion.div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-foreground">{product.name}</h3>
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${product.color} text-white text-xs font-medium`}>
-                          <motion.div
-                            className="w-1.5 h-1.5 bg-white rounded-full"
-                            animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          />
-                          {product.title}
-                        </div>
-                      </div>
+                        className="w-2 h-2 bg-white rounded-full"
+                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      AI-Powered Central Intelligence Platform
                     </div>
+                  </div>
+                </div>
 
-                    {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
-                      {product.description}
-                    </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Central intelligence platform for all autonomous systems with real-time threat detection, 
+                  autonomous mission planning, and fleet management capabilities. Powers the entire ecosystem.
+                </p>
 
-                    {/* Features */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Key Capabilities</h4>
                     <div className="space-y-2">
-                      {product.features.map((feature, featureIndex) => (
+                      {["Autonomous Mission Planning", "Real-Time Threat Detection", "Fleet Coordination", "AES-256 Encryption"].map((feature, index) => (
                         <motion.div
-                          key={featureIndex}
-                          className="flex items-center gap-3 text-xs text-muted-foreground"
+                          key={index}
+                          className="flex items-center gap-3"
                           initial={{ opacity: 0, x: -20 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1 + index * 0.1 + featureIndex * 0.1 }}
+                          transition={{ delay: 1 + index * 0.1 }}
                           viewport={{ once: true }}
                         >
                           <motion.div
-                            className="w-1.5 h-1.5 bg-primary rounded-full"
+                            className="w-2 h-2 bg-primary rounded-full"
                             animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: featureIndex * 0.2 }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
                           />
-                          {feature}
+                          <span className="text-sm text-muted-foreground">{feature}</span>
                         </motion.div>
                       ))}
                     </div>
                   </div>
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Performance</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Response Time</span>
+                        <span className="text-sm font-medium text-primary">&lt;1 second</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Accuracy</span>
+                        <span className="text-sm font-medium text-primary">99.5%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Uptime</span>
+                        <span className="text-sm font-medium text-primary">99.9%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                  {/* Hover Effects */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
+              <motion.div
+                className="relative"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="w-full h-80 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-3xl flex items-center justify-center border border-border/20 overflow-hidden">
+                  <img 
+                    src="/ArtemisOS/autonomous_mission_planning.png" 
+                    alt="ArtemisOS AI-Powered Intelligence Platform"
+                    className="w-full h-full object-cover rounded-3xl"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-3xl" />
+                  <div className="absolute bottom-6 left-6 right-6 text-center">
+                    <div className="text-2xl font-bold text-white">ArtemisOS Dashboard</div>
+                    <div className="text-sm text-white/80 mt-1">AI-Powered Intelligence Platform</div>
+                  </div>
                 </div>
               </motion.div>
-            ))}
+            </motion.div>
+
+            {/* Archer VTOL */}
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className="relative order-2 lg:order-1"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="w-full h-80 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-3xl flex items-center justify-center border border-border/20 overflow-hidden">
+                  <img 
+                    src="/archer_vtol/archer_vtol_1.png" 
+                    alt="Archer VTOL Modular Multi-Mission UAV"
+                    className="w-full h-full object-cover rounded-3xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-3xl" />
+                  <div className="absolute bottom-6 left-6 right-6 text-center">
+                    <div className="text-2xl font-bold text-white">Archer VTOL</div>
+                    <div className="text-sm text-white/80 mt-1">Modular Multi-Mission UAV</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="space-y-8 order-1 lg:order-2">
+                <div className="flex items-center gap-4">
+                  <motion.div
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    🚁
+                  </motion.div>
+                  <div>
+                    <h3 className="text-4xl font-bold text-foreground">Archer VTOL</h3>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white text-sm font-medium">
+                      <motion.div
+                        className="w-2 h-2 bg-white rounded-full"
+                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      Modular Multi-Mission UAV Platform
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Modular, quiet, and mass-producible UAV platform with enhanced terrain performance and AI-assisted operations. 
+                  Built with 3K Carbon Fiber Monocoque frame for maximum durability.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Frame</span>
+                        <span className="text-sm font-medium text-primary">3K Carbon Fiber</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Payload</span>
+                        <span className="text-sm font-medium text-primary">4kg</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Flight Time</span>
+                        <span className="text-sm font-medium text-primary">34 minutes</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Range</span>
+                        <span className="text-sm font-medium text-primary">15km</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Features</h4>
+                    <div className="space-y-2">
+                      {["Enhanced Terrain Performance", "AI-Assisted Operations", "Modular Payload", "Weather Resistance"].map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-center gap-3"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.2 + index * 0.1 }}
+                          viewport={{ once: true }}
+                        >
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                          />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Iroko UAV */}
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-8">
+                <div className="flex items-center gap-4">
+                  <motion.div
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    🚁
+                  </motion.div>
+                  <div>
+                    <h3 className="text-4xl font-bold text-foreground">Iroko UAV</h3>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-medium">
+                      <motion.div
+                        className="w-2 h-2 bg-white rounded-full"
+                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      First Response Quadcopter
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Modular, mass-producible quadcopter purpose-built for first response and infrastructure inspection. 
+                  Can be deployed in 90 seconds with minimal operator training.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Deployment</span>
+                        <span className="text-sm font-medium text-primary">90 seconds</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Endurance</span>
+                        <span className="text-sm font-medium text-primary">50 minutes</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Max Speed</span>
+                        <span className="text-sm font-medium text-primary">70 km/h</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Payload</span>
+                        <span className="text-sm font-medium text-primary">1.5kg</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Production</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Daily Production</span>
+                        <span className="text-sm font-medium text-primary">20 units</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Material</span>
+                        <span className="text-sm font-medium text-primary">Carbon Fiber</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Local Sourcing</span>
+                        <span className="text-sm font-medium text-primary">80%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <motion.div
+                className="relative"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="w-full h-80 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-3xl flex items-center justify-center border border-border/20 overflow-hidden">
+                  <img 
+                    src="/Iroko_UAV/Iroko_UAV .png" 
+                    alt="Iroko UAV First Response Quadcopter"
+                    className="w-full h-full object-cover rounded-3xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-3xl" />
+                  <div className="absolute bottom-6 left-6 right-6 text-center">
+                    <div className="text-2xl font-bold text-white">Iroko UAV</div>
+                    <div className="text-sm text-white/80 mt-1">90 Second Deployment</div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Duma UGV */}
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className="relative order-2 lg:order-1"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="w-full h-80 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-3xl flex items-center justify-center border border-border/20 overflow-hidden">
+                  <img 
+                    src="/Duma_ground_drone/Duma_ground_drone.png" 
+                    alt="Duma UGV Ground Surveillance Platform"
+                    className="w-full h-full object-cover rounded-3xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-3xl" />
+                  <div className="absolute bottom-6 left-6 right-6 text-center">
+                    <div className="text-2xl font-bold text-white">Duma UGV</div>
+                    <div className="text-sm text-white/80 mt-1">Ground Surveillance Platform</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="space-y-8 order-1 lg:order-2">
+                <div className="flex items-center gap-4">
+                  <motion.div
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center text-3xl"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    🤖
+                  </motion.div>
+                  <div>
+                    <h3 className="text-4xl font-bold text-foreground">Duma UGV</h3>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-medium">
+                      <motion.div
+                        className="w-2 h-2 bg-white rounded-full"
+                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      Ground Surveillance Platform
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Modular, mass-producible UGV platform for ground surveillance and site protection in hazardous environments. 
+                  Removes the need for human operators in dangerous situations.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Protection</span>
+                        <span className="text-sm font-medium text-primary">IP54</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Camera</span>
+                        <span className="text-sm font-medium text-primary">4K Video</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Payload</span>
+                        <span className="text-sm font-medium text-primary">4kg</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Range</span>
+                        <span className="text-sm font-medium text-primary">15km</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Applications</h4>
+                    <div className="space-y-2">
+                      {["Mine Operations", "Oil & Gas Pipeline", "Power Plant Security", "Hazardous Environments"].map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-center gap-3"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.6 + index * 0.1 }}
+                          viewport={{ once: true }}
+                        >
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                          />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Kallon Tower */}
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-8">
+                <div className="flex items-center gap-4">
+                  <motion.div
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center text-3xl"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    🗼
+                  </motion.div>
+                  <div>
+                    <h3 className="text-4xl font-bold text-foreground">Kallon Tower</h3>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white text-sm font-medium">
+                      <motion.div
+                        className="w-2 h-2 bg-white rounded-full"
+                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      AI-Powered Sentry System
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Solar-powered, AI-enabled sentry tower with 24/7 surveillance and multi-tower coordination capabilities. 
+                  Detects and tracks threats up to 3km away with advanced edge AI processing.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Detection Range</span>
+                        <span className="text-sm font-medium text-primary">3km</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Power</span>
+                        <span className="text-sm font-medium text-primary">Solar + Battery</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Zoom</span>
+                        <span className="text-sm font-medium text-primary">30x Optical</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Weather</span>
+                        <span className="text-sm font-medium text-primary">IP67</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-foreground">Features</h4>
+                    <div className="space-y-2">
+                      {["24/7 AI Surveillance", "Multi-Tower Coordination", "Self-Sustaining Power", "Edge AI Processing"].map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-center gap-3"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.8 + index * 0.1 }}
+                          viewport={{ once: true }}
+                        >
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                          />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <motion.div
+                className="relative"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="w-full h-80 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-3xl flex items-center justify-center border border-border/20 overflow-hidden">
+                  <img 
+                    src="/kallon(sentry_tower)/kallon.png" 
+                    alt="Kallon Tower AI-Powered Sentry System"
+                    className="w-full h-full object-cover rounded-3xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-3xl" />
+                  <div className="absolute bottom-6 left-6 right-6 text-center">
+                    <div className="text-2xl font-bold text-white">Kallon Tower</div>
+                    <div className="text-sm text-white/80 mt-1">3km Detection Range</div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Bottom CTA */}
@@ -1047,7 +1415,7 @@ export default function Home() {
             className="text-center mt-20"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
+            transition={{ delay: 1.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
             <motion.button
@@ -1080,7 +1448,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Manufacturing Excellence Section */}
+      {/* Manufacturing Excellence Section - Real Manufacturing Story */}
       <section className="relative py-32 bg-gradient-to-b from-charcoal via-background to-charcoal overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
@@ -1092,20 +1460,20 @@ export default function Home() {
                 linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
               `,
-              backgroundSize: '80px 80px'
+              backgroundSize: '60px 60px'
             }}
             animate={{
-              backgroundPosition: ['0px 0px', '80px 80px']
+              backgroundPosition: ['0px 0px', '60px 60px']
             }}
             transition={{
-              duration: 40,
+              duration: 25,
               repeat: Infinity,
               ease: 'linear'
             }}
           />
           
           {/* Manufacturing Particles */}
-          {[...Array(25)].map((_, i) => (
+          {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
@@ -1114,14 +1482,14 @@ export default function Home() {
                 top: `${Math.random() * 100}%`,
               }}
               animate={{
-                y: [0, -80, 0],
+                y: [0, -30, 0],
                 opacity: [0, 1, 0],
                 scale: [0, 1, 0]
               }}
               transition={{
-                duration: 5 + Math.random() * 3,
+                duration: 3 + Math.random() * 2,
                 repeat: Infinity,
-                delay: Math.random() * 3
+                delay: Math.random() * 2
               }}
             />
           ))}
@@ -1175,231 +1543,371 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              "Made in Africa" competitive advantage with 80% local sourcing and mass production capabilities
+              From concept to reality in 11 months - the largest drone manufacturing facility on the African continent, producing 20 Iroko drones daily with 80% local sourcing
             </motion.p>
           </motion.div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {/* Manufacturing Journey Timeline */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="relative">
+              {/* Timeline Line */}
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary to-terra-steel-blue" />
+              
+              {/* Timeline Items */}
+              <div className="space-y-12">
+                {/* Month 1-3: Conceptualization */}
+                <motion.div
+                  className="relative flex items-center gap-8"
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center border-2 border-primary/30">
+                    <span className="text-2xl">💡</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium mb-4">
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full" />
+                      Months 1-3: Conceptualization
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-2">Vision to Reality</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      From initial concept to detailed planning, Terra Industries began its ambitious journey to build Africa's largest drone manufacturing facility. The vision: transform Nigeria into a global drone producer and exporter.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Month 4-8: Development */}
+                <motion.div
+                  className="relative flex items-center gap-8"
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.2, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center border-2 border-primary/30">
+                    <span className="text-2xl">🔧</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium mb-4">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                      Months 4-8: Development & Setup
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-2">Infrastructure Development</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Intensive development phase focusing on facility setup, equipment procurement, and establishing local supply chains. 80% of components sourced locally, creating a true "Made in Africa" advantage.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Month 9-11: Launch */}
+                <motion.div
+                  className="relative flex items-center gap-8"
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.4, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center border-2 border-primary/30">
+                    <span className="text-2xl">🚀</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium mb-4">
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      Months 9-11: Launch & Production
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground mb-2">Factory Launch</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Successful launch of Africa's largest drone factory in Abuja. Achieved 20 Iroko drones per day production capacity, marking a historic milestone in African manufacturing and defense technology.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Manufacturing Stats */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             {[
               {
-                value: "20",
-                unit: "Drones Per Day",
-                description: "Production capacity of Iroko drones",
+                number: "20",
+                label: "Iroko Drones Per Day",
+                description: "Daily production capacity at full operation",
                 icon: "🏭",
-                color: "from-blue-500 to-cyan-600",
-                glowColor: "rgba(59, 130, 246, 0.3)"
+                color: "from-blue-500 to-cyan-600"
               },
               {
-                value: "80%",
-                unit: "Local Sourcing",
-                description: "Components manufactured or sourced within Nigeria",
+                number: "80%",
+                label: "Local Component Sourcing",
+                description: "Made in Africa competitive advantage",
                 icon: "🇳🇬",
-                color: "from-green-500 to-emerald-600",
-                glowColor: "rgba(16, 185, 129, 0.3)"
+                color: "from-green-500 to-emerald-600"
               },
               {
-                value: "11",
-                unit: "Months",
-                description: "Journey from conceptualization to realization",
+                number: "11",
+                label: "Months Journey",
+                description: "From concept to operational factory",
                 icon: "⚡",
-                color: "from-yellow-500 to-orange-600",
-                glowColor: "rgba(245, 158, 11, 0.3)"
+                color: "from-yellow-500 to-orange-600"
               }
             ].map((stat, index) => (
               <motion.div
                 key={index}
-                className="group relative"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.2, duration: 0.8 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
+                className="group relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                whileHover={{ y: -10, scale: 1.02 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* Card Container */}
-                <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden">
-                  {/* Animated Border */}
+                {/* Animated Border */}
+                <motion.div
+                  className="absolute inset-0 rounded-3xl"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(74, 144, 226, 0.2), transparent, rgba(74, 144, 226, 0.2))',
+                    padding: '2px'
+                  }}
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
+                </motion.div>
+
+                <div className="relative z-10 text-center">
                   <motion.div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${stat.glowColor}, transparent, ${stat.glowColor})`,
-                      padding: '2px'
-                    }}
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
+                    className="text-4xl mb-4"
+                    whileHover={{ scale: 1.2, rotate: 10 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
+                    {stat.icon}
                   </motion.div>
-
-                  {/* Content */}
-                  <div className="relative z-10 text-center">
-                    {/* Icon */}
-                    <motion.div
-                      className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-4xl"
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {stat.icon}
-                    </motion.div>
-
-                    {/* Value */}
-                    <motion.div
-                      className={`text-6xl md:text-7xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-4`}
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-                    >
-                      {stat.value}
-                    </motion.div>
-
-                    {/* Unit */}
-                    <div className="text-lg font-semibold text-foreground mb-2">
-                      {stat.unit}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {stat.description}
-                    </p>
-                  </div>
-
-                  {/* Hover Effects */}
                   <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                    className="text-4xl font-black text-primary mb-2"
+                    initial={{ scale: 0.8 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ delay: 1.8 + index * 0.2, duration: 0.5 }}
+                    viewport={{ once: true }}
+                  >
+                    {stat.number}
+                  </motion.div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{stat.label}</h3>
+                  <p className="text-sm text-muted-foreground">{stat.description}</p>
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Manufacturing Process */}
+
+          {/* Future Vision - Detailed Three-Year Expansion Plan */}
           <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+            className="mb-20"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
+            transition={{ delay: 2.2, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            {/* Content */}
-            <div className="space-y-8">
-              <motion.h3
-                className="text-4xl md:text-5xl font-bold text-foreground"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.4, duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <span className="block">From Concept to</span>
-                <span className="block gradient-text">Reality in 11 Months</span>
-              </motion.h3>
-
-              <motion.p
-                className="text-lg text-muted-foreground leading-relaxed"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.6, duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                Our manufacturing facility represents the largest drone factory on the African continent, 
-                demonstrating our commitment to local production and "Made in Africa" excellence.
-              </motion.p>
-
-              {/* Process Steps */}
-              <div className="space-y-4">
-                {[
-                  "Conceptualization & Design",
-                  "Local Component Sourcing",
-                  "Assembly Line Setup",
-                  "Quality Control & Testing",
-                  "Mass Production Launch"
-                ].map((step, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center gap-4"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.8 + index * 0.1, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.div
-                      className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-terra-steel-blue flex items-center justify-center text-white text-sm font-bold"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {index + 1}
-                    </motion.div>
-                    <span className="text-foreground font-medium">{step}</span>
-                  </motion.div>
-                ))}
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h3 className="text-4xl font-bold text-foreground mb-6">Three-Year Expansion Plan</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+                  Building on our success, Terra Industries is committed to constructing a network of drone factories across Africa, 
+                  establishing Nigeria as the continent's premier defense manufacturing hub and a global exporter of autonomous systems.
+                </p>
               </div>
-            </div>
-
-            {/* Visual Representation */}
-            <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.4, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              {/* Factory Visualization */}
-              <div className="relative w-full h-96 bg-gradient-to-br from-card to-charcoal rounded-3xl overflow-hidden border border-border/20">
-                {/* Assembly Line Animation */}
+              
+              {/* Expansion Timeline */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                {/* Year 1 */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent"
-                  animate={{ x: ['-100%', '100%'] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                />
-                
-                {/* Robotic Arms */}
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center"
-                    style={{
-                      left: `${20 + i * 30}%`,
-                      top: '50%',
-                      transform: 'translateY(-50%)'
-                    }}
-                    animate={{ 
-                      rotate: [0, 10, -10, 0],
-                      scale: [1, 1.1, 1]
-                    }}
-                    transition={{ 
-                      duration: 2 + i * 0.5, 
-                      repeat: Infinity,
-                      delay: i * 0.3
-                    }}
-                  >
-                    <span className="text-2xl">🤖</span>
-                  </motion.div>
-                ))}
-
-                {/* Production Stats Overlay */}
-                <div className="absolute bottom-4 left-4 right-4 bg-card/80 backdrop-blur-sm rounded-2xl p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-sm text-muted-foreground">Current Production</div>
-                      <div className="text-2xl font-bold text-foreground">20/day</div>
+                  className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.4, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-2xl">
+                      <span className="text-blue-500 font-bold">1</span>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-muted-foreground">Local Sourcing</div>
-                      <div className="text-2xl font-bold text-primary">80%</div>
+                    <h4 className="text-2xl font-bold text-foreground">Year 1: Foundation</h4>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Scale current Abuja facility to 50 drones per day</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Establish supply chain partnerships across West Africa</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Launch first international factory in Ghana</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Achieve 90% local component sourcing</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
+
+                {/* Year 2 */}
+                <motion.div
+                  className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.6, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-2xl">
+                      <span className="text-green-500 font-bold">2</span>
+                    </div>
+                    <h4 className="text-2xl font-bold text-foreground">Year 2: Expansion</h4>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Launch factories in Kenya and South Africa</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Establish pan-African distribution network</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Begin exports to Middle East and Europe</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Achieve 200 drones per day total capacity</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Year 3 */}
+                <motion.div
+                  className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.8, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center text-2xl">
+                      <span className="text-yellow-500 font-bold">3</span>
+                    </div>
+                    <h4 className="text-2xl font-bold text-foreground">Year 3: Global Leadership</h4>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Complete African factory network (8 countries)</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Launch global export operations</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Prepare for IPO and public offering</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2" />
+                      <p className="text-muted-foreground">Achieve 500+ drones per day capacity</p>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
+
+              {/* Strategic Goals */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 3, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center">
+                      <span className="text-2xl">🌍</span>
+                    </div>
+                    <h4 className="text-2xl font-bold text-foreground">Pan-African Network</h4>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Strategic expansion across multiple African countries to serve continental infrastructure protection needs, 
+                    creating a unified defense manufacturing ecosystem.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                      <span>8 African countries by Year 3</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                      <span>500+ drones daily capacity</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                      <span>95% local sourcing across network</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20"
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 3.2, duration: 0.8 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+                      <span className="text-2xl">🚀</span>
+                    </div>
+                    <h4 className="text-2xl font-bold text-foreground">Global Export Hub</h4>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Positioning Nigeria as a global drone producer and exporter, competing on the international stage 
+                    with world-class autonomous defense systems.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                      <span>Export to 15+ countries globally</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                      <span>$1 trillion infrastructure protection goal</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                      <span>IPO preparation and public offering</span>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Bottom CTA */}
           <motion.div
-            className="text-center mt-20"
+            className="text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2, duration: 0.8 }}
+            transition={{ delay: 2.4, duration: 0.8 }}
             viewport={{ once: true }}
           >
             <motion.button
@@ -1419,7 +1927,7 @@ export default function Home() {
                 whileHover={{ x: '0%' }}
                 transition={{ duration: 0.3 }}
               />
-              <span className="relative z-10">Visit Our Manufacturing Facility</span>
+              <span className="relative z-10">Explore Our Manufacturing</span>
               <motion.div
                 className="relative z-10"
                 animate={{ x: [0, 5, 0] }}
@@ -1724,91 +2232,6 @@ export default function Home() {
               <p className="text-muted-foreground text-lg">Critical infrastructure under Terra Industries protection</p>
             </div>
 
-            {/* Interactive Map Visualization */}
-            <div className="relative w-full h-96 bg-gradient-to-br from-card to-charcoal rounded-3xl overflow-hidden border border-border/20">
-              {/* Map Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
-              
-              {/* Protected Assets */}
-              {[
-                { name: "Nigeria", type: "Power Plants", count: 4, x: "20%", y: "60%" },
-                { name: "South Africa", type: "Mining Operations", count: 2, x: "75%", y: "80%" },
-                { name: "Ghana", type: "Oil Refineries", count: 1, x: "15%", y: "45%" },
-                { name: "Kenya", type: "Telecommunications", count: 1, x: "70%", y: "35%" }
-              ].map((asset, index) => (
-                <motion.div
-                  key={index}
-                  className="absolute w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-bold"
-                  style={{ left: asset.x, top: asset.y }}
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    boxShadow: ['0 0 0 rgba(74, 144, 226, 0.3)', '0 0 20px rgba(74, 144, 226, 0.6)', '0 0 0 rgba(74, 144, 226, 0.3)']
-                  }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity, 
-                    delay: index * 0.5 
-                  }}
-                  whileHover={{ scale: 1.3 }}
-                >
-                  {asset.count}
-                </motion.div>
-              ))}
-
-              {/* Connection Lines */}
-              <motion.svg
-                className="absolute inset-0 w-full h-full"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1.6, duration: 1 }}
-                viewport={{ once: true }}
-              >
-                <motion.line
-                  x1="20%"
-                  y1="60%"
-                  x2="75%"
-                  y2="80%"
-                  stroke="rgba(74, 144, 226, 0.3)"
-                  strokeWidth="2"
-                  strokeDasharray="5,5"
-                  animate={{ strokeDashoffset: [0, 10] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <motion.line
-                  x1="20%"
-                  y1="60%"
-                  x2="15%"
-                  y2="45%"
-                  stroke="rgba(74, 144, 226, 0.3)"
-                  strokeWidth="2"
-                  strokeDasharray="5,5"
-                  animate={{ strokeDashoffset: [0, 10] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                />
-              </motion.svg>
-
-              {/* Stats Overlay */}
-              <div className="absolute bottom-4 left-4 right-4 bg-card/80 backdrop-blur-sm rounded-2xl p-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                  <div>
-                    <div className="text-sm text-muted-foreground">Countries</div>
-                    <div className="text-2xl font-bold text-foreground">4</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Assets Protected</div>
-                    <div className="text-2xl font-bold text-primary">8</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Total Value</div>
-                    <div className="text-2xl font-bold text-foreground">$13B+</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Coverage</div>
-                    <div className="text-2xl font-bold text-primary">24/7</div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </motion.div>
 
           {/* Bottom CTA */}
@@ -2285,111 +2708,6 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          {/* World Map Visualization */}
-          <motion.div
-            className="relative mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="relative w-full h-96 bg-gradient-to-br from-card to-charcoal rounded-3xl overflow-hidden border border-border/20">
-              {/* Map Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
-              
-              {/* Country Markers */}
-              {[
-                { name: "Nigeria", status: "Headquarters", x: "45%", y: "65%", color: "bg-primary", size: "w-8 h-8" },
-                { name: "South Africa", status: "Active Operations", x: "60%", y: "85%", color: "bg-green-500", size: "w-6 h-6" },
-                { name: "Ghana", status: "Expansion Target", x: "40%", y: "55%", color: "bg-yellow-500", size: "w-4 h-4" },
-                { name: "Kenya", status: "Expansion Target", x: "65%", y: "45%", color: "bg-yellow-500", size: "w-4 h-4" },
-                { name: "Egypt", status: "Future Market", x: "55%", y: "35%", color: "bg-gray-500", size: "w-3 h-3" }
-              ].map((country, index) => (
-                <motion.div
-                  key={index}
-                  className={`absolute ${country.color} rounded-full flex items-center justify-center text-white text-xs font-bold ${country.size}`}
-                  style={{ left: country.x, top: country.y }}
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    boxShadow: ['0 0 0 rgba(74, 144, 226, 0.3)', '0 0 20px rgba(74, 144, 226, 0.6)', '0 0 0 rgba(74, 144, 226, 0.3)']
-                  }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity, 
-                    delay: index * 0.3 
-                  }}
-                  whileHover={{ scale: 1.3 }}
-                >
-                  {country.name === "Nigeria" ? "🇳🇬" : country.name === "South Africa" ? "🇿🇦" : "📍"}
-                </motion.div>
-              ))}
-
-              {/* Connection Lines */}
-              <motion.svg
-                className="absolute inset-0 w-full h-full"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 1 }}
-                viewport={{ once: true }}
-              >
-                <motion.line
-                  x1="45%"
-                  y1="65%"
-                  x2="60%"
-                  y2="85%"
-                  stroke="rgba(74, 144, 226, 0.5)"
-                  strokeWidth="3"
-                  strokeDasharray="5,5"
-                  animate={{ strokeDashoffset: [0, 10] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <motion.line
-                  x1="45%"
-                  y1="65%"
-                  x2="40%"
-                  y2="55%"
-                  stroke="rgba(245, 158, 11, 0.3)"
-                  strokeWidth="2"
-                  strokeDasharray="3,3"
-                  animate={{ strokeDashoffset: [0, 6] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                />
-                <motion.line
-                  x1="45%"
-                  y1="65%"
-                  x2="65%"
-                  y2="45%"
-                  stroke="rgba(245, 158, 11, 0.3)"
-                  strokeWidth="2"
-                  strokeDasharray="3,3"
-                  animate={{ strokeDashoffset: [0, 6] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                />
-              </motion.svg>
-
-              {/* Expansion Timeline */}
-              <div className="absolute bottom-4 left-4 right-4 bg-card/80 backdrop-blur-sm rounded-2xl p-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
-                  <div>
-                    <div className="text-sm text-muted-foreground">Current Markets</div>
-                    <div className="text-2xl font-bold text-foreground">2</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Expansion Targets</div>
-                    <div className="text-2xl font-bold text-yellow-500">3</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Future Markets</div>
-                    <div className="text-2xl font-bold text-gray-500">5+</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Pan-African Vision</div>
-                    <div className="text-2xl font-bold text-primary">54</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
 
           {/* Expansion Strategy */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
