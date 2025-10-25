@@ -1,9 +1,11 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
 import { HeroBackground } from "@/components/hero-background"
+import { useOptimizedScroll } from "@/hooks/use-optimized-scroll"
+import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 
 // Helper function to generate consistent particle positions (reduced count)
 const generateParticlePositions = (count: number) => {
@@ -23,21 +25,33 @@ const generateParticlePositions = (count: number) => {
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 300], [0, -50])
-  const opacity = useTransform(scrollY, [0, 300], [1, 0])
-  const scale = useTransform(scrollY, [0, 300], [1, 0.8])
+  const [scrollY, setScrollY] = useState(0)
+  
+  // Mobile optimization
+  const { isMobile, isReducedMotion, getParticleCount, getAnimationSettings } = useMobileOptimization()
+  
+  // Use optimized scroll listener
+  useOptimizedScroll((scrollY: number) => {
+    setScrollY(scrollY)
+  }, 16) // 60fps throttling
 
-  // Auto-rotation effect (reduced frequency)
+  // Memoize particle positions to prevent recalculation on every render
+  const particleCount = getParticleCount()
+  const particlePositions = useMemo(() => generateParticlePositions(particleCount), [particleCount])
+  
+  // Get optimized animation settings
+  const animationSettings = getAnimationSettings()
+
+  // Auto-rotation effect (disabled for reduced motion)
   useEffect(() => {
-    if (isPaused) return
+    if (isPaused || isReducedMotion) return
     
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % 7)
-    }, 10000) // Increased from 8s to 10s
+    }, isMobile ? 12000 : 10000) // Slower on mobile
 
     return () => clearInterval(interval)
-  }, [isPaused])
+  }, [isPaused, isReducedMotion, isMobile])
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
@@ -112,18 +126,18 @@ export function HeroSection() {
             `,
             backgroundSize: '50px 50px'
           }}
-          animate={{
+          animate={isReducedMotion ? {} : {
             backgroundPosition: ['0px 0px', '50px 50px']
           }}
-          transition={{
-            duration: 25, // Increased from 20s
+          transition={isReducedMotion ? {} : {
+            duration: isMobile ? 30 : 25, // Slower on mobile
             repeat: Infinity,
             ease: 'linear'
           }}
         />
         
         {/* Floating Particles (reduced count) */}
-        {generateParticlePositions(8).map((pos, i) => (
+        {!isReducedMotion && particlePositions.map((pos, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-primary rounded-full"
@@ -138,7 +152,7 @@ export function HeroSection() {
               scale: [0, 1, 0]
             }}
             transition={{
-              duration: pos.duration,
+              duration: isMobile ? pos.duration * 1.5 : pos.duration, // Slower on mobile
               repeat: Infinity,
               delay: pos.delay
             }}
@@ -152,20 +166,20 @@ export function HeroSection() {
           className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={animationSettings}
           viewport={{ once: true }}
         >
           <motion.div
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
+            transition={{ delay: isReducedMotion ? 0 : 0.2, ...animationSettings }}
             viewport={{ once: true }}
           >
             <motion.div
               className="w-2 h-2 bg-primary rounded-full"
-              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              animate={isReducedMotion ? {} : { scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
+              transition={isReducedMotion ? {} : { duration: 2, repeat: Infinity }}
             />
             <span className="text-sm font-medium text-primary">Securing Africa's Future</span>
           </motion.div>
@@ -174,7 +188,7 @@ export function HeroSection() {
             className="text-4xl md:text-6xl font-black tracking-tighter font-display text-foreground mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: isReducedMotion ? 0 : 0.3, ...animationSettings }}
             viewport={{ once: true }}
             style={{ willChange: 'transform, opacity' }}
           >
@@ -186,7 +200,7 @@ export function HeroSection() {
             className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: isReducedMotion ? 0 : 0.4, ...animationSettings }}
             viewport={{ once: true }}
           >
             Protecting over $13 billion in critical infrastructure across Africa with cutting-edge AI-powered defense technology
@@ -206,7 +220,7 @@ export function HeroSection() {
                 opacity: index === currentSlide ? 1 : 0,
                 scale: index === currentSlide ? 1 : 0.95
               }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
+              transition={isReducedMotion ? { duration: 0.1 } : { duration: 0.8, ease: "easeInOut" }}
               onClick={() => goToSlide(index)}
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
@@ -252,7 +266,7 @@ export function HeroSection() {
                   : 'bg-muted-foreground/30'
               }`}
               onClick={() => goToSlide(index)}
-              whileHover={{ scale: 1.2 }}
+              whileHover={isReducedMotion ? {} : { scale: 1.2 }}
               style={{ touchAction: 'manipulation' }}
             />
           ))}

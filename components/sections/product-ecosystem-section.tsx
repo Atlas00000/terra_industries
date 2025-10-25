@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { useMemo } from "react"
 
 // Helper function to generate consistent particle positions (reduced count)
 const generateParticlePositions = (count: number) => {
@@ -22,6 +23,9 @@ const generateParticlePositions = (count: number) => {
 export function ProductEcosystemSection() {
   const { isMobile, isReducedMotion, getParticleCount } = useMobileOptimization()
   const particleCount = getParticleCount()
+  
+  // Memoize particle positions to prevent recalculation on every render
+  const particlePositions = useMemo(() => generateParticlePositions(particleCount), [particleCount])
 
   return (
     <section className="relative py-24 bg-gradient-to-b from-background to-charcoal overflow-hidden">
@@ -49,7 +53,7 @@ export function ProductEcosystemSection() {
         />
         
         {/* Floating Particles (reduced count) */}
-        {!isReducedMotion && generateParticlePositions(particleCount).map((pos, i) => (
+        {!isReducedMotion && particlePositions.map((pos, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-primary rounded-full"

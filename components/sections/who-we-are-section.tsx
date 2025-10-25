@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { useOptimizedScroll } from "@/hooks/use-optimized-scroll"
+import { useMemo } from "react"
+import { useOptimizedAnimations } from "@/utils/animation-utils"
 
 // Helper function to generate consistent particle positions (reduced count)
 const generateParticlePositions = (count: number) => {
@@ -21,6 +24,10 @@ const generateParticlePositions = (count: number) => {
 export function WhoWeAreSection() {
   const { isMobile, isReducedMotion, getParticleCount } = useMobileOptimization()
   const particleCount = getParticleCount()
+  const { fadeInUp, particleAnimation, particleTransition } = useOptimizedAnimations()
+  
+  // Memoize particle positions to prevent recalculation on every render
+  const particlePositions = useMemo(() => generateParticlePositions(particleCount), [particleCount])
 
   return (
     <section className="relative py-24 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
@@ -46,7 +53,7 @@ export function WhoWeAreSection() {
         />
         
         {/* Floating Particles (reduced count) */}
-        {!isReducedMotion && generateParticlePositions(particleCount).map((pos, i) => (
+        {!isReducedMotion && particlePositions.map((pos, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-primary rounded-full"
@@ -55,13 +62,9 @@ export function WhoWeAreSection() {
               top: `${pos.top}%`,
               willChange: 'transform, opacity'
             }}
-            animate={{
-              y: [0, -80, 0],
-              opacity: [0, 0.6, 0],
-              scale: [0, 0.8, 0]
-            }}
+            animate={particleAnimation}
             transition={{
-              duration: pos.duration,
+              duration: isMobile ? pos.duration * 1.5 : pos.duration,
               repeat: Infinity,
               delay: pos.delay
             }}
@@ -73,9 +76,8 @@ export function WhoWeAreSection() {
         {/* Section Header */}
         <motion.div
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
+          {...fadeInUp}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
         >
           <motion.h2

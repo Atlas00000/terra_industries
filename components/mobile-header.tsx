@@ -19,6 +19,7 @@ export function MobileHeader() {
   }, [])
 
   const navItems = [
+    { label: "Company", href: "/company" },
     { label: "Artemis", href: "/artemis" },
     { label: "Archer", href: "/archer" },
     { label: "Iroko", href: "/iroko" },
