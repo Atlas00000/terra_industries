@@ -9,7 +9,7 @@ import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { useState, useEffect } from "react"
 
 // Import Artemis sections
-import { ArtemisCapabilitiesSection } from "@/components/artemis/artemis-capabilities-section"
+import { ArtemisCapabilitiesSection } from "@/components/artemis/artemis-capabilities-section-v2"
 
 export default function ArtemisPage() {
   const [isLoaded, setIsLoaded] = useState(false)

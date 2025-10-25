@@ -108,8 +108,8 @@ export function ArtemisCapabilitiesSection() {
             key={i}
             className="absolute w-1 h-1 bg-gradient-to-r from-primary to-blue-500 rounded-full"
             style={{
-              left: `${pos.left}%`,
-              top: `${pos.top}%`,
+              left: pos.left + '%',
+              top: pos.top + '%',
             }}
             animate={particleAnimation}
             transition={{
