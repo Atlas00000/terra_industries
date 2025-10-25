@@ -16,9 +16,11 @@ export function Header() {
   }, [])
 
   const navItems = [
-    { label: "Products", href: "#products" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
+    { label: "Artemis", href: "/artemis" },
+    { label: "Archer", href: "/archer" },
+    { label: "Iroko", href: "/iroko" },
+    { label: "Duma", href: "/duma" },
+    { label: "Kallon", href: "/kallon" },
   ]
 
   return (
@@ -83,35 +85,6 @@ export function Header() {
           ))}
         </nav>
 
-        <motion.button
-          className="group relative inline-flex items-center gap-3 px-8 py-4 text-sm font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-xl overflow-hidden"
-          whileHover={{ 
-            scale: 1.05,
-            boxShadow: '0 15px 30px rgba(74, 144, 226, 0.4)'
-          }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          style={{
-            boxShadow: '0 8px 20px rgba(74, 144, 226, 0.3)'
-          }}
-        >
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-            initial={{ x: '-100%' }}
-            whileHover={{ x: '0%' }}
-            transition={{ duration: 0.3 }}
-          />
-          <span className="relative z-10">Get Started</span>
-          <motion.div
-            className="relative z-10"
-            animate={{ x: [0, 3, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            →
-          </motion.div>
-        </motion.button>
       </div>
 
       {isScrolled && (

@@ -9,6 +9,7 @@ import { MobileLayout, MobileSection, MobileText, MobileButton, MobileImage } fr
 import { MobileLeadershipSlideshow } from "@/components/mobile-leadership-slideshow"
 import { MobileProductSlideshow } from "@/components/mobile-product-slideshow"
 import { MobileExpansionSlideshow } from "@/components/mobile-expansion-slideshow"
+import { HeroSection } from "@/components/hero-section"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { useState, useEffect } from "react"
@@ -96,107 +97,33 @@ export default function Home() {
       <main className="min-h-screen bg-background text-foreground overflow-hidden">
         {isMobile ? <MobileHeader /> : <Header />}
 
-      {/* Hero Section - Dynamic Story Slideshow */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Dynamic Background */}
+      <HeroSection />
+
+
+      {/* Who We Are Section */}
+      <section className="relative py-32 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
+        {/* Background Effects */}
         <div className="absolute inset-0">
-          <HeroBackground />
+          {/* Animated Grid */}
+          <motion.div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
+            }}
+            animate={{
+              backgroundPosition: ['0px 0px', '60px 60px']
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: 'linear'
+            }}
+          />
         </div>
-
-        {/* Animated Grid Overlay */}
-        <motion.div 
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }}
-          animate={{
-            backgroundPosition: ['0px 0px', '50px 50px']
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear'
-          }}
-        />
-
-          {/* Floating Particles */}
-          {generateParticlePositions(20).map((pos, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-primary rounded-full"
-              style={{
-                left: `${pos.left}%`,
-                top: `${pos.top}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0]
-              }}
-              transition={{
-                duration: pos.duration,
-                repeat: Infinity,
-                delay: pos.delay
-              }}
-            />
-          ))}
-
-        <div className="relative z-10 max-w-[80vw] mx-auto px-6 w-full">
-          {/* Story Slideshow Container */}
-          <div className="relative w-full h-[75vh] md:h-[80vh] rounded-3xl overflow-hidden border border-border/20">
-            {/* Slide Navigation */}
-            <div className="absolute top-6 left-6 right-6 z-20">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-2">
-                  {[0, 1, 2, 3, 4, 5, 6].map((index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                        index === currentSlide ? 'bg-primary' : 'bg-primary/30'
-                      }`}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                    />
-                  ))}
-                </div>
-                <div className="text-sm text-white/80 backdrop-blur-sm bg-black/20 px-3 py-1 rounded-full">
-                  Terra Industries Stories
-                </div>
-              </div>
-            </div>
-
-            {/* Slide Content */}
-            <div className="relative h-full">
-              {/* Slide 1: $13 Billion Infrastructure Protection */}
-              <motion.div
-                className="absolute inset-0 flex flex-col cursor-pointer"
-                initial={{ opacity: 1 }}
-                animate={{ opacity: currentSlide === 0 ? 1 : 0 }}
-                transition={{ duration: 0.5 }}
-                onClick={() => goToSlide(0)}
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                {/* Full-form Image */}
-                <div className="relative h-1/2 md:h-2/3 w-full">
-                  <motion.div
-                    className="w-full h-full"
-                  >
-                    <img 
-                      src="/stories/$13-Billion-Critical_Infrastructure.jpeg" 
-                      alt="$13 Billion Critical Infrastructure Protection"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  </motion.div>
-                </div>
                 
                 {/* Content Under Image */}
                 <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
