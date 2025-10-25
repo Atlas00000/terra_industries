@@ -1141,69 +1141,111 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <div className="space-y-8">
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    🧠
-                  </motion.div>
-                  <div>
-                    <h3 className="text-4xl font-bold text-foreground">ArtemisOS</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xs md:text-sm font-medium">
-                      <motion.div
-                        className="w-2 h-2 bg-white rounded-full"
-                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      AI-Powered Central Intelligence Platform
-                    </div>
+                <div>
+                  <h3 className="text-4xl font-bold text-foreground mb-4">ArtemisOS</h3>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xs md:text-sm font-medium">
+                    <motion.div
+                      className="w-2 h-2 bg-white rounded-full"
+                      animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    AI-Powered Central Intelligence Platform
                   </div>
                 </div>
 
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Central intelligence platform for all autonomous systems with real-time threat detection, 
-                  autonomous mission planning, and fleet management capabilities. Powers the entire ecosystem.
+                  Terrahaptix's flagship AI-powered, open operating system serving as the central intelligence platform 
+                  for all autonomous defense systems. Provides real-time threat detection, autonomous mission planning, 
+                  and fleet management capabilities across the entire product ecosystem.
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Key Capabilities</h4>
-                    <div className="space-y-2">
-                      {["Autonomous Mission Planning", "Real-Time Threat Detection", "Fleet Coordination", "AES-256 Encryption"].map((feature, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1 + index * 0.1 }}
-                          viewport={{ once: true }}
-                        >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Core Capabilities</h4>
+                      <div className="space-y-3">
+                        {[
+                          "Autonomous Mission Planning & Decision-Making",
+                          "Real-Time Threat Detection & Analysis", 
+                          "Drone Fleet Management & Swarm Operations",
+                          "AI-Powered Target Identification & Tracking",
+                          "AES-256 Encryption & Security",
+                          "Predictive Analytics & Pattern Recognition"
+                        ].map((feature, index) => (
                           <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                          />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
-                        </motion.div>
-                      ))}
+                            key={index}
+                            className="flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 1 + index * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.div
+                              className="w-2 h-2 bg-primary rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                            />
+                            <span className="text-sm text-muted-foreground">{feature}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Use Cases</h4>
+                      <div className="space-y-2">
+                        {["Critical Infrastructure Protection", "Border Security & Surveillance", "Industrial Security", "Environmental Monitoring"].map((useCase, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-terra-steel-blue rounded-full" />
+                            <span className="text-sm text-muted-foreground">{useCase}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Performance</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Response Time</span>
-                        <span className="text-sm font-medium text-primary">&lt;1 second</span>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Performance Metrics</h4>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Response Time</span>
+                          <span className="text-sm font-medium text-primary">&lt;1 second</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Threat Detection Accuracy</span>
+                          <span className="text-sm font-medium text-primary">99.5%</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">System Uptime</span>
+                          <span className="text-sm font-medium text-primary">99.9%</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Concurrent Systems</span>
+                          <span className="text-sm font-medium text-primary">1000+</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Accuracy</span>
-                        <span className="text-sm font-medium text-primary">99.5%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Uptime</span>
-                        <span className="text-sm font-medium text-primary">99.9%</span>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Business Impact</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Cost Reduction</span>
+                          <span className="text-sm font-medium text-primary">40-60%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Efficiency Gains</span>
+                          <span className="text-sm font-medium text-primary">3x</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Training Reduction</span>
+                          <span className="text-sm font-medium text-primary">70%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">ROI (18 months)</span>
+                          <span className="text-sm font-medium text-primary">300%</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1258,74 +1300,116 @@ export default function Home() {
               </motion.div>
 
               <div className="space-y-8 order-1 lg:order-2">
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    🚁
-                  </motion.div>
-                  <div>
-                    <h3 className="text-4xl font-bold text-foreground">Archer VTOL</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white text-xs md:text-sm font-medium">
-                      <motion.div
-                        className="w-2 h-2 bg-white rounded-full"
-                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      Modular Multi-Mission UAV Platform
-                    </div>
+                <div>
+                  <h3 className="text-4xl font-bold text-foreground mb-4">Archer VTOL</h3>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white text-xs md:text-sm font-medium">
+                    <motion.div
+                      className="w-2 h-2 bg-white rounded-full"
+                      animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    Modular Multi-Mission UAV Platform
                   </div>
                 </div>
 
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Modular, quiet, and mass-producible UAV platform with enhanced terrain performance and AI-assisted operations. 
-                  Built with 3K Carbon Fiber Monocoque frame for maximum durability.
+                  Modular, quiet, and mass-producible UAV platform purpose-built for reconnaissance and site protection. 
+                  Leverages ArtemisOS to automate mission planning, threat detection, and flight operations, significantly 
+                  reducing training burden for operators.
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Frame</span>
-                        <span className="text-sm font-medium text-primary">3K Carbon Fiber</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Key Capabilities</h4>
+                      <div className="space-y-3">
+                        {[
+                          "Enhanced Terrain Performance & Off-Road Optimization",
+                          "AI-Assisted Operations & Mission Automation", 
+                          "Modular Multi-Mission Payload System",
+                          "Weather Resistance (IP54 Protection)",
+                          "Remote Operations & Threat Detection",
+                          "Advanced Flight Control Systems"
+                        ].map((feature, index) => (
+                          <motion.div
+                            key={index}
+                            className="flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 1.2 + index * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.div
+                              className="w-2 h-2 bg-primary rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                            />
+                            <span className="text-sm text-muted-foreground">{feature}</span>
+                          </motion.div>
+                        ))}
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Payload</span>
-                        <span className="text-sm font-medium text-primary">4kg</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Flight Time</span>
-                        <span className="text-sm font-medium text-primary">34 minutes</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Range</span>
-                        <span className="text-sm font-medium text-primary">15km</span>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Primary Applications</h4>
+                      <div className="space-y-2">
+                        {["Border Surveillance & Perimeter Monitoring", "Infrastructure Inspection & Maintenance", "Search & Rescue Operations", "Environmental Monitoring"].map((useCase, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-terra-steel-blue rounded-full" />
+                            <span className="text-sm text-muted-foreground">{useCase}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Features</h4>
-                    <div className="space-y-2">
-                      {["Enhanced Terrain Performance", "AI-Assisted Operations", "Modular Payload", "Weather Resistance"].map((feature, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.2 + index * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                          />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
-                        </motion.div>
-                      ))}
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Technical Specifications</h4>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Frame Material</span>
+                          <span className="text-sm font-medium text-primary">3K Carbon Fiber</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Wingspan</span>
+                          <span className="text-sm font-medium text-primary">1900mm</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Max Takeoff Weight</span>
+                          <span className="text-sm font-medium text-primary">11.5 kg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Payload Capacity</span>
+                          <span className="text-sm font-medium text-primary">4 kg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Flight Time</span>
+                          <span className="text-sm font-medium text-primary">34 minutes</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Operational Range</span>
+                          <span className="text-sm font-medium text-primary">15-50 km</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Camera & Connectivity</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Camera Resolution</span>
+                          <span className="text-sm font-medium text-primary">48 MP / 4K 60fps</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Connectivity</span>
+                          <span className="text-sm font-medium text-primary">Wi-Fi 2.4/5.8GHz</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Charging Time</span>
+                          <span className="text-sm font-medium text-primary">90 minutes</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1341,68 +1425,119 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <div className="space-y-8">
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    🚁
-                  </motion.div>
-                  <div>
-                    <h3 className="text-4xl font-bold text-foreground">Iroko UAV</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-medium">
-                      <motion.div
-                        className="w-2 h-2 bg-white rounded-full"
-                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      First Response Quadcopter
-                    </div>
+                <div>
+                  <h3 className="text-4xl font-bold text-foreground mb-4">Iroko UAV</h3>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-medium">
+                    <motion.div
+                      className="w-2 h-2 bg-white rounded-full"
+                      animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    First Response Quadcopter
                   </div>
                 </div>
 
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Modular, mass-producible quadcopter purpose-built for first response and infrastructure inspection. 
-                  Can be deployed in 90 seconds with minimal operator training.
+                  Delivers autonomy and threat response capabilities, balancing extended range and multi-payload capacity 
+                  for diverse mission requirements with 90-second deployment.
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Deployment</span>
-                        <span className="text-sm font-medium text-primary">90 seconds</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Key Capabilities</h4>
+                      <div className="space-y-3">
+                        {[
+                          "90-Second Rapid Deployment",
+                          "ArtemisOS Integration & Autonomy", 
+                          "Modular Multi-Payload Capacity",
+                          "Minimal Training Requirements",
+                          "Emergency Response Optimization",
+                          "Weather Resistance (IP54)"
+                        ].map((feature, index) => (
+                          <motion.div
+                            key={index}
+                            className="flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 1.4 + index * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.div
+                              className="w-2 h-2 bg-primary rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                            />
+                            <span className="text-sm text-muted-foreground">{feature}</span>
+                          </motion.div>
+                        ))}
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Endurance</span>
-                        <span className="text-sm font-medium text-primary">50 minutes</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Max Speed</span>
-                        <span className="text-sm font-medium text-primary">70 km/h</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Payload</span>
-                        <span className="text-sm font-medium text-primary">1.5kg</span>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Primary Applications</h4>
+                      <div className="space-y-2">
+                        {["Surveillance & Perimeter Monitoring", "Infrastructure Inspection & Assessment", "Search & Rescue Operations", "Logistics & Payload Delivery"].map((useCase, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-terra-steel-blue rounded-full" />
+                            <span className="text-sm text-muted-foreground">{useCase}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Production</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Daily Production</span>
-                        <span className="text-sm font-medium text-primary">20 units</span>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Technical Specifications</h4>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Material</span>
+                          <span className="text-sm font-medium text-primary">Carbon Fiber Composite</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Max Takeoff Weight</span>
+                          <span className="text-sm font-medium text-primary">5 kg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Max Speed</span>
+                          <span className="text-sm font-medium text-primary">70 km/h</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Endurance</span>
+                          <span className="text-sm font-medium text-primary">50 minutes</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Range</span>
+                          <span className="text-sm font-medium text-primary">20 km</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Max Payload</span>
+                          <span className="text-sm font-medium text-primary">1.5 kg</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Material</span>
-                        <span className="text-sm font-medium text-primary">Carbon Fiber</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Local Sourcing</span>
-                        <span className="text-sm font-medium text-primary">80%</span>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Production & Manufacturing</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Daily Production</span>
+                          <span className="text-sm font-medium text-primary">20 units</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Local Sourcing</span>
+                          <span className="text-sm font-medium text-primary">80%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Battery Type</span>
+                          <span className="text-sm font-medium text-primary">LiPo 6S</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Communication</span>
+                          <span className="text-sm font-medium text-primary">AES-256 Encrypted</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1457,74 +1592,120 @@ export default function Home() {
               </motion.div>
 
               <div className="space-y-8 order-1 lg:order-2">
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    🤖
-                  </motion.div>
-                  <div>
-                    <h3 className="text-4xl font-bold text-foreground">Duma UGV</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs md:text-sm font-medium">
-                      <motion.div
-                        className="w-2 h-2 bg-white rounded-full"
-                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      Ground Surveillance Platform
-                    </div>
+                <div>
+                  <h3 className="text-4xl font-bold text-foreground mb-4">Duma UGV</h3>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs md:text-sm font-medium">
+                    <motion.div
+                      className="w-2 h-2 bg-white rounded-full"
+                      animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    Ground Surveillance Platform
                   </div>
                 </div>
 
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Modular, mass-producible UGV platform for ground surveillance and site protection in hazardous environments. 
-                  Removes the need for human operators in dangerous situations.
+                  Modular, mass-producible UGV platform purpose-built for ground surveillance and site protection. 
+                  Leverages ArtemisOS to automate mission planning, threat detection, and ground operations, removing 
+                  the need for human operators in hazardous environments.
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Protection</span>
-                        <span className="text-sm font-medium text-primary">IP54</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Key Capabilities</h4>
+                      <div className="space-y-3">
+                        {[
+                          "Open Architecture & Easy Configuration",
+                          "ArtemisOS Integration & Autonomy", 
+                          "Modular Multi-Mission Payload System",
+                          "Enhanced Situational Awareness",
+                          "Operational Independence",
+                          "Hazardous Environment Operations"
+                        ].map((feature, index) => (
+                          <motion.div
+                            key={index}
+                            className="flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 1.6 + index * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.div
+                              className="w-2 h-2 bg-primary rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                            />
+                            <span className="text-sm text-muted-foreground">{feature}</span>
+                          </motion.div>
+                        ))}
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Camera</span>
-                        <span className="text-sm font-medium text-primary">4K Video</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Payload</span>
-                        <span className="text-sm font-medium text-primary">4kg</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Range</span>
-                        <span className="text-sm font-medium text-primary">15km</span>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Primary Applications</h4>
+                      <div className="space-y-2">
+                        {["Mine Operations & Underground Surveillance", "Oil & Gas Pipeline Monitoring", "Power Plant Asset Protection", "Farmland Operations & Agriculture"].map((useCase, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-terra-steel-blue rounded-full" />
+                            <span className="text-sm text-muted-foreground">{useCase}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Applications</h4>
-                    <div className="space-y-2">
-                      {["Mine Operations", "Oil & Gas Pipeline", "Power Plant Security", "Hazardous Environments"].map((feature, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.6 + index * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                          />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
-                        </motion.div>
-                      ))}
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Technical Specifications</h4>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Frame Material</span>
+                          <span className="text-sm font-medium text-primary">3K Carbon Fiber</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Protection Level</span>
+                          <span className="text-sm font-medium text-primary">IP54</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Camera System</span>
+                          <span className="text-sm font-medium text-primary">48 MP / 4K 60fps</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Payload Capacity</span>
+                          <span className="text-sm font-medium text-primary">4 kg</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Operational Range</span>
+                          <span className="text-sm font-medium text-primary">15-50 km</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Battery Life</span>
+                          <span className="text-sm font-medium text-primary">34 minutes</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Connectivity & Security</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Connectivity</span>
+                          <span className="text-sm font-medium text-primary">Wi-Fi 2.4/5.8GHz</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Bluetooth</span>
+                          <span className="text-sm font-medium text-primary">5.0</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Security</span>
+                          <span className="text-sm font-medium text-primary">AES-256 Encryption</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Charging Time</span>
+                          <span className="text-sm font-medium text-primary">90 minutes</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1540,74 +1721,120 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <div className="space-y-8">
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    🗼
-                  </motion.div>
-                  <div>
-                    <h3 className="text-4xl font-bold text-foreground">Kallon Tower</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white text-xs md:text-sm font-medium">
-                      <motion.div
-                        className="w-2 h-2 bg-white rounded-full"
-                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      AI-Powered Sentry System
-                    </div>
+                <div>
+                  <h3 className="text-4xl font-bold text-foreground mb-4">Kallon Tower</h3>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white text-xs md:text-sm font-medium">
+                    <motion.div
+                      className="w-2 h-2 bg-white rounded-full"
+                      animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    AI-Powered Sentry System
                   </div>
                 </div>
 
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Solar-powered, AI-enabled sentry tower with 24/7 surveillance and multi-tower coordination capabilities. 
-                  Detects and tracks threats up to 3km away with advanced edge AI processing.
+                  Solar-powered, AI-enabled sentry tower that leverages ArtemisOS to detect and track threats up to 3km away. 
+                  With AI-enabled edge processing, 360-degree pan capability, and a variety of sensors, Kallon brings 
+                  increased security to borders, mines, oil pipelines, and other critical infrastructure.
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Specifications</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Detection Range</span>
-                        <span className="text-sm font-medium text-primary">3km</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Key Capabilities</h4>
+                      <div className="space-y-3">
+                        {[
+                          "24/7 AI-Powered Surveillance & Monitoring",
+                          "Multi-Tower Coordination & Networked Intelligence", 
+                          "Self-Sustaining Solar Power & Battery Backup",
+                          "Edge AI Processing & Real-Time Analysis",
+                          "360-Degree Pan Capability",
+                          "Continuous Operation & Uninterrupted Surveillance"
+                        ].map((feature, index) => (
+                          <motion.div
+                            key={index}
+                            className="flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 1.8 + index * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.div
+                              className="w-2 h-2 bg-primary rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                            />
+                            <span className="text-sm text-muted-foreground">{feature}</span>
+                          </motion.div>
+                        ))}
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Power</span>
-                        <span className="text-sm font-medium text-primary">Solar + Battery</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Zoom</span>
-                        <span className="text-sm font-medium text-primary">30x Optical</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Weather</span>
-                        <span className="text-sm font-medium text-primary">IP67</span>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Primary Applications</h4>
+                      <div className="space-y-2">
+                        {["Border Surveillance & Perimeter Monitoring", "Infrastructure Protection & Asset Security", "Oil & Gas Pipeline Monitoring", "Public Safety & Urban Security"].map((useCase, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-terra-steel-blue rounded-full" />
+                            <span className="text-sm text-muted-foreground">{useCase}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-foreground">Features</h4>
-                    <div className="space-y-2">
-                      {["24/7 AI Surveillance", "Multi-Tower Coordination", "Self-Sustaining Power", "Edge AI Processing"].map((feature, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.8 + index * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                          />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
-                        </motion.div>
-                      ))}
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Technical Specifications</h4>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Material</span>
+                          <span className="text-sm font-medium text-primary">Reinforced Composite</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Height</span>
+                          <span className="text-sm font-medium text-primary">6m (Extendable)</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Detection Range</span>
+                          <span className="text-sm font-medium text-primary">3km</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Camera System</span>
+                          <span className="text-sm font-medium text-primary">Multi-Sensor EO/IR</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Zoom Capability</span>
+                          <span className="text-sm font-medium text-primary">30x Optical / 12x Digital</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">Weather Resistance</span>
+                          <span className="text-sm font-medium text-primary">IP67 (-30°C to +55°C)</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4">Power & Connectivity</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Power Supply</span>
+                          <span className="text-sm font-medium text-primary">Solar + LiFePO4 Battery</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Connectivity</span>
+                          <span className="text-sm font-medium text-primary">LTE/5G + Wi-Fi + Satellite</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Security</span>
+                          <span className="text-sm font-medium text-primary">AES-256 Encryption</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">AI Capabilities</span>
+                          <span className="text-sm font-medium text-primary">Object Detection & Tracking</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1634,41 +1861,6 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Explore Our Products</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.div>
-            </motion.button>
-          </motion.div>
         </div>
       </section>
 
@@ -1767,8 +1959,117 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              From concept to reality in 11 months - the largest drone manufacturing facility on the African continent, producing 20 Iroko drones daily with 80% local sourcing
+              From concept to reality in 11 months - the largest drone manufacturing facility on the African continent, producing 20 Iroko drones daily with 80% local sourcing, establishing Nigeria as Africa's premier defense manufacturing hub
             </motion.p>
+          </motion.div>
+
+          {/* Manufacturing Overview */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Manufacturing Story */}
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-3xl font-bold text-foreground mb-6">
+                    <span className="block">Revolutionizing African</span>
+                    <span className="block gradient-text">Manufacturing Excellence</span>
+                  </h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                    Terra Industries has achieved what many considered impossible - building Africa's largest drone manufacturing facility 
+                    in just 11 months. This remarkable achievement represents more than just industrial capacity; it's a testament to 
+                    African innovation, determination, and the vision of transforming Nigeria into a global drone producer.
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Our upgraded drone factory in Abuja stands as the cornerstone of our ambitious three-year expansion plan, 
+                    demonstrating that "Made in Africa" can compete globally while creating local economic opportunities 
+                    and protecting the continent's most critical infrastructure.
+                  </p>
+                </div>
+
+                {/* Key Achievements */}
+                <div className="space-y-6">
+                  <h4 className="text-xl font-semibold text-foreground">Manufacturing Achievements</h4>
+                  <div className="space-y-4">
+                    {[
+                      "Largest drone factory on the African continent",
+                      "20 Iroko drones per day production capacity", 
+                      "80% local component sourcing and manufacturing",
+                      "11-month journey from concept to operational factory",
+                      "Job creation and local economic development",
+                      "Enhanced capacity to protect Africa's critical resources"
+                    ].map((achievement, index) => (
+                      <motion.div
+                        key={index}
+                        className="flex items-center gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1 + index * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        <motion.div
+                          className="w-2 h-2 bg-primary rounded-full"
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                        />
+                        <span className="text-sm text-muted-foreground">{achievement}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Manufacturing Impact */}
+              <div className="space-y-8">
+                <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
+                  <h4 className="text-2xl font-bold text-foreground mb-4">Economic Impact</h4>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Local Job Creation</span>
+                      <span className="text-lg font-bold text-primary">Hundreds of Jobs</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Local Sourcing</span>
+                      <span className="text-lg font-bold text-primary">80%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Daily Production</span>
+                      <span className="text-lg font-bold text-primary">20 Drones</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Timeline</span>
+                      <span className="text-lg font-bold text-primary">11 Months</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/10 to-primary/10 border border-terra-steel-blue/20">
+                  <h4 className="text-2xl font-bold text-foreground mb-4">Strategic Positioning</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-terra-steel-blue rounded-full" />
+                      <span className="text-sm text-muted-foreground">"Made in Africa" competitive advantage</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-terra-steel-blue rounded-full" />
+                      <span className="text-sm text-muted-foreground">Enhanced infrastructure protection capacity</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-terra-steel-blue rounded-full" />
+                      <span className="text-sm text-muted-foreground">Global export potential</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-terra-steel-blue rounded-full" />
+                      <span className="text-sm text-muted-foreground">Technology transfer and knowledge sharing</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Manufacturing Journey Timeline */}
@@ -1857,80 +2158,6 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Manufacturing Stats */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {[
-              {
-                number: "20",
-                label: "Iroko Drones Per Day",
-                description: "Daily production capacity at full operation",
-                icon: "🏭",
-                color: "from-blue-500 to-cyan-600"
-              },
-              {
-                number: "80%",
-                label: "Local Component Sourcing",
-                description: "Made in Africa competitive advantage",
-                icon: "🇳🇬",
-                color: "from-green-500 to-emerald-600"
-              },
-              {
-                number: "11",
-                label: "Months Journey",
-                description: "From concept to operational factory",
-                icon: "⚡",
-                color: "from-yellow-500 to-orange-600"
-              }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="group relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                whileHover={{ y: -10, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Animated Border */}
-                <motion.div
-                  className="absolute inset-0 rounded-3xl"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(74, 144, 226, 0.2), transparent, rgba(74, 144, 226, 0.2))',
-                    padding: '2px'
-                  }}
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
-                </motion.div>
-
-                <div className="relative z-10 text-center">
-                  <motion.div
-                    className="text-4xl mb-4"
-                    whileHover={{ scale: 1.2, rotate: 10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {stat.icon}
-                  </motion.div>
-                  <motion.div
-                    className="text-4xl font-black text-primary mb-2"
-                    initial={{ scale: 0.8 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ delay: 1.8 + index * 0.2, duration: 0.5 }}
-                    viewport={{ once: true }}
-                  >
-                    {stat.number}
-                  </motion.div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">{stat.label}</h3>
-                  <p className="text-sm text-muted-foreground">{stat.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
 
 
           {/* Future Vision - Detailed Three-Year Expansion Plan */}
@@ -2126,95 +2353,82 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.4, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Explore Our Manufacturing</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.div>
-            </motion.button>
-          </motion.div>
         </div>
       </section>
 
-      {/* Infrastructure Protection Section */}
+      {/* Infrastructure Protection Section - Visual Marvel */}
       <section className="relative py-32 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
-        {/* Background Effects */}
+        {/* Dynamic Background Effects */}
         <div className="absolute inset-0">
-          {/* Security Grid Pattern */}
+          {/* Animated Security Grid */}
           <motion.div 
-            className="absolute inset-0 opacity-5"
+            className="absolute inset-0 opacity-10"
             style={{
               backgroundImage: `
-                linear-gradient(0deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
+                linear-gradient(0deg, rgba(74, 144, 226, 0.3) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(74, 144, 226, 0.3) 2px, transparent 2px)
               `,
-              backgroundSize: '100px 100px'
+              backgroundSize: '80px 80px'
             }}
             animate={{
-              backgroundPosition: ['0px 0px', '100px 100px']
+              backgroundPosition: ['0px 0px', '80px 80px']
             }}
             transition={{
-              duration: 50,
+              duration: 20,
               repeat: Infinity,
               ease: 'linear'
             }}
           />
           
-          {/* Security Particles */}
-          {generateParticlePositions(30).map((pos, i) => (
+          {/* Floating Security Particles */}
+          {generateParticlePositions(25).map((pos, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-primary rounded-full"
+              className="absolute w-2 h-2 bg-primary rounded-full"
               style={{
                 left: `${pos.left}%`,
                 top: `${pos.top}%`,
+                boxShadow: '0 0 20px rgba(74, 144, 226, 0.5)'
               }}
               animate={{
-                y: [0, -100, 0],
+                y: [0, -150, 0],
                 opacity: [0, 1, 0],
-                scale: [0, 1, 0]
+                scale: [0, 1.5, 0],
+                rotate: [0, 360, 0]
               }}
               transition={{
-                duration: pos.duration + 3, // Add 3 to make it longer for this section
+                duration: pos.duration + 4,
                 repeat: Infinity,
-                delay: pos.delay * 2 // Double the delay for this section
+                delay: pos.delay * 1.5
               }}
             />
           ))}
+
+          {/* Security Scan Lines */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(74, 144, 226, 0.1) 50%, transparent 100%)',
+              width: '2px',
+              height: '100%',
+              left: '20%'
+            }}
+            animate={{
+              x: ['0%', '100%', '0%'],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
         </div>
 
         <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -2222,277 +2436,326 @@ export default function Home() {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-8"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm mb-12"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="w-2 h-2 bg-primary rounded-full"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                className="w-3 h-3 bg-primary rounded-full"
+                animate={{ 
+                  scale: [1, 1.5, 1], 
+                  opacity: [1, 0.5, 1],
+                  boxShadow: ['0 0 0px rgba(74, 144, 226, 0)', '0 0 20px rgba(74, 144, 226, 0.8)', '0 0 0px rgba(74, 144, 226, 0)']
+                }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm font-medium text-primary">Infrastructure Protection</span>
+              <span className="text-lg font-semibold text-primary">Infrastructure Protection</span>
             </motion.div>
 
             {/* Main Headline */}
             <motion.h2
-              className="text-5xl md:text-7xl font-black tracking-tighter font-display text-foreground mb-8"
+              className="text-6xl md:text-8xl font-black tracking-tighter font-display text-foreground mb-12"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
               viewport={{ once: true }}
               style={{
-                textShadow: '0 0 40px rgba(74, 144, 226, 0.2)'
+                textShadow: '0 0 60px rgba(74, 144, 226, 0.3)'
               }}
             >
-              <span className="block">$13+ Billion in</span>
-              <span className="block gradient-text glow-text">Critical Infrastructure Protected</span>
+              <motion.span 
+                className="block"
+                animate={{ 
+                  textShadow: [
+                    '0 0 20px rgba(74, 144, 226, 0.3)',
+                    '0 0 40px rgba(74, 144, 226, 0.6)',
+                    '0 0 20px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                $13+ Billion in
+              </motion.span>
+              <motion.span 
+                className="block gradient-text glow-text"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                Critical Infrastructure Protected
+              </motion.span>
             </motion.h2>
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
+              className="text-2xl md:text-3xl text-muted-foreground max-w-7xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Real impact, real results - protecting Africa's most critical assets across multiple sectors
+              Real impact, real results - protecting Africa's most critical assets across multiple sectors with proven autonomous defense systems
             </motion.p>
           </motion.div>
 
-          {/* Impact Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            {[
-              {
-                value: "$13B+",
-                unit: "Infrastructure Protected",
-                description: "Total value of critical assets under our protection",
-                icon: "🛡️",
-                color: "from-blue-500 to-cyan-600",
-                glowColor: "rgba(59, 130, 246, 0.3)"
-              },
-              {
-                value: "$1.2M",
-                unit: "Largest Contract",
-                description: "Hydroelectric plant security contract with Nethawk Solutions",
-                icon: "⚡",
-                color: "from-yellow-500 to-orange-600",
-                glowColor: "rgba(245, 158, 11, 0.3)"
-              },
-              {
-                value: "4",
-                unit: "Power Plants",
-                description: "Major power facilities currently under protection",
-                icon: "🏭",
-                color: "from-green-500 to-emerald-600",
-                glowColor: "rgba(16, 185, 129, 0.3)"
-              }
-            ].map((stat, index) => (
+          {/* Impact Showcase - Visual Marvel */}
+          <motion.div
+            className="mb-24"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* $13B+ Infrastructure Protected */}
               <motion.div
-                key={index}
-                className="group relative"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.2, duration: 0.8 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 backdrop-blur-sm"
+                whileHover={{ y: -15, scale: 1.03 }}
+                transition={{ duration: 0.4 }}
               >
-                {/* Card Container */}
-                <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden">
-                  {/* Animated Border */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity
+                  }}
+                />
+                <div className="relative z-10 p-8">
                   <motion.div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${stat.glowColor}, transparent, ${stat.glowColor})`,
-                      padding: '2px'
+                    className="text-7xl font-black bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent mb-4"
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
+                    $13B+
                   </motion.div>
-
-                  {/* Content */}
-                  <div className="relative z-10 text-center">
-                    {/* Icon */}
-                    <motion.div
-                      className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-4xl"
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {stat.icon}
-                    </motion.div>
-
-                    {/* Value */}
-                    <motion.div
-                      className={`text-6xl md:text-7xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-4`}
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-                    >
-                      {stat.value}
-                    </motion.div>
-
-                    {/* Unit */}
-                    <div className="text-lg font-semibold text-foreground mb-2">
-                      {stat.unit}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {stat.description}
-                    </p>
-                  </div>
-
-                  {/* Hover Effects */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  <h3 className="text-2xl font-bold text-foreground mb-4">Infrastructure Protected</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Total value of critical assets under our protection across Africa, safeguarding the global economy
+                  </p>
                 </div>
               </motion.div>
-            ))}
-          </div>
 
-          {/* Real Case Studies */}
+              {/* $1.2M Largest Contract */}
+              <motion.div
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 backdrop-blur-sm"
+                whileHover={{ y: -15, scale: 1.03 }}
+                transition={{ duration: 0.4 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: 1
+                  }}
+                />
+                <div className="relative z-10 p-8">
+                  <motion.div
+                    className="text-7xl font-black bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text text-transparent mb-4"
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    $1.2M
+                  </motion.div>
+                  <h3 className="text-2xl font-bold text-foreground mb-4">Largest Contract</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Hydroelectric plant security contract with Nethawk Solutions, establishing recurring revenue
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* 4 Power Plants */}
+              <motion.div
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 backdrop-blur-sm"
+                whileHover={{ y: -15, scale: 1.03 }}
+                transition={{ duration: 0.4 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: 2
+                  }}
+                />
+                <div className="relative z-10 p-8">
+                  <motion.div
+                    className="text-7xl font-black bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent mb-4"
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                  >
+                    4
+                  </motion.div>
+                  <h3 className="text-2xl font-bold text-foreground mb-4">Power Plants</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Major power facilities currently under protection, our fastest-growing market segment
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Real Case Studies - Enhanced */}
           <motion.div
-            className="mb-20"
+            className="mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8 }}
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h3 className="text-4xl font-bold text-foreground mb-6">Real Case Studies</h3>
-              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
-                Actual infrastructure protection deployments across Africa with measurable results
+              <motion.h3 
+                className="text-5xl font-bold text-foreground mb-8"
+                animate={{
+                  textShadow: [
+                    '0 0 20px rgba(74, 144, 226, 0.3)',
+                    '0 0 40px rgba(74, 144, 226, 0.6)',
+                    '0 0 20px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Real Impact, Real Results
+              </motion.h3>
+              <p className="text-2xl text-muted-foreground leading-relaxed max-w-7xl mx-auto">
+                Our systems are actively protecting critical infrastructure across Africa, with proven results and measurable impact
               </p>
             </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            {/* Case Studies Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Hydroelectric Plant Security */}
               <motion.div
-                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.4, duration: 0.8 }}
-                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/15 to-cyan-500/15 border border-blue-500/40 backdrop-blur-sm"
+                whileHover={{ y: -20, scale: 1.02 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl">
-                    ⚡
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">Hydroelectric Plant Security</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-green-500 rounded-full" />
-                      $1.2M Contract
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Secured our largest contract to date, protecting two major hydroelectric power plants in Nigeria 
-                    with a comprehensive fleet of AI-powered drones and solar-powered sentry towers.
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5"
+                  animate={{
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity
+                  }}
+                />
+                <div className="relative z-10 p-10">
+                  <motion.div
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-500/20 text-blue-500 text-lg font-semibold mb-6"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.div
+                      className="w-3 h-3 bg-blue-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    $1.2M Contract
+                  </motion.div>
+                  <h4 className="text-3xl font-bold text-foreground mb-6">
+                    Hydroelectric Plant Security
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                    Our largest contract to date, protecting two major hydroelectric power plants in Nigeria. 
+                    Deployed a large fleet of drones and sentry towers for real-time threat detection and response.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">$1.2M</div>
-                      <div className="text-sm text-muted-foreground">Contract Value</div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Client</span>
+                      <span className="text-lg font-bold text-primary">Nethawk Solutions</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">2 Plants</div>
-                      <div className="text-sm text-muted-foreground">Protected</div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Technology</span>
+                      <span className="text-lg font-bold text-primary">AI-Powered Drones & Sentry Towers</span>
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5 className="font-semibold text-foreground">Key Features:</h5>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Large fleet of AI-powered drones</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Solar-powered sentry towers</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>ArtemisOS integration</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Recurring revenue model</span>
-                      </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Integration</span>
+                      <span className="text-lg font-bold text-primary">ArtemisOS Platform</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Revenue Model</span>
+                      <span className="text-lg font-bold text-primary">Annual Software Subscriptions</span>
                     </div>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Power Plant Network */}
+              {/* Power Infrastructure Protection */}
               <motion.div
-                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.6, duration: 0.8 }}
-                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500/15 to-emerald-500/15 border border-green-500/40 backdrop-blur-sm"
+                whileHover={{ y: -20, scale: 1.02 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl">
-                    🔋
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">Power Plant Network</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
-                      Active Protection
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Currently protecting four power plants and several substations across Nigeria, 
-                    demonstrating our real-time threat detection and response capabilities.
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5"
+                  animate={{
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: 2
+                  }}
+                />
+                <div className="relative z-10 p-10">
+                  <motion.div
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-green-500/20 text-green-500 text-lg font-semibold mb-6"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.div
+                      className="w-3 h-3 bg-green-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                    />
+                    Power Industry Focus
+                  </motion.div>
+                  <h4 className="text-3xl font-bold text-foreground mb-6">
+                    Power Infrastructure Protection
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                    Four power plants and several substations currently under our protection, 
+                    demonstrating our growing presence in the power industry - our fastest-growing market segment.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">4 Plants</div>
-                      <div className="text-sm text-muted-foreground">Under Protection</div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Power Plants</span>
+                      <span className="text-lg font-bold text-primary">4 Facilities</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">Real-Time</div>
-                      <div className="text-sm text-muted-foreground">Monitoring</div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Substations</span>
+                      <span className="text-lg font-bold text-primary">Multiple Locations</span>
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5 className="font-semibold text-foreground">Protection Features:</h5>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Real-time threat detection</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Autonomous response systems</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Substation monitoring</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>ArtemisOS integration</span>
-                      </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Market Growth</span>
+                      <span className="text-lg font-bold text-primary">Fastest Growing Segment</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Technology</span>
+                      <span className="text-lg font-bold text-primary">ArtemisOS + Archer Drones</span>
                     </div>
                   </div>
                 </div>
@@ -2500,176 +2763,189 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Software Integration Success */}
+          {/* Future Vision - Enhanced */}
           <motion.div
-            className="mb-20"
+            className="text-center"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.8 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-6xl mx-auto text-center">
-              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
-                    🧠
-                  </div>
-                  <div>
-                    <h4 className="text-3xl font-bold text-foreground">First Software-Only Contract</h4>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-primary rounded-full" />
-                      ArtemisOS Integration
-                    </div>
-                  </div>
-                </div>
-                
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Successfully secured our first software-only contract to integrate ArtemisOS with existing surveillance systems 
-                  at Aba Power ring fence and other assets, demonstrating growing recognition of our software capabilities.
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">Software-Only</div>
-                    <div className="text-sm text-muted-foreground">First Contract Type</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">Aba Power</div>
-                    <div className="text-sm text-muted-foreground">Client</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">Enhanced</div>
-                    <div className="text-sm text-muted-foreground">Autonomy</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Future Vision */}
-          <motion.div
-            className="text-center mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="max-w-6xl mx-auto">
-              <h3 className="text-4xl font-bold text-foreground mb-6">$1 Trillion Protection Goal</h3>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-                Our five-year vision is to protect up to $1 trillion in critical assets across emerging markets, 
-                establishing Terra Industries as the global leader in infrastructure security.
-              </p>
+            <div className="max-w-7xl mx-auto">
+              <motion.h3 
+                className="text-6xl font-bold text-foreground mb-12"
+                animate={{
+                  textShadow: [
+                    '0 0 30px rgba(74, 144, 226, 0.3)',
+                    '0 0 60px rgba(74, 144, 226, 0.6)',
+                    '0 0 30px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                <span className="block">Protecting $1 Trillion in</span>
+                <span className="block gradient-text">Emerging Markets</span>
+              </motion.h3>
+              <motion.p 
+                className="text-2xl text-muted-foreground leading-relaxed mb-16"
+                animate={{
+                  opacity: [0.8, 1, 0.8]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Our five-year goal is to protect up to $1 trillion in critical assets across emerging markets, 
+                accelerating Africa's industrialization efforts and safeguarding the global economy.
+              </motion.p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
-                  <h4 className="text-xl font-bold text-foreground mb-4">Current Achievement</h4>
-                  <p className="text-muted-foreground">
-                    Successfully protecting $13+ billion in critical infrastructure across multiple African countries.
-                  </p>
-                </div>
-                <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
-                  <h4 className="text-xl font-bold text-foreground mb-4">Future Vision</h4>
-                  <p className="text-muted-foreground">
-                    Expanding to protect $1 trillion in critical assets across emerging markets globally.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-5xl font-black text-primary mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    $1T
+                  </motion.div>
+                  <div className="text-xl font-bold text-foreground mb-2">Five-Year Protection Goal</div>
+                  <div className="text-muted-foreground">Critical assets across emerging markets</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-5xl font-black text-terra-steel-blue mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    Global
+                  </motion.div>
+                  <div className="text-xl font-bold text-foreground mb-2">Emerging Markets Focus</div>
+                  <div className="text-muted-foreground">Expanding beyond Africa</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-5xl font-black text-primary mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                  >
+                    Industrialization
+                  </motion.div>
+                  <div className="text-xl font-bold text-foreground mb-2">Accelerating Africa's Growth</div>
+                  <div className="text-muted-foreground">Transforming the continent</div>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
-
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Secure Your Infrastructure</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.div>
-            </motion.button>
           </motion.div>
         </div>
       </section>
 
-      {/* Technology Innovation Section */}
+      {/* Technology Innovation Section - Visual Marvel */}
       <section className="relative py-32 bg-gradient-to-b from-charcoal via-background to-charcoal overflow-hidden">
-        {/* Background Effects */}
+        {/* Dynamic Background Effects */}
         <div className="absolute inset-0">
-          {/* AI Circuit Pattern */}
+          {/* Animated AI Circuit Pattern */}
           <motion.div 
-            className="absolute inset-0 opacity-5"
+            className="absolute inset-0 opacity-15"
             style={{
               backgroundImage: `
-                linear-gradient(45deg, rgba(74, 144, 226, 0.1) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(74, 144, 226, 0.1) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(74, 144, 226, 0.1) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(74, 144, 226, 0.1) 75%)
+                linear-gradient(45deg, rgba(74, 144, 226, 0.4) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(74, 144, 226, 0.4) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(74, 144, 226, 0.4) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(74, 144, 226, 0.4) 75%)
               `,
-              backgroundSize: '60px 60px',
-              backgroundPosition: '0 0, 0 30px, 30px -30px, -30px 0px'
+              backgroundSize: '80px 80px',
+              backgroundPosition: '0 0, 0 40px, 40px -40px, -40px 0px'
             }}
             animate={{
-              backgroundPosition: ['0 0, 0 30px, 30px -30px, -30px 0px', '60px 60px, 60px 90px, 90px 30px, 30px 60px']
+              backgroundPosition: ['0 0, 0 40px, 40px -40px, -40px 0px', '80px 80px, 80px 120px, 120px 40px, 40px 80px']
             }}
             transition={{
-              duration: 35,
+              duration: 25,
               repeat: Infinity,
               ease: 'linear'
             }}
           />
           
-          {/* AI Particles */}
-          {generateParticlePositions(20).map((pos, i) => (
+          {/* Floating AI Particles */}
+          {generateParticlePositions(30).map((pos, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-primary rounded-full"
+              className="absolute w-2 h-2 bg-primary rounded-full"
               style={{
                 left: `${pos.left}%`,
                 top: `${pos.top}%`,
+                boxShadow: '0 0 25px rgba(74, 144, 226, 0.6)'
               }}
               animate={{
-                y: [0, -60, 0],
+                y: [0, -120, 0],
                 opacity: [0, 1, 0],
-                scale: [0, 1, 0]
+                scale: [0, 1.8, 0],
+                rotate: [0, 180, 360]
               }}
               transition={{
-                duration: pos.duration + 1, // Add 1 to make it longer for this section
+                duration: pos.duration + 3,
                 repeat: Infinity,
-                delay: pos.delay
+                delay: pos.delay * 1.2
               }}
             />
           ))}
+
+          {/* AI Data Streams */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(74, 144, 226, 0.1) 50%, transparent 100%)',
+              width: '3px',
+              height: '100%',
+              left: '15%'
+            }}
+            animate={{
+              x: ['0%', '100%', '0%'],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(74, 144, 226, 0.1) 50%, transparent 100%)',
+              width: '3px',
+              height: '100%',
+              left: '85%'
+            }}
+            animate={{
+              x: ['0%', '-100%', '0%'],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: 3
+            }}
+          />
         </div>
 
         <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -2677,120 +2953,133 @@ export default function Home() {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-8"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm mb-12"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="w-2 h-2 bg-primary rounded-full"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                className="w-3 h-3 bg-primary rounded-full"
+                animate={{ 
+                  scale: [1, 1.5, 1], 
+                  opacity: [1, 0.5, 1],
+                  boxShadow: ['0 0 0px rgba(74, 144, 226, 0)', '0 0 25px rgba(74, 144, 226, 0.8)', '0 0 0px rgba(74, 144, 226, 0)']
+                }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm font-medium text-primary">Technology Innovation</span>
+              <span className="text-lg font-semibold text-primary">Technology Innovation</span>
             </motion.div>
 
             {/* Main Headline */}
             <motion.h2
-              className="text-5xl md:text-7xl font-black tracking-tighter font-display text-foreground mb-8"
+              className="text-6xl md:text-8xl font-black tracking-tighter font-display text-foreground mb-12"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
               viewport={{ once: true }}
               style={{
-                textShadow: '0 0 40px rgba(74, 144, 226, 0.2)'
+                textShadow: '0 0 60px rgba(74, 144, 226, 0.3)'
               }}
             >
-              <span className="block">ArtemisOS in</span>
-              <span className="block gradient-text glow-text">Real-Time Action</span>
+              <motion.span 
+                className="block"
+                animate={{ 
+                  textShadow: [
+                    '0 0 20px rgba(74, 144, 226, 0.3)',
+                    '0 0 40px rgba(74, 144, 226, 0.6)',
+                    '0 0 20px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                ArtemisOS in
+              </motion.span>
+              <motion.span 
+                className="block gradient-text glow-text"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                Real-Time Action
+              </motion.span>
             </motion.h2>
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
+              className="text-2xl md:text-3xl text-muted-foreground max-w-7xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              AI-powered threat detection, autonomous mission planning, and fleet coordination in real-time
+              AI-powered threat detection, autonomous mission planning, and fleet coordination in real-time across critical infrastructure
             </motion.p>
           </motion.div>
 
-          {/* Real Technology Achievements */}
+          {/* Technology Showcase - Visual Marvel */}
           <motion.div
-            className="mb-20"
+            className="mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h3 className="text-4xl font-bold text-foreground mb-6">Real Technology Achievements</h3>
-              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
-                Actual demonstrations and deployments of ArtemisOS across critical infrastructure
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Real-Time Capabilities Demo */}
               <motion.div
-                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/30 backdrop-blur-sm"
+                whileHover={{ y: -20, scale: 1.02 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 flex items-center justify-center text-3xl">
-                    🧠
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">ArtemisOS Real-Time Demo</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-500 text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-purple-500 rounded-full" />
-                      Live Demonstration
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-indigo-500/10"
+                  animate={{
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity
+                  }}
+                />
+                <div className="relative z-10 p-10">
+                  <motion.div
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-purple-500/20 text-purple-500 text-lg font-semibold mb-6"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.div
+                      className="w-3 h-3 bg-purple-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    Live Demonstration
+                  </motion.div>
+                  <h4 className="text-3xl font-bold text-foreground mb-6">
+                    ArtemisOS Real-Time Demo
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                     Successfully showcased ArtemisOS real-time capabilities, demonstrating advanced AI-powered threat detection 
                     and autonomous mission planning with four power plants and several substations under active protection.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">4 Plants</div>
-                      <div className="text-sm text-muted-foreground">Under Protection</div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20">
+                      <span className="text-muted-foreground">Power Plants</span>
+                      <span className="text-lg font-bold text-primary">4 Under Protection</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">Real-Time</div>
-                      <div className="text-sm text-muted-foreground">AI Processing</div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20">
+                      <span className="text-muted-foreground">Processing</span>
+                      <span className="text-lg font-bold text-primary">Real-Time AI</span>
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5 className="font-semibold text-foreground">Demonstrated Capabilities:</h5>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Advanced AI-powered threat detection</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Autonomous mission planning</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Archer drone integration</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Power industry focus</span>
-                      </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20">
+                      <span className="text-muted-foreground">Integration</span>
+                      <span className="text-lg font-bold text-primary">Archer Drones</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20">
+                      <span className="text-muted-foreground">Market</span>
+                      <span className="text-lg font-bold text-primary">Fastest Growing</span>
                     </div>
                   </div>
                 </div>
@@ -2798,61 +3087,57 @@ export default function Home() {
 
               {/* Software-Only Contract Success */}
               <motion.div
-                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 backdrop-blur-sm"
+                whileHover={{ y: -20, scale: 1.02 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl">
-                    💻
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">Software-Only Contract</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-green-500 rounded-full" />
-                      Market Recognition
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10"
+                  animate={{
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: 2
+                  }}
+                />
+                <div className="relative z-10 p-10">
+                  <motion.div
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-green-500/20 text-green-500 text-lg font-semibold mb-6"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.div
+                      className="w-3 h-3 bg-green-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                    />
+                    Market Recognition
+                  </motion.div>
+                  <h4 className="text-3xl font-bold text-foreground mb-6">
+                    Software-Only Contract
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                     Secured our first software-only contract to integrate ArtemisOS with existing surveillance systems 
                     at Aba Power ring fence, demonstrating growing recognition of our software capabilities.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">Aba Power</div>
-                      <div className="text-sm text-muted-foreground">Client</div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Client</span>
+                      <span className="text-lg font-bold text-primary">Aba Power</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">Enhanced</div>
-                      <div className="text-sm text-muted-foreground">Autonomy</div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Contract Type</span>
+                      <span className="text-lg font-bold text-primary">Software-Only</span>
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5 className="font-semibold text-foreground">Integration Features:</h5>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Real-time threat detection</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Enhanced autonomy</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>System enhancement</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Revenue diversification</span>
-                      </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Technology</span>
+                      <span className="text-lg font-bold text-primary">Real-Time Detection</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Impact</span>
+                      <span className="text-lg font-bold text-primary">Enhanced Autonomy</span>
                     </div>
                   </div>
                 </div>
@@ -2860,299 +3145,306 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Technology Innovation Focus */}
+          {/* Technology Innovation Focus - Enhanced */}
           <motion.div
-            className="mb-20"
+            className="mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-6xl mx-auto text-center">
-              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
-                    🚀
-                  </div>
-                  <div>
-                    <h4 className="text-3xl font-bold text-foreground">Technology & AI Innovation Focus</h4>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-primary rounded-full" />
-                      Cutting-Edge Development
-                    </div>
-                  </div>
-                </div>
-                
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Terra Industries is committed to technology and AI innovation, focusing on cutting-edge autonomous defense systems 
-                  with advanced research and development capabilities.
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-16">
+                <motion.h3 
+                  className="text-5xl font-bold text-foreground mb-8"
+                  animate={{
+                    textShadow: [
+                      '0 0 20px rgba(74, 144, 226, 0.3)',
+                      '0 0 40px rgba(74, 144, 226, 0.6)',
+                      '0 0 20px rgba(74, 144, 226, 0.3)'
+                    ]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  Technology & AI Innovation Focus
+                </motion.h3>
+                <p className="text-2xl text-muted-foreground leading-relaxed max-w-6xl mx-auto">
+                  Terra Industries is committed to cutting-edge autonomous defense systems, focusing on AI and technology innovation 
+                  to advance defense technology and maintain technical leadership in the industry.
                 </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-primary mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    AI Innovation
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Advanced AI Systems</div>
+                  <div className="text-muted-foreground">Cutting-edge artificial intelligence</div>
+                </motion.div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">AI Innovation</div>
-                    <div className="text-sm text-muted-foreground">Advanced AI algorithms</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">Autonomous Systems</div>
-                    <div className="text-sm text-muted-foreground">Self-operating defense</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">R&D Focus</div>
-                    <div className="text-sm text-muted-foreground">Research & development</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-card/30">
-                    <div className="text-2xl font-bold text-primary">Technical Leadership</div>
-                    <div className="text-sm text-muted-foreground">Industry expertise</div>
-                  </div>
-                </div>
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-terra-steel-blue mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    Autonomous
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Self-Operating Technology</div>
+                  <div className="text-muted-foreground">Independent system operations</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-primary mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                  >
+                    Defense
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Military-Grade Solutions</div>
+                  <div className="text-muted-foreground">Advanced defense technology</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-terra-steel-blue mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+                  >
+                    R&D Focus
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Research & Development</div>
+                  <div className="text-muted-foreground">Continuous innovation</div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
 
-          {/* ArtemisOS Core Features */}
+          {/* ArtemisOS Core Features - Enhanced */}
           <motion.div
-            className="mb-20"
+            className="text-center"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h3 className="text-4xl font-bold text-foreground mb-6">ArtemisOS Core Features</h3>
-              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
-                Advanced AI-powered capabilities for autonomous defense systems
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Autonomous Mission Planning",
-                  description: "Advanced AI algorithms for autonomous decision-making with intelligent route optimization and obstacle avoidance",
-                  icon: "🧠",
-                  features: ["Decision-Making Capabilities", "Path Planning", "Mission Optimization", "Risk Assessment"],
-                  color: "from-purple-500 to-indigo-600",
-                  glowColor: "rgba(147, 51, 234, 0.3)"
-                },
-                {
-                  title: "AI Detection & Tracking",
-                  description: "AI-powered detection and classification of targets with multi-object tracking and behavioral analysis",
-                  icon: "🎯",
-                  features: ["Target Identification", "Multi-Object Tracking", "Behavioral Analysis", "Threat Assessment"],
-                  color: "from-blue-500 to-cyan-600",
-                  glowColor: "rgba(59, 130, 246, 0.3)"
-                },
-                {
-                  title: "Fleet Management",
-                  description: "Coordination of multiple unmanned systems with swarm operations and resource allocation",
-                  icon: "🚁",
-                  features: ["Cluster Management", "Swarm Operations", "Resource Allocation", "Performance Monitoring"],
-                  color: "from-green-500 to-emerald-600",
-                  glowColor: "rgba(16, 185, 129, 0.3)"
-                },
-                {
-                  title: "Real-Time Data Analysis",
-                  description: "Comprehensive collection and instant processing of large data volumes with pattern recognition",
-                  icon: "📊",
-                  features: ["Data Collection", "Real-Time Analysis", "Pattern Recognition", "Predictive Analytics"],
-                  color: "from-orange-500 to-red-600",
-                  glowColor: "rgba(249, 115, 22, 0.3)"
-                },
-                {
-                  title: "AES-256 Encryption",
-                  description: "Military-grade encryption ensuring secure communication and data protection across all systems",
-                  icon: "🔒",
-                  features: ["End-to-End Encryption", "Secure Key Management", "Data Protection", "Compliance Standards"],
-                  color: "from-indigo-500 to-purple-600",
-                  glowColor: "rgba(99, 102, 241, 0.3)"
-                },
-                {
-                  title: "Artemis Cloud Integration",
-                  description: "Scalable cloud infrastructure for data storage, real-time analysis, and advanced analytics",
-                  icon: "☁️",
-                  features: ["Data Storage", "Real-Time Analysis", "Historical Data", "Scalable Infrastructure"],
-                  color: "from-cyan-500 to-blue-600",
-                  glowColor: "rgba(6, 182, 212, 0.3)"
-                }
-              ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.8 + index * 0.2, duration: 0.8 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                >
-                  {/* Card Container */}
-                  <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden h-full">
-                    {/* Animated Border */}
-                    <motion.div
-                      className="absolute inset-0 rounded-3xl"
-                      style={{
-                        background: `linear-gradient(135deg, ${feature.glowColor}, transparent, ${feature.glowColor})`,
-                        padding: '2px'
-                      }}
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
-                    </motion.div>
-
-                    {/* Content */}
-                    <div className="relative z-10 h-full flex flex-col">
-                      {/* Icon and Title */}
-                      <div className="flex items-center gap-4 mb-6">
-                        <motion.div
-                          className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          {feature.icon}
-                        </motion.div>
-                        <div>
-                          <h3 className="text-xl font-bold text-foreground">{feature.title}</h3>
-                          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${feature.color} text-white text-xs font-medium`}>
-                            <motion.div
-                              className="w-1.5 h-1.5 bg-white rounded-full"
-                              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                              transition={{ duration: 2, repeat: Infinity }}
-                            />
-                            AI-Powered
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
-                        {feature.description}
-                      </p>
-
-                      {/* Features */}
-                      <div className="space-y-2">
-                        {feature.features.map((item, featureIndex) => (
-                          <motion.div
-                            key={featureIndex}
-                            className="flex items-center gap-3 text-xs text-muted-foreground"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 2 + index * 0.2 + featureIndex * 0.1 }}
-                            viewport={{ once: true }}
-                          >
-                            <motion.div
-                              className="w-1.5 h-1.5 bg-primary rounded-full"
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 2, repeat: Infinity, delay: featureIndex * 0.2 }}
-                            />
-                            {item}
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Hover Effects */}
-                    <motion.div
-                      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Experience ArtemisOS</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+            <div className="max-w-7xl mx-auto">
+              <motion.h3 
+                className="text-6xl font-bold text-foreground mb-12"
+                animate={{
+                  textShadow: [
+                    '0 0 30px rgba(74, 144, 226, 0.3)',
+                    '0 0 60px rgba(74, 144, 226, 0.6)',
+                    '0 0 30px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
               >
-                →
-              </motion.div>
-            </motion.button>
+                <span className="block">ArtemisOS Core</span>
+                <span className="block gradient-text">Features</span>
+              </motion.h3>
+              <motion.p 
+                className="text-2xl text-muted-foreground leading-relaxed mb-16"
+                animate={{
+                  opacity: [0.8, 1, 0.8]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Advanced AI-powered operating system capabilities for autonomous defense operations
+              </motion.p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <motion.div
+                  className="p-10 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -20, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.h4 
+                    className="text-2xl font-bold text-foreground mb-6"
+                    animate={{
+                      textShadow: [
+                        '0 0 10px rgba(74, 144, 226, 0.3)',
+                        '0 0 20px rgba(74, 144, 226, 0.6)',
+                        '0 0 10px rgba(74, 144, 226, 0.3)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    Autonomous Mission Planning
+                  </motion.h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    AI-driven decision making and mission execution without human intervention, 
+                    enabling fully autonomous defense operations across multiple scenarios.
+                  </p>
+                </motion.div>
+                
+                <motion.div
+                  className="p-10 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -20, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.h4 
+                    className="text-2xl font-bold text-foreground mb-6"
+                    animate={{
+                      textShadow: [
+                        '0 0 10px rgba(74, 144, 226, 0.3)',
+                        '0 0 20px rgba(74, 144, 226, 0.6)',
+                        '0 0 10px rgba(74, 144, 226, 0.3)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                  >
+                    Fleet Coordination
+                  </motion.h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Seamless coordination of multiple drones and systems for comprehensive coverage, 
+                    ensuring optimal resource allocation and mission effectiveness.
+                  </p>
+                </motion.div>
+                
+                <motion.div
+                  className="p-10 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -20, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.h4 
+                    className="text-2xl font-bold text-foreground mb-6"
+                    animate={{
+                      textShadow: [
+                        '0 0 10px rgba(74, 144, 226, 0.3)',
+                        '0 0 20px rgba(74, 144, 226, 0.6)',
+                        '0 0 10px rgba(74, 144, 226, 0.3)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, delay: 2 }}
+                  >
+                    AES-256 Encryption
+                  </motion.h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Military-grade security and cybersecurity for all communications and data, 
+                    ensuring maximum protection of sensitive defense operations.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* International Expansion Section */}
+      {/* International Expansion Section - Visual Marvel */}
       <section className="relative py-32 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
-        {/* Background Effects */}
+        {/* Dynamic Background Effects */}
         <div className="absolute inset-0">
-          {/* Global Grid Pattern */}
+          {/* Animated Global Grid */}
           <motion.div 
-            className="absolute inset-0 opacity-5"
+            className="absolute inset-0 opacity-15"
             style={{
               backgroundImage: `
-                linear-gradient(0deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
+                linear-gradient(0deg, rgba(74, 144, 226, 0.3) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(74, 144, 226, 0.3) 2px, transparent 2px)
               `,
-              backgroundSize: '120px 120px'
+              backgroundSize: '100px 100px'
             }}
             animate={{
-              backgroundPosition: ['0px 0px', '120px 120px']
+              backgroundPosition: ['0px 0px', '100px 100px']
             }}
             transition={{
-              duration: 60,
+              duration: 30,
               repeat: Infinity,
               ease: 'linear'
             }}
           />
           
-          {/* Global Particles */}
-          {generateParticlePositions(35).map((pos, i) => (
+          {/* Floating Global Particles */}
+          {generateParticlePositions(40).map((pos, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-primary rounded-full"
+              className="absolute w-2 h-2 bg-primary rounded-full"
               style={{
                 left: `${pos.left}%`,
                 top: `${pos.top}%`,
+                boxShadow: '0 0 30px rgba(74, 144, 226, 0.7)'
               }}
               animate={{
-                y: [0, -120, 0],
+                y: [0, -150, 0],
                 opacity: [0, 1, 0],
-                scale: [0, 1, 0]
+                scale: [0, 2, 0],
+                rotate: [0, 360, 0]
               }}
               transition={{
-                duration: pos.duration + 5, // Add 5 to make it longer for this section
+                duration: pos.duration + 5,
                 repeat: Infinity,
-                delay: pos.delay * 3 // Triple the delay for this section
+                delay: pos.delay * 2
               }}
             />
           ))}
+
+          {/* Global Connection Lines */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(45deg, transparent 0%, rgba(74, 144, 226, 0.1) 50%, transparent 100%)',
+              width: '4px',
+              height: '100%',
+              left: '25%'
+            }}
+            animate={{
+              x: ['0%', '100%', '0%'],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(-45deg, transparent 0%, rgba(74, 144, 226, 0.1) 50%, transparent 100%)',
+              width: '4px',
+              height: '100%',
+              left: '75%'
+            }}
+            animate={{
+              x: ['0%', '-100%', '0%'],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: 4
+            }}
+          />
         </div>
 
         <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -3160,179 +3452,193 @@ export default function Home() {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-8"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm mb-12"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="w-2 h-2 bg-primary rounded-full"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                className="w-3 h-3 bg-primary rounded-full"
+                animate={{ 
+                  scale: [1, 1.5, 1], 
+                  opacity: [1, 0.5, 1],
+                  boxShadow: ['0 0 0px rgba(74, 144, 226, 0)', '0 0 25px rgba(74, 144, 226, 0.8)', '0 0 0px rgba(74, 144, 226, 0)']
+                }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm font-medium text-primary">International Expansion</span>
+              <span className="text-lg font-semibold text-primary">International Expansion</span>
             </motion.div>
 
             {/* Main Headline */}
             <motion.h2
-              className="text-5xl md:text-7xl font-black tracking-tighter font-display text-foreground mb-8"
+              className="text-6xl md:text-8xl font-black tracking-tighter font-display text-foreground mb-12"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
               viewport={{ once: true }}
               style={{
-                textShadow: '0 0 40px rgba(74, 144, 226, 0.2)'
+                textShadow: '0 0 60px rgba(74, 144, 226, 0.3)'
               }}
             >
-              <span className="block">From Nigeria to</span>
-              <span className="block gradient-text glow-text">the World</span>
+              <motion.span 
+                className="block"
+                animate={{ 
+                  textShadow: [
+                    '0 0 20px rgba(74, 144, 226, 0.3)',
+                    '0 0 40px rgba(74, 144, 226, 0.6)',
+                    '0 0 20px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                From Nigeria to
+              </motion.span>
+              <motion.span 
+                className="block gradient-text glow-text"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                the World
+              </motion.span>
             </motion.h2>
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
+              className="text-2xl md:text-3xl text-muted-foreground max-w-7xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Successfully exporting to South Africa and expanding across Africa with pan-African security solutions
+              Successfully exporting to South Africa and expanding across Africa with pan-African security solutions and global market penetration
             </motion.p>
           </motion.div>
 
-
-          {/* Real International Expansion Success */}
+          {/* International Success Showcase - Visual Marvel */}
           <motion.div
-            className="mb-20"
+            className="mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h3 className="text-4xl font-bold text-foreground mb-6">South Africa Export Success</h3>
-              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
-                First successful international expansion beyond Nigeria, marking a significant milestone in our pan-African market strategy
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* South Africa Success Story */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              {/* South Africa Export Success */}
               <motion.div
-                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 backdrop-blur-sm"
+                whileHover={{ y: -20, scale: 1.02 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl">
-                    🇿🇦
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">South Africa Export Success</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-green-500 rounded-full" />
-                      International Milestone
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10"
+                  animate={{
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity
+                  }}
+                />
+                <div className="relative z-10 p-10">
+                  <motion.div
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-green-500/20 text-green-500 text-lg font-semibold mb-6"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.div
+                      className="w-3 h-3 bg-green-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    International Milestone
+                  </motion.div>
+                  <h4 className="text-3xl font-bold text-foreground mb-6">
+                    South Africa Export Success
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                     Successfully announced export of drones to South Africa, marking our first international expansion 
                     and market penetration beyond Nigeria. This achievement represents a significant milestone in our 
-                    pan-African market strategy.
+                    pan-African market strategy and demonstrates our export capabilities.
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">First Export</div>
-                      <div className="text-sm text-muted-foreground">Beyond Nigeria</div>
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Market Entry</span>
+                      <span className="text-lg font-bold text-primary">First International</span>
                     </div>
-                    <div className="p-4 rounded-xl bg-card/30">
-                      <div className="text-lg font-bold text-primary">Pan-African</div>
-                      <div className="text-sm text-muted-foreground">Strategy</div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Strategy</span>
+                      <span className="text-lg font-bold text-primary">Pan-African Focus</span>
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5 className="font-semibold text-foreground">Key Achievements:</h5>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>International market entry</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Export capabilities demonstration</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Strategic milestone achievement</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Business development success</span>
-                      </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Capabilities</span>
+                      <span className="text-lg font-bold text-primary">Export Demonstration</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-green-500/10 border border-green-500/20">
+                      <span className="text-muted-foreground">Achievement</span>
+                      <span className="text-lg font-bold text-primary">Strategic Milestone</span>
                     </div>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Future Expansion Strategy */}
+              {/* Pan-African Strategy */}
               <motion.div
-                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 backdrop-blur-sm"
+                whileHover={{ y: -20, scale: 1.02 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl">
-                    🌍
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">Pan-African Strategy</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
-                      Continental Expansion
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10"
+                  animate={{
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: 2
+                  }}
+                />
+                <div className="relative z-10 p-10">
+                  <motion.div
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-500/20 text-blue-500 text-lg font-semibold mb-6"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.div
+                      className="w-3 h-3 bg-blue-500 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                    />
+                    Continental Expansion
+                  </motion.div>
+                  <h4 className="text-3xl font-bold text-foreground mb-6">
+                    Pan-African Strategy
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                     Building a network of drone factories across Africa with a three-year expansion plan, 
-                    targeting key markets for critical infrastructure protection and local manufacturing.
+                    targeting key markets for critical infrastructure protection and local manufacturing 
+                    to establish continental market leadership.
                   </p>
                   
-                  <div className="space-y-4">
-                    <h5 className="font-semibold text-foreground">Strategic Priorities:</h5>
-                    <div className="space-y-3">
-                      {[
-                        "Pan-African market leadership",
-                        "Network of drone factories across Africa",
-                        "Strategic alliances with global companies",
-                        "Additional African markets expansion"
-                      ].map((priority, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.4 + index * 0.1, duration: 0.6 }}
-                          viewport={{ once: true }}
-                        >
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                          />
-                          <span className="text-sm text-muted-foreground">{priority}</span>
-                        </motion.div>
-                      ))}
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Leadership</span>
+                      <span className="text-lg font-bold text-primary">Pan-African Market</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Manufacturing</span>
+                      <span className="text-lg font-bold text-primary">Network of Factories</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Alliances</span>
+                      <span className="text-lg font-bold text-primary">Global Partnerships</span>
+                    </div>
+                    <div className="flex justify-between items-center p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-muted-foreground">Expansion</span>
+                      <span className="text-lg font-bold text-primary">Additional Markets</span>
                     </div>
                   </div>
                 </div>
@@ -3340,108 +3646,230 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Global Vision & Goals */}
+          {/* Global Vision - Enhanced */}
           <motion.div
-            className="mb-20"
+            className="mb-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-6xl mx-auto text-center">
-              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
-                    🚀
-                  </div>
-                  <div>
-                    <h4 className="text-3xl font-bold text-foreground">Global Vision</h4>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-xs md:text-sm font-medium">
-                      <span className="w-2 h-2 bg-primary rounded-full" />
-                      $1 Trillion Protection Goal
-                    </div>
-                  </div>
-                </div>
-                
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-16">
+                <motion.h3 
+                  className="text-5xl font-bold text-foreground mb-8"
+                  animate={{
+                    textShadow: [
+                      '0 0 20px rgba(74, 144, 226, 0.3)',
+                      '0 0 40px rgba(74, 144, 226, 0.6)',
+                      '0 0 20px rgba(74, 144, 226, 0.3)'
+                    ]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  Global Vision & Goals
+                </motion.h3>
+                <p className="text-2xl text-muted-foreground leading-relaxed max-w-6xl mx-auto">
                   Our five-year vision is to protect up to $1 trillion in critical assets across emerging markets, 
                   establishing Terra Industries as the global leader in infrastructure security.
                 </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <motion.div
+                  className="p-10 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.h4 
+                    className="text-3xl font-bold text-foreground mb-6"
+                    animate={{
+                      textShadow: [
+                        '0 0 10px rgba(74, 144, 226, 0.3)',
+                        '0 0 20px rgba(74, 144, 226, 0.6)',
+                        '0 0 10px rgba(74, 144, 226, 0.3)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    Short-Term Goals (2025-2026)
+                  </motion.h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-primary/10">
+                      <motion.div
+                        className="w-2 h-2 bg-primary rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <span className="text-muted-foreground">Network of drone factories across Africa</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-primary/10">
+                      <motion.div
+                        className="w-2 h-2 bg-primary rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                      />
+                      <span className="text-muted-foreground">Additional African markets expansion</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-primary/10">
+                      <motion.div
+                        className="w-2 h-2 bg-primary rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                      />
+                      <span className="text-muted-foreground">Strategic alliances with global companies</span>
+                    </div>
+                  </div>
+                </motion.div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
-                    <h5 className="text-xl font-bold text-foreground mb-4">Short-Term Goals (2025-2026)</h5>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Network of drone factories across Africa</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Additional African markets expansion</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Strategic alliances with global companies</span>
-                      </div>
+                <motion.div
+                  className="p-10 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.h4 
+                    className="text-3xl font-bold text-foreground mb-6"
+                    animate={{
+                      textShadow: [
+                        '0 0 10px rgba(74, 144, 226, 0.3)',
+                        '0 0 20px rgba(74, 144, 226, 0.6)',
+                        '0 0 10px rgba(74, 144, 226, 0.3)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                  >
+                    Long-Term Vision (2026-2030)
+                  </motion.h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-terra-steel-blue/10">
+                      <motion.div
+                        className="w-2 h-2 bg-terra-steel-blue rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <span className="text-muted-foreground">Pan-African market leadership</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-terra-steel-blue/10">
+                      <motion.div
+                        className="w-2 h-2 bg-terra-steel-blue rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                      />
+                      <span className="text-muted-foreground">Global market penetration</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-terra-steel-blue/10">
+                      <motion.div
+                        className="w-2 h-2 bg-terra-steel-blue rounded-full"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                      />
+                      <span className="text-muted-foreground">$1 trillion in critical assets protection</span>
                     </div>
                   </div>
-                  <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
-                    <h5 className="text-xl font-bold text-foreground mb-4">Long-Term Vision (2026-2030)</h5>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Pan-African market leadership</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>Global market penetration</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-                        <span>$1 trillion in critical assets protection</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
 
-          {/* Bottom CTA */}
+          {/* Made in Africa Innovation - Enhanced */}
           <motion.div
-            className="text-center mt-20"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-center"
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2, duration: 0.8 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Join Our Global Expansion</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+            <div className="max-w-7xl mx-auto">
+              <motion.h3 
+                className="text-6xl font-bold text-foreground mb-12"
+                animate={{
+                  textShadow: [
+                    '0 0 30px rgba(74, 144, 226, 0.3)',
+                    '0 0 60px rgba(74, 144, 226, 0.6)',
+                    '0 0 30px rgba(74, 144, 226, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
               >
-                →
-              </motion.div>
-            </motion.button>
+                <span className="block">Made in Africa</span>
+                <span className="block gradient-text">Innovation</span>
+              </motion.h3>
+              <motion.p 
+                className="text-2xl text-muted-foreground leading-relaxed mb-16"
+                animate={{
+                  opacity: [0.8, 1, 0.8]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Local manufacturing capabilities and African innovation leadership in autonomous systems
+              </motion.p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-primary mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    Local
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Manufacturing</div>
+                  <div className="text-muted-foreground">Local production capabilities</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-terra-steel-blue mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    Innovation
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">African Leadership</div>
+                  <div className="text-muted-foreground">Technology sovereignty</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-primary mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                  >
+                    Economic
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Local Impact</div>
+                  <div className="text-muted-foreground">Economic development</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 backdrop-blur-sm"
+                  whileHover={{ y: -15, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className="text-4xl font-black text-terra-steel-blue mb-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+                  >
+                    Global
+                  </motion.div>
+                  <div className="text-lg font-bold text-foreground mb-2">Competitiveness</div>
+                  <div className="text-muted-foreground">International standards</div>
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
