@@ -9,7 +9,10 @@ import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { useState, useEffect } from "react"
 
 // Import Artemis sections
+import { ArtemisHeroSection } from "@/components/artemis/artemis-hero-section-v2"
+import { ArtemisIntelligenceSection } from "@/components/artemis/artemis-intelligence-section-v2"
 import { ArtemisCapabilitiesSection } from "@/components/artemis/artemis-capabilities-section-v2"
+import { ArtemisIntegrationSection } from "@/components/artemis/artemis-integration-section-v2"
 
 export default function ArtemisPage() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -35,26 +38,17 @@ export default function ArtemisPage() {
       <main className="min-h-screen bg-background text-foreground overflow-hidden">
         {isMobile ? <MobileHeader /> : <Header />}
 
-        {/* Basic Artemis Page - Ready for components */}
-        <section className="relative py-24 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
-          <div className="relative z-10 max-w-[80vw] mx-auto px-6">
-            <div className="text-center">
-              <h1 className="text-4xl md:text-6xl font-black tracking-tighter font-display text-foreground mb-8">
-                <span className="block">ArtemisOS</span>
-                <span className="block bg-gradient-to-r from-primary via-purple-500 to-green-400 bg-clip-text text-transparent">
-                  Central Intelligence
-                </span>
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-                The flagship AI-powered operating system serving as the central intelligence platform 
-                for all autonomous defense systems.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Artemis Hero Section */}
+        <ArtemisHeroSection />
+
+        {/* AI Intelligence Core */}
+        <ArtemisIntelligenceSection />
 
         {/* Core Capabilities */}
         <ArtemisCapabilitiesSection />
+
+        {/* System Integration */}
+        <ArtemisIntegrationSection />
 
         <Footer />
       </main>
