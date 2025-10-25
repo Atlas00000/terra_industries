@@ -3,13 +3,33 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { HeroBackground } from "@/components/hero-background"
+import { Loading } from "@/components/loading"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { useState, useEffect } from "react"
+import Image from "next/image"
+
+// Helper function to generate consistent particle positions
+const generateParticlePositions = (count: number) => {
+  const positions = [];
+  for (let i = 0; i < count; i++) {
+    // Use a simple hash of the index to generate consistent positions
+    const hash = (i * 2654435761) % 1000000;
+    positions.push({
+      left: (hash % 90) + 5, // 5-95% range
+      top: ((hash * 7) % 90) + 5, // 5-95% range
+      duration: 3 + (i % 3),
+      delay: (i % 4) * 0.5
+    });
+  }
+  return positions;
+};
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isLoaded, setIsLoaded] = useState(false)
+  const [showLoading, setShowLoading] = useState(true)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 300], [0, -50])
   const opacity = useTransform(scrollY, [0, 300], [1, 0])
@@ -19,14 +39,20 @@ export default function Home() {
     setIsLoaded(true)
   }, [])
 
+  const handleLoadingComplete = () => {
+    setShowLoading(false)
+  }
+
   // Auto-rotation effect
   useEffect(() => {
+    if (isPaused) return
+    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % 7)
-    }, 5000) // Change slide every 5 seconds
+    }, 8000) // Change slide every 8 seconds
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isPaused])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -47,6 +73,13 @@ export default function Home() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
+    setIsPaused(true)
+    // Resume auto-rotation after 10 seconds of inactivity
+    setTimeout(() => setIsPaused(false), 10000)
+  }
+
+  if (showLoading) {
+    return <Loading onComplete={handleLoadingComplete} />
   }
 
   return (
@@ -54,7 +87,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section - Dynamic Story Slideshow */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         {/* Dynamic Background */}
         <div className="absolute inset-0">
           <HeroBackground />
@@ -80,31 +113,31 @@ export default function Home() {
           }}
         />
 
-        {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0]
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2
-            }}
-          />
-        ))}
+          {/* Floating Particles */}
+          {generateParticlePositions(20).map((pos, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-primary rounded-full"
+              style={{
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0]
+              }}
+              transition={{
+                duration: pos.duration,
+                repeat: Infinity,
+                delay: pos.delay
+              }}
+            />
+          ))}
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6 w-full">
           {/* Story Slideshow Container */}
-          <div className="relative w-full h-[80vh] rounded-3xl overflow-hidden border border-border/20">
+          <div className="relative w-full h-[75vh] md:h-[80vh] rounded-3xl overflow-hidden border border-border/20">
             {/* Slide Navigation */}
             <div className="absolute top-6 left-6 right-6 z-20">
               <div className="flex justify-between items-center">
@@ -131,17 +164,20 @@ export default function Home() {
             <div className="relative h-full">
               {/* Slide 1: $13 Billion Infrastructure Protection */}
               <motion.div
-                className="absolute inset-0 flex flex-col"
+                className="absolute inset-0 flex flex-col cursor-pointer"
                 initial={{ opacity: 1 }}
                 animate={{ opacity: currentSlide === 0 ? 1 : 0 }}
                 transition={{ duration: 0.5 }}
+                onClick={() => goToSlide(0)}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/$13-Billion-Critical_Infrastructure.jpeg" 
@@ -153,10 +189,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -165,43 +201,36 @@ export default function Home() {
                       Major Milestone
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">$13+ Billion in</span>
                       <span className="block gradient-text">Critical Infrastructure</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       Our systems now protect over $13 billion worth of critical infrastructure across Africa, 
                       demonstrating significant market penetration and impact in safeguarding the global economy.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">$13B+</div>
-                        <div className="text-sm text-white/80">Infrastructure Protected</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">$1T</div>
-                        <div className="text-sm text-white/80">Five-Year Goal</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
 
               {/* Slide 2: Ooni of Ife Joins Board */}
               <motion.div
-                className="absolute inset-0 flex flex-col"
+                className="absolute inset-0 flex flex-col cursor-pointer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: currentSlide === 1 ? 1 : 0 }}
                 transition={{ duration: 0.5 }}
+                onClick={() => goToSlide(1)}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/Ooni_to_Board1.jpeg" 
@@ -213,10 +242,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -225,26 +254,16 @@ export default function Home() {
                       Royal Leadership
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">His Imperial Majesty</span>
                       <span className="block gradient-text">Ooni of Ife</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       One of Africa's most powerful kings joins our Board of Directors, bringing deep passion 
                       for Nigeria's industrial and economic prosperity to our leadership team.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">225+</div>
-                        <div className="text-sm text-white/80">LinkedIn Engagement</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">Royal</div>
-                        <div className="text-sm text-white/80">Leadership</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -257,11 +276,9 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/Upgraded_Drone_Factory.jpeg" 
@@ -273,10 +290,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-blue-500/20 text-blue-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -285,26 +302,16 @@ export default function Home() {
                       Manufacturing Excellence
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">Africa's Largest</span>
                       <span className="block gradient-text">Drone Factory</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       Unveiled our upgraded drone manufacturing facility in Abuja, establishing the largest 
                       drone factory on the African continent with 20 Iroko drones per day production capacity.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">20</div>
-                        <div className="text-sm text-white/80">Drones Per Day</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">80%</div>
-                        <div className="text-sm text-white/80">Local Sourcing</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -317,11 +324,9 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/Largest_Contract_Achievement.jpeg" 
@@ -333,10 +338,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -345,26 +350,16 @@ export default function Home() {
                       Contract Success
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">$1.2 Million</span>
                       <span className="block gradient-text">Hydroelectric Contract</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       Secured our largest contract to date, protecting two major hydroelectric power plants 
                       in Nigeria with a comprehensive fleet of AI-powered drones and sentry towers.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">$1.2M</div>
-                        <div className="text-sm text-white/80">Contract Value</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">2 Plants</div>
-                        <div className="text-sm text-white/80">Protected</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -377,11 +372,9 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/South_Africa_Export_Success.jpeg" 
@@ -393,10 +386,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-blue-500/20 text-blue-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -405,26 +398,16 @@ export default function Home() {
                       International Expansion
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">South Africa</span>
                       <span className="block gradient-text">Export Success</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       Successfully announced export of drones to South Africa, marking our first international 
                       expansion and market penetration beyond Nigeria in our pan-African strategy.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">First</div>
-                        <div className="text-sm text-white/80">Export Success</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">Pan-African</div>
-                        <div className="text-sm text-white/80">Strategy</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -437,11 +420,9 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/ArtemisOS_Real_Time_Capabilities_Demonstration.jpeg" 
@@ -453,10 +434,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 text-purple-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-purple-500/20 text-purple-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -465,26 +446,16 @@ export default function Home() {
                       Technology Innovation
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">ArtemisOS</span>
                       <span className="block gradient-text">Real-Time Demo</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       Showcased advanced AI-powered threat detection and autonomous mission planning capabilities 
                       with four power plants and several substations under active protection.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">4 Plants</div>
-                        <div className="text-sm text-white/80">Under Protection</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">Real-Time</div>
-                        <div className="text-sm text-white/80">AI Processing</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -497,11 +468,9 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 {/* Full-form Image */}
-                <div className="relative h-2/3 w-full">
+                <div className="relative h-1/2 md:h-2/3 w-full">
                   <motion.div
                     className="w-full h-full"
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
                   >
                     <img 
                       src="/stories/Made_in_Africa_Innovation.jpeg" 
@@ -513,10 +482,10 @@ export default function Home() {
                 </div>
                 
                 {/* Content Under Image */}
-                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
-                  <div className="w-full space-y-6">
+                <div className="h-1/2 md:h-1/3 p-4 md:p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-3 md:space-y-6">
                     <motion.div
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 text-orange-500 text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-2 rounded-full bg-orange-500/20 text-orange-500 text-xs md:text-sm font-medium"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 1, duration: 0.6 }}
@@ -525,42 +494,23 @@ export default function Home() {
                       African Innovation
                     </motion.div>
                     
-                    <h3 className="text-4xl font-bold text-white">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white">
                       <span className="block">Made in Africa</span>
                       <span className="block gradient-text">Innovation</span>
                     </h3>
                     
-                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                    <p className="text-sm md:text-lg text-white/90 leading-relaxed max-w-2xl">
                       Showcasing local manufacturing capabilities and African innovation in autonomous systems, 
                       positioning Terra Industries as leaders in "Made in Africa" technology.
                     </p>
                     
-                    <div className="flex gap-6">
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">Local</div>
-                        <div className="text-sm text-white/80">Manufacturing</div>
-                      </div>
-                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <div className="text-2xl font-bold text-primary">African</div>
-                        <div className="text-sm text-white/80">Innovation</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
             </div>
 
-            {/* Slide Controls */}
-            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-              <motion.button
-                onClick={prevSlide}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium hover:bg-white/20 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                ← Previous
-              </motion.button>
-              
+            {/* Slide Navigation Dots */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
               <div className="flex gap-2">
                 {[0, 1, 2, 3, 4, 5, 6].map((index) => (
                   <motion.button
@@ -574,56 +524,223 @@ export default function Home() {
                   />
                 ))}
               </div>
-              
-              <motion.button
-                onClick={nextSlide}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium hover:bg-white/20 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Next →
-              </motion.button>
             </div>
           </div>
 
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center mt-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2, duration: 0.8 }}
-          >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Explore Our Defense Ecosystem</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.div>
-            </motion.button>
-          </motion.div>
         </div>
       </section>
 
-      {/* Leadership Excellence Section - Dynamic Story Slideshow */}
+      {/* Who We Are Section */}
+      <section className="relative py-32 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0">
+          {/* Animated Grid */}
+          <motion.div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
+            }}
+            animate={{
+              backgroundPosition: ['0px 0px', '60px 60px']
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: 'linear'
+            }}
+          />
+          
+          {/* Floating Particles */}
+          {generateParticlePositions(15).map((pos, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-primary rounded-full"
+              style={{
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0]
+              }}
+              transition={{
+                duration: pos.duration,
+                repeat: Infinity,
+                delay: pos.delay
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
+          {/* Section Header */}
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className="w-2 h-2 bg-primary rounded-full" />
+              Company Overview
+            </motion.div>
+            
+            <h2 className="text-5xl md:text-7xl font-black tracking-tighter font-display text-foreground mb-8">
+              <span className="block">Who We Are</span>
+              <span className="block gradient-text">Terra Industries</span>
+            </h2>
+            
+            <motion.p
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Securing Africa's Future Through Advanced Autonomous Defense Technology
+            </motion.p>
+          </motion.div>
+
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Company Story */}
+            <motion.div
+              className="space-y-8"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-6">
+                <h3 className="text-3xl font-bold text-foreground">
+                  <span className="block">Transforming Africa's</span>
+                  <span className="block gradient-text">Defense Landscape</span>
+                </h3>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Founded in 2024, Terra Industries has rapidly established itself as Nigeria's premier 
+                  defense technology company, protecting over $13 billion worth of critical infrastructure 
+                  across Africa. Our mission is to secure Africa's most vital assets through advanced 
+                  autonomous defense systems.
+                </p>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  From our headquarters in Abuja, we're building the future of African defense manufacturing, 
+                  with a vision to turn Nigeria into a global drone producer and exporter while protecting 
+                  the continent's critical industries including oil & gas, mining, and agriculture.
+                </p>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Our rapid growth and strategic positioning have made us a key player in the African defense 
+                  manufacturing sector, with successful international expansion to South Africa and plans for 
+                  pan-African market penetration. We're transforming how Africa protects its most critical 
+                  infrastructure through cutting-edge autonomous technology.
+                </p>
+              </div>
+
+              {/* Key Stats */}
+              <div className="grid grid-cols-2 gap-6">
+                <motion.div
+                  className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="text-3xl font-bold text-primary mb-2">$13B+</div>
+                  <div className="text-sm text-muted-foreground">Infrastructure Protected</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="text-3xl font-bold text-primary mb-2">20</div>
+                  <div className="text-sm text-muted-foreground">Drones Per Day</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="text-3xl font-bold text-primary mb-2">80%</div>
+                  <div className="text-sm text-muted-foreground">Local Sourcing</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="text-3xl font-bold text-primary mb-2">$1.2M</div>
+                  <div className="text-sm text-muted-foreground">Largest Contract</div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Mission & Vision */}
+            <motion.div
+              className="space-y-8"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
+                <h4 className="text-2xl font-bold text-foreground mb-4">Our Mission</h4>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Build autonomous defense systems to protect Africa's critical infrastructure, 
+                  transforming the continent's most vital industries through advanced technology.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  We focus on protecting mines, refineries, power plants, and other critical assets 
+                  that form the backbone of Africa's economy, ensuring their security through 
+                  cutting-edge autonomous defense solutions.
+                </p>
+              </div>
+              
+              <div className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/10 to-primary/10 border border-terra-steel-blue/20">
+                <h4 className="text-2xl font-bold text-foreground mb-4">Our Vision</h4>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Secure Africa's critical infrastructure through advanced autonomous technology, 
+                  establishing Nigeria as a global leader in defense manufacturing.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  We envision a future where Nigeria becomes a global drone producer and exporter, 
+                  with a network of drone factories across Africa, protecting over $1 trillion 
+                  worth of emerging market infrastructure.
+                </p>
+              </div>
+
+              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-terra-steel-blue/5 border border-border/20">
+                <h4 className="text-2xl font-bold text-foreground mb-4">Our Impact</h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  Since our founding, we've successfully protected critical infrastructure worth 
+                  over $13 billion across Africa, with our largest contract valued at $1.2 million 
+                  for hydroelectric plant security. Our manufacturing capabilities include producing 
+                  20 Iroko drones per day with 80% local component sourcing, establishing Nigeria 
+                  as Africa's premier defense manufacturing hub.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Leadership Excellence Section - Real Leadership Stories */}
       <section className="relative py-32 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
@@ -648,13 +765,13 @@ export default function Home() {
           />
           
           {/* Floating Elements */}
-          {[...Array(15)].map((_, i) => (
+          {generateParticlePositions(15).map((pos, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [0, -50, 0],
@@ -662,15 +779,15 @@ export default function Home() {
                 scale: [0, 1, 0]
               }}
               transition={{
-                duration: 4 + Math.random() * 3,
+                duration: pos.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2
+                delay: pos.delay
               }}
             />
           ))}
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20"
@@ -706,426 +823,229 @@ export default function Home() {
                 textShadow: '0 0 40px rgba(74, 144, 226, 0.2)'
               }}
             >
-              <span className="block">The Leadership</span>
-              <span className="block gradient-text glow-text">Journey</span>
+              <span className="block">Royal & Military</span>
+              <span className="block gradient-text glow-text">Command</span>
             </motion.h2>
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              From founding to $13B+ infrastructure protection - the real story of Terra Industries' leadership evolution
+              Led by Africa's most influential leaders - from royal authority to military expertise, 
+              our leadership team combines centuries of tradition with cutting-edge defense technology
             </motion.p>
           </motion.div>
 
-          {/* Leadership Journey Slideshow */}
+          {/* Leadership Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+            {/* Ooni of Ife */}
+            <motion.div
+              className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-500/10 to-primary/10 border border-purple-500/20"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <div className="p-8">
+                <div className="mb-6">
+                  <Image
+                    src="/stories/Ooni_to_Board1.jpeg"
+                    alt="His Imperial Majesty, the Ooni of Ife"
+                    width={300}
+                    height={200}
+                    className="w-full h-48 object-cover rounded-2xl mb-4"
+                  />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-500 text-sm font-medium mb-4">
+                    <span className="w-2 h-2 bg-purple-500 rounded-full" />
+                    Board of Directors
+                  </div>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  His Imperial Majesty,<br />
+                  <span className="gradient-text">the Ooni of Ife</span>
+                </h3>
+                
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  One of Africa's most powerful kings, bringing deep passion for Nigeria's industrial 
+                  and economic prosperity. His royal authority enhances our credibility and government 
+                  relations, with a global vision to turn Nigeria into a global drone producer.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Royal Authority & Influence</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Economic Development Vision</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Government Relations</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* AVM Jolasinmi */}
+            <motion.div
+              className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/10 to-primary/10 border border-blue-500/20"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <div className="p-8">
+                <div className="mb-6">
+                  <Image
+                    src="/stories/Ayoola_Jolasinmi_Joins_Board.jpeg"
+                    alt="Retired Air Vice Marshal Ayoola Jolasinmi"
+                    width={300}
+                    height={200}
+                    className="w-full h-48 object-cover rounded-2xl mb-4"
+                  />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium mb-4">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                    Board of Directors
+                  </div>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  Retired Air Vice Marshal<br />
+                  <span className="gradient-text">Ayoola Jolasinmi</span>
+                </h3>
+                
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Distinguished career in the Nigerian Air Force with key positions including Director of Operations, 
+                  Chief of Defence Space Administration, and Chief of Defence Policy & Plans at Defence Headquarters.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Military Leadership</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Strategic Defense Planning</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Space Administration</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Engr. Mansur Ahmed */}
+            <motion.div
+              className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500/10 to-primary/10 border border-green-500/20"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, scale: 1.02 }}
+            >
+              <div className="p-8">
+                <div className="mb-6">
+                  <Image
+                    src="/stories/Addition_Engr_Mansur_Ahmed.jpeg"
+                    alt="Engr. Mansur Ahmed"
+                    width={300}
+                    height={200}
+                    className="w-full h-48 object-cover rounded-2xl mb-4"
+                  />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium mb-4">
+                    <span className="w-2 h-2 bg-green-500 rounded-full" />
+                    Engineering Leadership
+                  </div>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  <span className="gradient-text">Engr. Mansur Ahmed</span>
+                </h3>
+                
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Extensive technical expertise and engineering leadership, strengthening our product 
+                  development and technical innovation capabilities. Focus on engineering excellence 
+                  and technical innovation.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Technical Expertise</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Product Development</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="text-sm text-muted-foreground">Engineering Excellence</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Leadership Impact */}
           <motion.div
-            className="relative"
-            initial={{ opacity: 0, y: 50 }}
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            {/* Slideshow Container */}
-            <div className="relative w-full h-[600px] bg-gradient-to-br from-card to-charcoal rounded-3xl overflow-hidden border border-border/20">
-              {/* Slide Navigation */}
-              <div className="absolute top-6 left-6 right-6 z-20">
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-2">
-                    {[0, 1, 2, 3, 4].map((index) => (
-                      <motion.button
-                        key={index}
-                        onClick={() => goToSlide(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                          index === currentSlide ? 'bg-primary' : 'bg-primary/30'
-                        }`}
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.9 }}
-                      />
-                    ))}
-                  </div>
-                  <div className="text-sm text-muted-foreground">Leadership Timeline</div>
-                </div>
-              </div>
-
-              {/* Slide Content */}
-              <div className="relative h-full">
-                {/* Slide 1: Company Founding */}
+            <div className="max-w-6xl mx-auto">
+              <h3 className="text-4xl font-bold text-foreground mb-8">
+                <span className="block">Leadership Impact</span>
+                <span className="block gradient-text">$13B+ Infrastructure Protected</span>
+              </h3>
+              
+              <p className="text-xl text-muted-foreground leading-relaxed mb-12">
+                Under this exceptional leadership team, Terra Industries has successfully protected 
+                over $13 billion worth of critical infrastructure across Africa, establishing Nigeria 
+                as a premier defense manufacturing hub with 20 drones per day production capacity.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <motion.div
-                  className="absolute inset-0 p-12 flex items-center"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: currentSlide === 0 ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
+                  className="p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-8">
-                      <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 1, duration: 0.6 }}
-                      >
-                        <span className="w-2 h-2 bg-yellow-500 rounded-full" />
-                        2024 - Company Founding
-                      </motion.div>
-                      
-                      <h3 className="text-4xl font-bold text-foreground">
-                        <span className="block">The Beginning</span>
-                        <span className="block gradient-text">Terra Industries Founded</span>
-                      </h3>
-                      
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        Founded in 2024 with a vision to protect Africa's critical infrastructure through autonomous defense systems. 
-                        The journey from concept to reality began with a clear mission: secure Africa's future.
-                      </p>
-                      
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-primary">2024</div>
-                          <div className="text-sm text-muted-foreground">Founded</div>
-                        </div>
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-primary">$0</div>
-                          <div className="text-sm text-muted-foreground">Initial Value</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <motion.div
-                        className="w-full h-80 bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 rounded-2xl flex items-center justify-center"
-                        animate={{ scale: [1, 1.02, 1] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                      >
-                        <div className="text-center">
-                          <div className="text-6xl mb-4">🚀</div>
-                          <div className="text-2xl font-bold text-foreground">Vision to Reality</div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
+                  <div className="text-3xl font-bold text-primary mb-2">$13B+</div>
+                  <div className="text-sm text-muted-foreground">Infrastructure Protected</div>
                 </motion.div>
-
-                {/* Slide 2: Engineering Leadership */}
-                <motion.div
-                  className="absolute inset-0 p-12 flex items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: currentSlide === 1 ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-8">
-                      <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 1, duration: 0.6 }}
-                      >
-                        <span className="w-2 h-2 bg-green-500 rounded-full" />
-                        Engineering Leadership Addition
-                      </motion.div>
-                      
-                      <h3 className="text-4xl font-bold text-foreground">
-                        <span className="block">Engr. Mansur Ahmed</span>
-                        <span className="block gradient-text">Joins Engineering Team</span>
-                      </h3>
-                      
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        Extensive technical expertise and engineering leadership driving innovation in autonomous defense systems. 
-                        Strengthened technical capabilities and product development focus.
-                      </p>
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3">
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          />
-                          <span className="text-muted-foreground">Enhanced technical team capabilities</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                          />
-                          <span className="text-muted-foreground">Advanced product development</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <motion.div
-                            className="w-2 h-2 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                          />
-                          <span className="text-muted-foreground">Engineering excellence focus</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <motion.div
-                        className="w-full h-80 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center"
-                        animate={{ rotate: [0, 2, -2, 0] }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                      >
-                        <div className="text-center">
-                          <div className="text-6xl mb-4">⚙️</div>
-                          <div className="text-2xl font-bold text-foreground">Engineering Excellence</div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Slide 3: Military Leadership */}
-                <motion.div
-                  className="absolute inset-0 p-12 flex items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: currentSlide === 2 ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-8">
-                      <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 1, duration: 0.6 }}
-                      >
-                        <span className="w-2 h-2 bg-blue-500 rounded-full" />
-                        Military Leadership Addition
-                      </motion.div>
-                      
-                      <h3 className="text-4xl font-bold text-foreground">
-                        <span className="block">Retired Air Vice Marshal</span>
-                        <span className="block gradient-text">Ayoola Jolasinmi</span>
-                      </h3>
-                      
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        Distinguished career in the Nigerian Air Force with extensive experience in defense operations and strategic planning. 
-                        Former Director of Operations, Chief of Defence Space Administration.
-                      </p>
-                      
-                      <div className="grid grid-cols-1 gap-4">
-                        <div className="p-4 rounded-xl bg-card/50 border border-border/20">
-                          <div className="text-sm text-primary font-medium mb-1">Key Positions</div>
-                          <div className="text-sm text-muted-foreground">Director of Operations, Chief of Defence Space Administration</div>
-                        </div>
-                        <div className="p-4 rounded-xl bg-card/50 border border-border/20">
-                          <div className="text-sm text-primary font-medium mb-1">Strategic Value</div>
-                          <div className="text-sm text-muted-foreground">Enhanced credibility and government relations</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <motion.div
-                        className="w-full h-80 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center"
-                        animate={{ scale: [1, 1.05, 1] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                      >
-                        <div className="text-center">
-                          <div className="text-6xl mb-4">🎖️</div>
-                          <div className="text-2xl font-bold text-foreground">Military Excellence</div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Slide 4: Royal Leadership */}
-                <motion.div
-                  className="absolute inset-0 p-12 flex items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: currentSlide === 3 ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-8">
-                      <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 1, duration: 0.6 }}
-                      >
-                        <span className="w-2 h-2 bg-yellow-500 rounded-full" />
-                        Royal Leadership Addition
-                      </motion.div>
-                      
-                      <h3 className="text-4xl font-bold text-foreground">
-                        <span className="block">His Imperial Majesty</span>
-                        <span className="block gradient-text">The Ooni of Ife</span>
-                      </h3>
-                      
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        One of Africa's most powerful kings joins the Board of Directors, bringing deep passion for Nigeria's 
-                        industrial and economic prosperity. Enhanced credibility and market positioning.
-                      </p>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-yellow-500">225+</div>
-                          <div className="text-sm text-muted-foreground">LinkedIn Engagement</div>
-                        </div>
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-yellow-500">10+</div>
-                          <div className="text-sm text-muted-foreground">Comments</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <motion.div
-                        className="w-full h-80 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-2xl flex items-center justify-center"
-                        animate={{ rotate: [0, 1, -1, 0] }}
-                        transition={{ duration: 5, repeat: Infinity }}
-                      >
-                        <div className="text-center">
-                          <div className="text-6xl mb-4">👑</div>
-                          <div className="text-2xl font-bold text-foreground">Royal Authority</div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Slide 5: Current Impact */}
-                <motion.div
-                  className="absolute inset-0 p-12 flex items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: currentSlide === 4 ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-8">
-                      <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 1, duration: 0.6 }}
-                      >
-                        <span className="w-2 h-2 bg-primary rounded-full" />
-                        Current Impact
-                      </motion.div>
-                      
-                      <h3 className="text-4xl font-bold text-foreground">
-                        <span className="block">$13+ Billion</span>
-                        <span className="block gradient-text">Infrastructure Protected</span>
-                      </h3>
-                      
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        Combined leadership excellence has resulted in protecting over $13 billion in critical infrastructure 
-                        across Africa, with the largest contract being $1.2 million for hydroelectric plant security.
-                      </p>
-                      
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-primary">$13B+</div>
-                          <div className="text-sm text-muted-foreground">Infrastructure</div>
-                        </div>
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-primary">$1.2M</div>
-                          <div className="text-sm text-muted-foreground">Largest Contract</div>
-                        </div>
-                        <div className="text-center p-4 rounded-xl bg-card/50">
-                          <div className="text-2xl font-bold text-primary">3</div>
-                          <div className="text-sm text-muted-foreground">Key Leaders</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="relative">
-                      <motion.div
-                        className="w-full h-80 bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 rounded-2xl flex items-center justify-center"
-                        animate={{ scale: [1, 1.03, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        <div className="text-center">
-                          <div className="text-6xl mb-4">🛡️</div>
-                          <div className="text-2xl font-bold text-foreground">Protecting Africa</div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Slide Controls */}
-              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
-                <motion.button
-                  onClick={prevSlide}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/20 text-sm font-medium hover:bg-card/80 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  ← Previous
-                </motion.button>
                 
-                <div className="flex gap-2">
-                  {[0, 1, 2, 3, 4].map((index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === currentSlide ? 'bg-primary' : 'bg-primary/30'
-                      }`}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                    />
-                  ))}
-                </div>
-                
-                <motion.button
-                  onClick={nextSlide}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/20 text-sm font-medium hover:bg-card/80 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <motion.div
+                  className="p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  Next →
-                </motion.button>
+                  <div className="text-3xl font-bold text-primary mb-2">20</div>
+                  <div className="text-sm text-muted-foreground">Drones Per Day</div>
+                </motion.div>
+                
+                <motion.div
+                  className="p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/20"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="text-3xl font-bold text-primary mb-2">80%</div>
+                  <div className="text-sm text-muted-foreground">Local Sourcing</div>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
-
-          {/* Bottom CTA */}
-          <motion.div
-            className="text-center mt-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <motion.button
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10">Explore Our Leadership Story</span>
-              <motion.div
-                className="relative z-10"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.div>
-            </motion.button>
           </motion.div>
         </div>
       </section>
@@ -1158,7 +1078,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20"
@@ -1200,7 +1120,7 @@ export default function Home() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -1231,7 +1151,7 @@ export default function Home() {
                   </motion.div>
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">ArtemisOS</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xs md:text-sm font-medium">
                       <motion.div
                         className="w-2 h-2 bg-white rounded-full"
                         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
@@ -1348,7 +1268,7 @@ export default function Home() {
                   </motion.div>
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">Archer VTOL</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white text-xs md:text-sm font-medium">
                       <motion.div
                         className="w-2 h-2 bg-white rounded-full"
                         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
@@ -1431,7 +1351,7 @@ export default function Home() {
                   </motion.div>
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">Iroko UAV</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs md:text-sm font-medium">
                       <motion.div
                         className="w-2 h-2 bg-white rounded-full"
                         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
@@ -1547,7 +1467,7 @@ export default function Home() {
                   </motion.div>
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">Duma UGV</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs md:text-sm font-medium">
                       <motion.div
                         className="w-2 h-2 bg-white rounded-full"
                         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
@@ -1630,7 +1550,7 @@ export default function Home() {
                   </motion.div>
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">Kallon Tower</h3>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 text-white text-xs md:text-sm font-medium">
                       <motion.div
                         className="w-2 h-2 bg-white rounded-full"
                         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
@@ -1777,13 +1697,13 @@ export default function Home() {
           />
           
           {/* Manufacturing Particles */}
-          {[...Array(20)].map((_, i) => (
+          {generateParticlePositions(20).map((pos, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [0, -30, 0],
@@ -1791,15 +1711,15 @@ export default function Home() {
                 scale: [0, 1, 0]
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: pos.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2
+                delay: pos.delay
               }}
             />
           ))}
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20"
@@ -1841,7 +1761,7 @@ export default function Home() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -2024,7 +1944,7 @@ export default function Home() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
                 <h3 className="text-4xl font-bold text-foreground mb-6">Three-Year Expansion Plan</h3>
-                <p className="text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+                <p className="text-xl text-muted-foreground leading-relaxed max-w-6xl mx-auto">
                   Building on our success, Terra Industries is committed to constructing a network of drone factories across Africa, 
                   establishing Nigeria as the continent's premier defense manufacturing hub and a global exporter of autonomous systems.
                 </p>
@@ -2269,13 +2189,13 @@ export default function Home() {
           />
           
           {/* Security Particles */}
-          {[...Array(30)].map((_, i) => (
+          {generateParticlePositions(30).map((pos, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [0, -100, 0],
@@ -2283,15 +2203,15 @@ export default function Home() {
                 scale: [0, 1, 0]
               }}
               transition={{
-                duration: 6 + Math.random() * 4,
+                duration: pos.duration + 3, // Add 3 to make it longer for this section
                 repeat: Infinity,
-                delay: Math.random() * 4
+                delay: pos.delay * 2 // Double the delay for this section
               }}
             />
           ))}
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20"
@@ -2333,7 +2253,7 @@ export default function Home() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -2448,7 +2368,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h3 className="text-4xl font-bold text-foreground mb-6">Real Case Studies</h3>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
                 Actual infrastructure protection deployments across Africa with measurable results
               </p>
             </div>
@@ -2468,7 +2388,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-foreground">Hydroelectric Plant Security</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-green-500 rounded-full" />
                       $1.2M Contract
                     </div>
@@ -2530,7 +2450,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-foreground">Power Plant Network</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-blue-500 rounded-full" />
                       Active Protection
                     </div>
@@ -2588,7 +2508,7 @@ export default function Home() {
             transition={{ delay: 1.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-6xl mx-auto text-center">
               <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
                 <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
@@ -2596,7 +2516,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-3xl font-bold text-foreground">First Software-Only Contract</h4>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-primary rounded-full" />
                       ArtemisOS Integration
                     </div>
@@ -2634,7 +2554,7 @@ export default function Home() {
             transition={{ delay: 2, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <h3 className="text-4xl font-bold text-foreground mb-6">$1 Trillion Protection Goal</h3>
               <p className="text-xl text-muted-foreground leading-relaxed mb-8">
                 Our five-year vision is to protect up to $1 trillion in critical assets across emerging markets, 
@@ -2724,13 +2644,13 @@ export default function Home() {
           />
           
           {/* AI Particles */}
-          {[...Array(20)].map((_, i) => (
+          {generateParticlePositions(20).map((pos, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [0, -60, 0],
@@ -2738,15 +2658,15 @@ export default function Home() {
                 scale: [0, 1, 0]
               }}
               transition={{
-                duration: 4 + Math.random() * 2,
+                duration: pos.duration + 1, // Add 1 to make it longer for this section
                 repeat: Infinity,
-                delay: Math.random() * 2
+                delay: pos.delay
               }}
             />
           ))}
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20"
@@ -2788,7 +2708,7 @@ export default function Home() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -2808,7 +2728,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h3 className="text-4xl font-bold text-foreground mb-6">Real Technology Achievements</h3>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
                 Actual demonstrations and deployments of ArtemisOS across critical infrastructure
               </p>
             </div>
@@ -2828,7 +2748,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-foreground">ArtemisOS Real-Time Demo</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-500 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-500 text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-purple-500 rounded-full" />
                       Live Demonstration
                     </div>
@@ -2890,7 +2810,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-foreground">Software-Only Contract</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-green-500 rounded-full" />
                       Market Recognition
                     </div>
@@ -2948,7 +2868,7 @@ export default function Home() {
             transition={{ delay: 1.4, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-6xl mx-auto text-center">
               <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
                 <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
@@ -2956,7 +2876,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-3xl font-bold text-foreground">Technology & AI Innovation Focus</h4>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-primary rounded-full" />
                       Cutting-Edge Development
                     </div>
@@ -3000,7 +2920,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h3 className="text-4xl font-bold text-foreground mb-6">ArtemisOS Core Features</h3>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
                 Advanced AI-powered capabilities for autonomous defense systems
               </p>
             </div>
@@ -3207,13 +3127,13 @@ export default function Home() {
           />
           
           {/* Global Particles */}
-          {[...Array(35)].map((_, i) => (
+          {generateParticlePositions(35).map((pos, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [0, -120, 0],
@@ -3221,15 +3141,15 @@ export default function Home() {
                 scale: [0, 1, 0]
               }}
               transition={{
-                duration: 8 + Math.random() * 4,
+                duration: pos.duration + 5, // Add 5 to make it longer for this section
                 repeat: Infinity,
-                delay: Math.random() * 5
+                delay: pos.delay * 3 // Triple the delay for this section
               }}
             />
           ))}
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-[80vw] mx-auto px-6">
           {/* Section Header */}
           <motion.div
             className="text-center mb-20"
@@ -3271,7 +3191,7 @@ export default function Home() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-muted-foreground max-w-6xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -3292,7 +3212,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h3 className="text-4xl font-bold text-foreground mb-6">South Africa Export Success</h3>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-muted-foreground max-w-5xl mx-auto">
                 First successful international expansion beyond Nigeria, marking a significant milestone in our pan-African market strategy
               </p>
             </div>
@@ -3312,7 +3232,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-foreground">South Africa Export Success</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-green-500 rounded-full" />
                       International Milestone
                     </div>
@@ -3375,7 +3295,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-2xl font-bold text-foreground">Pan-African Strategy</h4>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-blue-500 rounded-full" />
                       Continental Expansion
                     </div>
@@ -3428,7 +3348,7 @@ export default function Home() {
             transition={{ delay: 1.4, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-6xl mx-auto text-center">
               <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
                 <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
@@ -3436,7 +3356,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="text-3xl font-bold text-foreground">Global Vision</h4>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-xs md:text-sm font-medium">
                       <span className="w-2 h-2 bg-primary rounded-full" />
                       $1 Trillion Protection Goal
                     </div>
