@@ -19,6 +19,15 @@ export default function Home() {
     setIsLoaded(true)
   }, [])
 
+  // Auto-rotation effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 7)
+    }, 5000) // Change slide every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
@@ -29,11 +38,11 @@ export default function Home() {
 
   // Slideshow navigation functions
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % 5)
+    setCurrentSlide((prev) => (prev + 1) % 7)
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + 5) % 5)
+    setCurrentSlide((prev) => (prev - 1 + 7) % 7)
   }
 
   const goToSlide = (index: number) => {
@@ -44,279 +53,574 @@ export default function Home() {
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <Header />
 
-      {/* Hero Section - Visual Marvel */}
+      {/* Hero Section - Dynamic Story Slideshow */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Dynamic Background Layers */}
+        {/* Dynamic Background */}
         <div className="absolute inset-0">
           <HeroBackground />
-          
-          {/* Animated Grid Overlay */}
-          <motion.div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '50px 50px'
-            }}
-            animate={{
-              backgroundPosition: ['0px 0px', '50px 50px']
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'linear'
-            }}
-          />
-          
-          {/* Floating Particles */}
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-primary rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0]
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2
-              }}
-            />
-          ))}
         </div>
 
-        {/* Main Content Container */}
+        {/* Animated Grid Overlay */}
         <motion.div 
-          className="relative z-10 max-w-7xl mx-auto px-6 text-center"
-          style={{ y, opacity, scale }}
-        >
-          {/* Hero Content */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isLoaded ? 1 : 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="space-y-12"
-          >
-            {/* Animated Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm"
-            >
-              <motion.div
-                className="w-2 h-2 bg-primary rounded-full"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span className="text-sm font-medium text-primary">Securing Africa's Future</span>
-            </motion.div>
-
-            {/* Main Headline with Dynamic Effects */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
-              className="space-y-6"
-            >
-              <motion.h1 
-                className="text-7xl md:text-9xl font-black tracking-tighter font-display text-foreground leading-none"
-                style={{
-                  textShadow: '0 0 40px rgba(74, 144, 226, 0.3)'
-                }}
-              >
-                <motion.span 
-                  className="block"
-                  initial={{ opacity: 0, x: -100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
-                >
-                  Protecting
-                </motion.span>
-                <motion.span 
-                  className="block relative"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8, duration: 0.8, type: "spring", stiffness: 100 }}
-                >
-                  <span className="gradient-text glow-text">$13+ Billion</span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"
-                    animate={{ opacity: [0, 1, 0] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
-                </motion.span>
-                <motion.span 
-                  className="block text-5xl md:text-6xl mt-4"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.8 }}
-                >
-                  in Critical Infrastructure
-                </motion.span>
-                <motion.span 
-                  className="block text-3xl md:text-4xl mt-6 text-primary"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.8 }}
-                >
-                  Across Africa
-                </motion.span>
-              </motion.h1>
-            </motion.div>
-
-            {/* Subheadline with Typewriter Effect */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4, duration: 0.8 }}
-              className="max-w-5xl mx-auto"
-            >
-              <motion.p 
-                className="text-2xl md:text-3xl text-muted-foreground leading-relaxed font-light"
-                style={{
-                  background: 'linear-gradient(135deg, #ffffff 0%, #c0c0c0 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}
-              >
-                Advanced Autonomous Defense Systems for Africa's Most Critical Assets
-              </motion.p>
-            </motion.div>
-
-            {/* Interactive CTA Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.6, duration: 0.8 }}
-              className="pt-8"
-            >
-              <motion.button
-                className="group relative inline-flex items-center gap-4 px-12 py-6 text-xl font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
-                }}
-                whileTap={{ scale: 0.95 }}
-                style={{
-                  boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
-                }}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '0%' }}
-                  transition={{ duration: 0.3 }}
-                />
-                <span className="relative z-10">Explore Our Defense Ecosystem</span>
-                <motion.div
-                  className="relative z-10"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  →
-                </motion.div>
-              </motion.button>
-            </motion.div>
-
-            {/* Dynamic Stats Grid */}
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.8, duration: 0.8 }}
-            >
-              {[
-                { value: '$13B+', label: 'Infrastructure Protected', color: 'from-primary to-terra-steel-blue' },
-                { value: '20', label: 'Drones Per Day', color: 'from-terra-silver to-terra-chrome' },
-                { value: '5', label: 'Integrated Systems', color: 'from-terra-cold-blue to-primary' }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="group relative p-8 rounded-2xl border border-border/20 bg-card/50 backdrop-blur-sm"
-                  whileHover={{ 
-                    y: -10,
-                    scale: 1.02,
-                    boxShadow: '0 20px 40px rgba(74, 144, 226, 0.1)'
-                  }}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2 + index * 0.2, duration: 0.8 }}
-                >
-                  <motion.div
-                    className={`text-5xl md:text-6xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wider mt-2 font-medium">
-                    {stat.label}
-                  </div>
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl border border-primary/20"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* Interactive Mouse Follower */}
-        <motion.div
-          className="fixed w-6 h-6 border-2 border-primary rounded-full pointer-events-none z-50"
+          className="absolute inset-0 opacity-20"
           style={{
-            x: mousePosition.x - 12,
-            y: mousePosition.y - 12,
+            backgroundImage: `
+              linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
           }}
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.5, 1, 0.5]
+            backgroundPosition: ['0px 0px', '50px 50px']
           }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'linear'
+          }}
         />
 
-        {/* Animated Scroll Indicator */}
-        <motion.div 
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-        >
+        {/* Floating Particles */}
+        {[...Array(20)].map((_, i) => (
           <motion.div
-            className="flex flex-col items-center gap-4"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            key={i}
+            className="absolute w-1 h-1 bg-primary rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0]
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2
+            }}
+          />
+        ))}
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+          {/* Story Slideshow Container */}
+          <div className="relative w-full h-[80vh] rounded-3xl overflow-hidden border border-border/20">
+            {/* Slide Navigation */}
+            <div className="absolute top-6 left-6 right-6 z-20">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-2">
+                  {[0, 1, 2, 3, 4, 5, 6].map((index) => (
+                    <motion.button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentSlide ? 'bg-primary' : 'bg-primary/30'
+                      }`}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                    />
+                  ))}
+                </div>
+                <div className="text-sm text-white/80 backdrop-blur-sm bg-black/20 px-3 py-1 rounded-full">
+                  Terra Industries Stories
+                </div>
+              </div>
+            </div>
+
+            {/* Slide Content */}
+            <div className="relative h-full">
+              {/* Slide 1: $13 Billion Infrastructure Protection */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: currentSlide === 0 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/$13-Billion-Critical_Infrastructure.jpeg" 
+                      alt="$13 Billion Critical Infrastructure Protection"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      Major Milestone
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">$13+ Billion in</span>
+                      <span className="block gradient-text">Critical Infrastructure</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      Our systems now protect over $13 billion worth of critical infrastructure across Africa, 
+                      demonstrating significant market penetration and impact in safeguarding the global economy.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">$13B+</div>
+                        <div className="text-sm text-white/80">Infrastructure Protected</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">$1T</div>
+                        <div className="text-sm text-white/80">Five-Year Goal</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Slide 2: Ooni of Ife Joins Board */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: currentSlide === 1 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/Ooni_to_Board1.jpeg" 
+                      alt="Ooni of Ife Joins Board of Directors"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full" />
+                      Royal Leadership
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">His Imperial Majesty</span>
+                      <span className="block gradient-text">Ooni of Ife</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      One of Africa's most powerful kings joins our Board of Directors, bringing deep passion 
+                      for Nigeria's industrial and economic prosperity to our leadership team.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">225+</div>
+                        <div className="text-sm text-white/80">LinkedIn Engagement</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">Royal</div>
+                        <div className="text-sm text-white/80">Leadership</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Slide 3: Largest Drone Factory */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: currentSlide === 2 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/Upgraded_Drone_Factory.jpeg" 
+                      alt="Upgraded Drone Factory in Abuja"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                      Manufacturing Excellence
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">Africa's Largest</span>
+                      <span className="block gradient-text">Drone Factory</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      Unveiled our upgraded drone manufacturing facility in Abuja, establishing the largest 
+                      drone factory on the African continent with 20 Iroko drones per day production capacity.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">20</div>
+                        <div className="text-sm text-white/80">Drones Per Day</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">80%</div>
+                        <div className="text-sm text-white/80">Local Sourcing</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Slide 4: $1.2M Contract Success */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: currentSlide === 3 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/Largest_Contract_Achievement.jpeg" 
+                      alt="$1.2 Million Hydroelectric Contract"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      Contract Success
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">$1.2 Million</span>
+                      <span className="block gradient-text">Hydroelectric Contract</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      Secured our largest contract to date, protecting two major hydroelectric power plants 
+                      in Nigeria with a comprehensive fleet of AI-powered drones and sentry towers.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">$1.2M</div>
+                        <div className="text-sm text-white/80">Contract Value</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">2 Plants</div>
+                        <div className="text-sm text-white/80">Protected</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Slide 5: South Africa Export Success */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: currentSlide === 4 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/South_Africa_Export_Success.jpeg" 
+                      alt="South Africa Export Success"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                      International Expansion
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">South Africa</span>
+                      <span className="block gradient-text">Export Success</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      Successfully announced export of drones to South Africa, marking our first international 
+                      expansion and market penetration beyond Nigeria in our pan-African strategy.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">First</div>
+                        <div className="text-sm text-white/80">Export Success</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">Pan-African</div>
+                        <div className="text-sm text-white/80">Strategy</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Slide 6: ArtemisOS Real-Time Demo */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: currentSlide === 5 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/ArtemisOS_Real_Time_Capabilities_Demonstration.jpeg" 
+                      alt="ArtemisOS Real-Time Capabilities Demonstration"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 text-purple-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-purple-500 rounded-full" />
+                      Technology Innovation
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">ArtemisOS</span>
+                      <span className="block gradient-text">Real-Time Demo</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      Showcased advanced AI-powered threat detection and autonomous mission planning capabilities 
+                      with four power plants and several substations under active protection.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">4 Plants</div>
+                        <div className="text-sm text-white/80">Under Protection</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">Real-Time</div>
+                        <div className="text-sm text-white/80">AI Processing</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Slide 7: Made in Africa Innovation */}
+              <motion.div
+                className="absolute inset-0 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: currentSlide === 6 ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Full-form Image */}
+                <div className="relative h-2/3 w-full">
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <img 
+                      src="/stories/Made_in_Africa_Innovation.jpeg" 
+                      alt="Made in Africa Innovation"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  </motion.div>
+                </div>
+                
+                {/* Content Under Image */}
+                <div className="h-1/3 p-8 bg-gradient-to-b from-black/80 to-black flex items-center">
+                  <div className="w-full space-y-6">
+                    <motion.div
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 text-orange-500 text-sm font-medium"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <span className="w-2 h-2 bg-orange-500 rounded-full" />
+                      African Innovation
+                    </motion.div>
+                    
+                    <h3 className="text-4xl font-bold text-white">
+                      <span className="block">Made in Africa</span>
+                      <span className="block gradient-text">Innovation</span>
+                    </h3>
+                    
+                    <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
+                      Showcasing local manufacturing capabilities and African innovation in autonomous systems, 
+                      positioning Terra Industries as leaders in "Made in Africa" technology.
+                    </p>
+                    
+                    <div className="flex gap-6">
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">Local</div>
+                        <div className="text-sm text-white/80">Manufacturing</div>
+                      </div>
+                      <div className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <div className="text-2xl font-bold text-primary">African</div>
+                        <div className="text-sm text-white/80">Innovation</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Slide Controls */}
+            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
+              <motion.button
+                onClick={prevSlide}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium hover:bg-white/20 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                ← Previous
+              </motion.button>
+              
+              <div className="flex gap-2">
+                {[0, 1, 2, 3, 4, 5, 6].map((index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide ? 'bg-primary' : 'bg-white/30'
+                    }`}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                  />
+                ))}
+              </div>
+              
+              <motion.button
+                onClick={nextSlide}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium hover:bg-white/20 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Next →
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 0.8 }}
           >
-            <div className="text-xs text-muted-foreground uppercase tracking-wider">Scroll to Explore</div>
-            <motion.div
-              className="w-8 h-12 border-2 border-primary rounded-full flex justify-center relative"
-              animate={{ borderColor: ['rgba(74, 144, 226, 0.3)', 'rgba(74, 144, 226, 1)', 'rgba(74, 144, 226, 0.3)'] }}
-              transition={{ duration: 2, repeat: Infinity }}
+            <motion.button
+              className="group relative inline-flex items-center gap-4 px-12 py-6 text-lg font-bold text-white bg-gradient-to-r from-primary to-terra-steel-blue rounded-2xl overflow-hidden"
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: '0 20px 40px rgba(74, 144, 226, 0.4)'
+              }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                boxShadow: '0 10px 30px rgba(74, 144, 226, 0.3)'
+              }}
             >
-              <motion.div 
-                className="w-1 h-4 bg-primary rounded-full mt-2"
-                animate={{ 
-                  y: [0, 16, 0],
-                  opacity: [1, 0, 1]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-terra-steel-blue to-primary"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '0%' }}
+                transition={{ duration: 0.3 }}
               />
-            </motion.div>
+              <span className="relative z-10">Explore Our Defense Ecosystem</span>
+              <motion.div
+                className="relative z-10"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                →
+              </motion.div>
+            </motion.button>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Leadership Excellence Section - Dynamic Story Slideshow */}
@@ -2134,104 +2438,224 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Case Studies */}
+          {/* Real Case Studies */}
           <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+            className="mb-20"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            {/* Case Study 1 */}
-            <motion.div
-              className="group relative"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden">
-                <div className="flex items-center gap-4 mb-6">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    ⚡
-                  </motion.div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground">Hydroelectric Plant Security</h3>
-                    <div className="text-primary font-semibold">$1.2M Contract</div>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Securing two major hydroelectric power plants in Nigeria with a comprehensive fleet of drones and sentry towers for real-time threat detection and response.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Real-time Monitoring", "AI Threat Detection", "24/7 Surveillance", "Emergency Response"].map((feature, index) => (
-                    <motion.span
-                      key={index}
-                      className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {feature}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Case Study 2 */}
-            <motion.div
-              className="group relative"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden">
-                <div className="flex items-center gap-4 mb-6">
-                  <motion.div
-                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    🏭
-                  </motion.div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground">Power Plant Network</h3>
-                    <div className="text-primary font-semibold">4 Facilities Protected</div>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Comprehensive protection of critical power infrastructure including substations and transmission lines across multiple locations.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Perimeter Security", "Asset Monitoring", "Threat Assessment", "Coordinated Response"].map((feature, index) => (
-                    <motion.span
-                      key={index}
-                      className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {feature}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Protected Assets Map */}
-          <motion.div
-            className="mt-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-12">
-              <h3 className="text-4xl font-bold text-foreground mb-4">Protected Assets Across Africa</h3>
-              <p className="text-muted-foreground text-lg">Critical infrastructure under Terra Industries protection</p>
+            <div className="text-center mb-16">
+              <h3 className="text-4xl font-bold text-foreground mb-6">Real Case Studies</h3>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Actual infrastructure protection deployments across Africa with measurable results
+              </p>
             </div>
 
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Hydroelectric Plant Security */}
+              <motion.div
+                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.4, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl">
+                    ⚡
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-foreground">Hydroelectric Plant Security</h4>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium">
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      $1.2M Contract
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Secured our largest contract to date, protecting two major hydroelectric power plants in Nigeria 
+                    with a comprehensive fleet of AI-powered drones and solar-powered sentry towers.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">$1.2M</div>
+                      <div className="text-sm text-muted-foreground">Contract Value</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">2 Plants</div>
+                      <div className="text-sm text-muted-foreground">Protected</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h5 className="font-semibold text-foreground">Key Features:</h5>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Large fleet of AI-powered drones</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Solar-powered sentry towers</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>ArtemisOS integration</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Recurring revenue model</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Power Plant Network */}
+              <motion.div
+                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.6, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl">
+                    🔋
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-foreground">Power Plant Network</h4>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                      Active Protection
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Currently protecting four power plants and several substations across Nigeria, 
+                    demonstrating our real-time threat detection and response capabilities.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">4 Plants</div>
+                      <div className="text-sm text-muted-foreground">Under Protection</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">Real-Time</div>
+                      <div className="text-sm text-muted-foreground">Monitoring</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h5 className="font-semibold text-foreground">Protection Features:</h5>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Real-time threat detection</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Autonomous response systems</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Substation monitoring</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>ArtemisOS integration</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Software Integration Success */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
+                    🧠
+                  </div>
+                  <div>
+                    <h4 className="text-3xl font-bold text-foreground">First Software-Only Contract</h4>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium">
+                      <span className="w-2 h-2 bg-primary rounded-full" />
+                      ArtemisOS Integration
+                    </div>
+                  </div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  Successfully secured our first software-only contract to integrate ArtemisOS with existing surveillance systems 
+                  at Aba Power ring fence and other assets, demonstrating growing recognition of our software capabilities.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">Software-Only</div>
+                    <div className="text-sm text-muted-foreground">First Contract Type</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">Aba Power</div>
+                    <div className="text-sm text-muted-foreground">Client</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">Enhanced</div>
+                    <div className="text-sm text-muted-foreground">Autonomy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Future Vision */}
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-4xl font-bold text-foreground mb-6">$1 Trillion Protection Goal</h3>
+              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+                Our five-year vision is to protect up to $1 trillion in critical assets across emerging markets, 
+                establishing Terra Industries as the global leader in infrastructure security.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
+                  <h4 className="text-xl font-bold text-foreground mb-4">Current Achievement</h4>
+                  <p className="text-muted-foreground">
+                    Successfully protecting $13+ billion in critical infrastructure across multiple African countries.
+                  </p>
+                </div>
+                <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
+                  <h4 className="text-xl font-bold text-foreground mb-4">Future Vision</h4>
+                  <p className="text-muted-foreground">
+                    Expanding to protect $1 trillion in critical assets across emerging markets globally.
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Bottom CTA */}
@@ -2374,202 +2798,351 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          {/* Live Dashboard Simulation */}
+          {/* Real Technology Achievements */}
           <motion.div
-            className="relative mb-20"
+            className="mb-20"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative w-full h-96 bg-gradient-to-br from-card to-charcoal rounded-3xl overflow-hidden border border-border/20">
-              {/* Dashboard Header */}
-              <div className="absolute top-4 left-4 right-4 bg-card/80 backdrop-blur-sm rounded-2xl p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <motion.div
-                      className="w-3 h-3 bg-green-500 rounded-full"
-                      animate={{ opacity: [1, 0.3, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    />
-                    <span className="text-sm font-medium text-foreground">ArtemisOS Live Dashboard</span>
+            <div className="text-center mb-16">
+              <h3 className="text-4xl font-bold text-foreground mb-6">Real Technology Achievements</h3>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Actual demonstrations and deployments of ArtemisOS across critical infrastructure
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Real-Time Capabilities Demo */}
+              <motion.div
+                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 flex items-center justify-center text-3xl">
+                    🧠
                   </div>
-                  <div className="text-xs text-muted-foreground">Real-time Monitoring</div>
-                </div>
-              </div>
-
-              {/* Live Data Streams */}
-              <div className="absolute top-20 left-4 right-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[
-                  { label: "Active Drones", value: "12", status: "operational", color: "text-green-500" },
-                  { label: "Threats Detected", value: "3", status: "monitoring", color: "text-yellow-500" },
-                  { label: "Mission Success", value: "98%", status: "excellent", color: "text-blue-500" }
-                ].map((metric, index) => (
-                  <motion.div
-                    key={index}
-                    className="bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/20"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1 + index * 0.2, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="text-xs text-muted-foreground mb-1">{metric.label}</div>
-                    <div className={`text-2xl font-bold ${metric.color}`}>{metric.value}</div>
-                    <div className="text-xs text-primary">{metric.status}</div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* AI Processing Visualization */}
-              <div className="absolute bottom-4 left-4 right-4 bg-card/80 backdrop-blur-sm rounded-2xl p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-foreground">AI Processing Status</span>
-                  <motion.div
-                    className="w-2 h-2 bg-primary rounded-full"
-                    animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                  {[
-                    { label: "Mission Planning", progress: 85 },
-                    { label: "Threat Analysis", progress: 92 },
-                    { label: "Fleet Coordination", progress: 78 },
-                    { label: "Encryption", progress: 100 }
-                  ].map((process, index) => (
-                    <div key={index}>
-                      <div className="text-xs text-muted-foreground mb-1">{process.label}</div>
-                      <div className="w-full bg-border rounded-full h-2">
-                        <motion.div
-                          className="bg-primary h-2 rounded-full"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${process.progress}%` }}
-                          transition={{ delay: 1.2 + index * 0.1, duration: 1 }}
-                          viewport={{ once: true }}
-                        />
-                      </div>
-                      <div className="text-xs text-primary font-medium mt-1">{process.progress}%</div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-foreground">ArtemisOS Real-Time Demo</h4>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-500 text-sm font-medium">
+                      <span className="w-2 h-2 bg-purple-500 rounded-full" />
+                      Live Demonstration
                     </div>
-                  ))}
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Successfully showcased ArtemisOS real-time capabilities, demonstrating advanced AI-powered threat detection 
+                    and autonomous mission planning with four power plants and several substations under active protection.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">4 Plants</div>
+                      <div className="text-sm text-muted-foreground">Under Protection</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">Real-Time</div>
+                      <div className="text-sm text-muted-foreground">AI Processing</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h5 className="font-semibold text-foreground">Demonstrated Capabilities:</h5>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Advanced AI-powered threat detection</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Autonomous mission planning</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Archer drone integration</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Power industry focus</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Software-Only Contract Success */}
+              <motion.div
+                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl">
+                    💻
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-foreground">Software-Only Contract</h4>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium">
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      Market Recognition
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Secured our first software-only contract to integrate ArtemisOS with existing surveillance systems 
+                    at Aba Power ring fence, demonstrating growing recognition of our software capabilities.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">Aba Power</div>
+                      <div className="text-sm text-muted-foreground">Client</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">Enhanced</div>
+                      <div className="text-sm text-muted-foreground">Autonomy</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h5 className="font-semibold text-foreground">Integration Features:</h5>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Real-time threat detection</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Enhanced autonomy</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>System enhancement</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Revenue diversification</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Technology Innovation Focus */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
+                    🚀
+                  </div>
+                  <div>
+                    <h4 className="text-3xl font-bold text-foreground">Technology & AI Innovation Focus</h4>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium">
+                      <span className="w-2 h-2 bg-primary rounded-full" />
+                      Cutting-Edge Development
+                    </div>
+                  </div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  Terra Industries is committed to technology and AI innovation, focusing on cutting-edge autonomous defense systems 
+                  with advanced research and development capabilities.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">AI Innovation</div>
+                    <div className="text-sm text-muted-foreground">Advanced AI algorithms</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">Autonomous Systems</div>
+                    <div className="text-sm text-muted-foreground">Self-operating defense</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">R&D Focus</div>
+                    <div className="text-sm text-muted-foreground">Research & development</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-card/30">
+                    <div className="text-2xl font-bold text-primary">Technical Leadership</div>
+                    <div className="text-sm text-muted-foreground">Industry expertise</div>
+                  </div>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* ArtemisOS Features */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Autonomous Mission Planning",
-                description: "AI-driven mission planning with real-time adaptation to changing conditions and threat levels",
-                icon: "🧠",
-                features: ["Dynamic Route Optimization", "Threat Assessment", "Resource Allocation", "Mission Success Prediction"],
-                color: "from-purple-500 to-indigo-600",
-                glowColor: "rgba(147, 51, 234, 0.3)"
-              },
-              {
-                title: "Fleet Coordination",
-                description: "Advanced swarm intelligence enabling coordinated operations across multiple autonomous systems",
-                icon: "🚁",
-                features: ["Swarm Intelligence", "Real-time Communication", "Distributed Decision Making", "Collision Avoidance"],
-                color: "from-blue-500 to-cyan-600",
-                glowColor: "rgba(59, 130, 246, 0.3)"
-              },
-              {
-                title: "AES-256 Encryption",
-                description: "Military-grade encryption ensuring secure communication and data protection across all systems",
-                icon: "🔒",
-                features: ["End-to-End Encryption", "Secure Key Management", "Quantum Resistance", "Zero-Trust Architecture"],
-                color: "from-green-500 to-emerald-600",
-                glowColor: "rgba(16, 185, 129, 0.3)"
-              }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                className="group relative"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 + index * 0.2, duration: 0.8 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-              >
-                {/* Card Container */}
-                <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden h-full">
-                  {/* Animated Border */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${feature.glowColor}, transparent, ${feature.glowColor})`,
-                      padding: '2px'
-                    }}
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
-                  </motion.div>
+          {/* ArtemisOS Core Features */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h3 className="text-4xl font-bold text-foreground mb-6">ArtemisOS Core Features</h3>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Advanced AI-powered capabilities for autonomous defense systems
+              </p>
+            </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 h-full flex flex-col">
-                    {/* Icon and Title */}
-                    <div className="flex items-center gap-4 mb-6">
-                      <motion.div
-                        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {feature.icon}
-                      </motion.div>
-                      <div>
-                        <h3 className="text-xl font-bold text-foreground">{feature.title}</h3>
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${feature.color} text-white text-xs font-medium`}>
-                          <motion.div
-                            className="w-1.5 h-1.5 bg-white rounded-full"
-                            animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          />
-                          AI-Powered
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Autonomous Mission Planning",
+                  description: "Advanced AI algorithms for autonomous decision-making with intelligent route optimization and obstacle avoidance",
+                  icon: "🧠",
+                  features: ["Decision-Making Capabilities", "Path Planning", "Mission Optimization", "Risk Assessment"],
+                  color: "from-purple-500 to-indigo-600",
+                  glowColor: "rgba(147, 51, 234, 0.3)"
+                },
+                {
+                  title: "AI Detection & Tracking",
+                  description: "AI-powered detection and classification of targets with multi-object tracking and behavioral analysis",
+                  icon: "🎯",
+                  features: ["Target Identification", "Multi-Object Tracking", "Behavioral Analysis", "Threat Assessment"],
+                  color: "from-blue-500 to-cyan-600",
+                  glowColor: "rgba(59, 130, 246, 0.3)"
+                },
+                {
+                  title: "Fleet Management",
+                  description: "Coordination of multiple unmanned systems with swarm operations and resource allocation",
+                  icon: "🚁",
+                  features: ["Cluster Management", "Swarm Operations", "Resource Allocation", "Performance Monitoring"],
+                  color: "from-green-500 to-emerald-600",
+                  glowColor: "rgba(16, 185, 129, 0.3)"
+                },
+                {
+                  title: "Real-Time Data Analysis",
+                  description: "Comprehensive collection and instant processing of large data volumes with pattern recognition",
+                  icon: "📊",
+                  features: ["Data Collection", "Real-Time Analysis", "Pattern Recognition", "Predictive Analytics"],
+                  color: "from-orange-500 to-red-600",
+                  glowColor: "rgba(249, 115, 22, 0.3)"
+                },
+                {
+                  title: "AES-256 Encryption",
+                  description: "Military-grade encryption ensuring secure communication and data protection across all systems",
+                  icon: "🔒",
+                  features: ["End-to-End Encryption", "Secure Key Management", "Data Protection", "Compliance Standards"],
+                  color: "from-indigo-500 to-purple-600",
+                  glowColor: "rgba(99, 102, 241, 0.3)"
+                },
+                {
+                  title: "Artemis Cloud Integration",
+                  description: "Scalable cloud infrastructure for data storage, real-time analysis, and advanced analytics",
+                  icon: "☁️",
+                  features: ["Data Storage", "Real-Time Analysis", "Historical Data", "Scalable Infrastructure"],
+                  color: "from-cyan-500 to-blue-600",
+                  glowColor: "rgba(6, 182, 212, 0.3)"
+                }
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  className="group relative"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.8 + index * 0.2, duration: 0.8 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                >
+                  {/* Card Container */}
+                  <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden h-full">
+                    {/* Animated Border */}
+                    <motion.div
+                      className="absolute inset-0 rounded-3xl"
+                      style={{
+                        background: `linear-gradient(135deg, ${feature.glowColor}, transparent, ${feature.glowColor})`,
+                        padding: '2px'
+                      }}
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
+                    </motion.div>
+
+                    {/* Content */}
+                    <div className="relative z-10 h-full flex flex-col">
+                      {/* Icon and Title */}
+                      <div className="flex items-center gap-4 mb-6">
+                        <motion.div
+                          className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl"
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {feature.icon}
+                        </motion.div>
+                        <div>
+                          <h3 className="text-xl font-bold text-foreground">{feature.title}</h3>
+                          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${feature.color} text-white text-xs font-medium`}>
+                            <motion.div
+                              className="w-1.5 h-1.5 bg-white rounded-full"
+                              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                            />
+                            AI-Powered
+                          </div>
                         </div>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
+                        {feature.description}
+                      </p>
+
+                      {/* Features */}
+                      <div className="space-y-2">
+                        {feature.features.map((item, featureIndex) => (
+                          <motion.div
+                            key={featureIndex}
+                            className="flex items-center gap-3 text-xs text-muted-foreground"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 2 + index * 0.2 + featureIndex * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <motion.div
+                              className="w-1.5 h-1.5 bg-primary rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, delay: featureIndex * 0.2 }}
+                            />
+                            {item}
+                          </motion.div>
+                        ))}
                       </div>
                     </div>
 
-                    {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
-                      {feature.description}
-                    </p>
-
-                    {/* Features */}
-                    <div className="space-y-2">
-                      {feature.features.map((item, featureIndex) => (
-                        <motion.div
-                          key={featureIndex}
-                          className="flex items-center gap-3 text-xs text-muted-foreground"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 1.4 + index * 0.2 + featureIndex * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <motion.div
-                            className="w-1.5 h-1.5 bg-primary rounded-full"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: featureIndex * 0.2 }}
-                          />
-                          {item}
-                        </motion.div>
-                      ))}
-                    </div>
+                    {/* Hover Effects */}
+                    <motion.div
+                      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
                   </div>
-
-                  {/* Hover Effects */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
           {/* Bottom CTA */}
           <motion.div
@@ -2709,134 +3282,211 @@ export default function Home() {
           </motion.div>
 
 
-          {/* Expansion Strategy */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Strategy Content */}
-            <motion.div
-              className="space-y-8"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.4, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-4xl font-bold text-foreground">
-                <span className="block">Pan-African</span>
-                <span className="block gradient-text">Expansion Strategy</span>
-              </h3>
-
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Building a network of drone factories across Africa, starting with our successful expansion to South Africa 
-                and targeting key markets for critical infrastructure protection.
+          {/* Real International Expansion Success */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h3 className="text-4xl font-bold text-foreground mb-6">South Africa Export Success</h3>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                First successful international expansion beyond Nigeria, marking a significant milestone in our pan-African market strategy
               </p>
+            </div>
 
-              {/* Expansion Phases */}
-              <div className="space-y-6">
-                {[
-                  { phase: "Phase 1", title: "South Africa Success", status: "Completed", description: "Successfully established operations and secured contracts" },
-                  { phase: "Phase 2", title: "West Africa Expansion", status: "In Progress", description: "Ghana and Nigeria market consolidation" },
-                  { phase: "Phase 3", title: "East Africa Entry", status: "Planned", description: "Kenya and Tanzania market entry" },
-                  { phase: "Phase 4", title: "North Africa", status: "Future", description: "Egypt and Morocco expansion" }
-                ].map((phase, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border/20"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.6 + index * 0.1, duration: 0.6 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <motion.div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold ${
-                        phase.status === "Completed" ? "bg-green-500" :
-                        phase.status === "In Progress" ? "bg-blue-500" :
-                        phase.status === "Planned" ? "bg-yellow-500" : "bg-gray-500"
-                      }`}
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {index + 1}
-                    </motion.div>
-                    <div className="flex-grow">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium text-primary">{phase.phase}</span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          phase.status === "Completed" ? "bg-green-500/20 text-green-500" :
-                          phase.status === "In Progress" ? "bg-blue-500/20 text-blue-500" :
-                          phase.status === "Planned" ? "bg-yellow-500/20 text-yellow-500" : "bg-gray-500/20 text-gray-500"
-                        }`}>
-                          {phase.status}
-                        </span>
-                      </div>
-                      <h4 className="font-semibold text-foreground">{phase.title}</h4>
-                      <p className="text-sm text-muted-foreground">{phase.description}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* South Africa Success Story */}
+              <motion.div
+                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center text-3xl">
+                    🇿🇦
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-foreground">South Africa Export Success</h4>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-500 text-sm font-medium">
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      International Milestone
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Successfully announced export of drones to South Africa, marking our first international expansion 
+                    and market penetration beyond Nigeria. This achievement represents a significant milestone in our 
+                    pan-African market strategy.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">First Export</div>
+                      <div className="text-sm text-muted-foreground">Beyond Nigeria</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-card/30">
+                      <div className="text-lg font-bold text-primary">Pan-African</div>
+                      <div className="text-sm text-muted-foreground">Strategy</div>
+                    </div>
+                  </div>
 
-            {/* Success Metrics */}
-            <motion.div
-              className="space-y-8"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.4, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-3xl font-bold text-foreground">Expansion Success</h3>
+                  <div className="space-y-2">
+                    <h5 className="font-semibold text-foreground">Key Achievements:</h5>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>International market entry</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Export capabilities demonstration</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Strategic milestone achievement</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Business development success</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
 
-              {/* Success Stats */}
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { value: "100%", label: "South Africa Success Rate", color: "text-green-500" },
-                  { value: "3x", label: "Revenue Growth", color: "text-blue-500" },
-                  { value: "15+", label: "New Contracts", color: "text-primary" },
-                  { value: "5", label: "Countries Targeted", color: "text-yellow-500" }
-                ].map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    className="text-center p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.8 + index * 0.1, duration: 0.6 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <div className={`text-3xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
+              {/* Future Expansion Strategy */}
+              <motion.div
+                className="p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-3xl">
+                    🌍
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-foreground">Pan-African Strategy</h4>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                      Continental Expansion
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Building a network of drone factories across Africa with a three-year expansion plan, 
+                    targeting key markets for critical infrastructure protection and local manufacturing.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <h5 className="font-semibold text-foreground">Strategic Priorities:</h5>
+                    <div className="space-y-3">
+                      {[
+                        "Pan-African market leadership",
+                        "Network of drone factories across Africa",
+                        "Strategic alliances with global companies",
+                        "Additional African markets expansion"
+                      ].map((priority, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-center gap-3"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 1.4 + index * 0.1, duration: 0.6 }}
+                          viewport={{ once: true }}
+                        >
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                          />
+                          <span className="text-sm text-muted-foreground">{priority}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
 
-              {/* Key Achievements */}
-              <div className="space-y-4">
-                <h4 className="text-xl font-semibold text-foreground">Key Achievements</h4>
-                {[
-                  "Successfully established South African operations",
-                  "Secured multiple government contracts",
-                  "Built local manufacturing partnerships",
-                  "Expanded product portfolio for regional needs"
-                ].map((achievement, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center gap-3"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 2 + index * 0.1, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.div
-                      className="w-2 h-2 bg-primary rounded-full"
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                    />
-                    <span className="text-muted-foreground">{achievement}</span>
-                  </motion.div>
-                ))}
+          {/* Global Vision & Goals */}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-terra-steel-blue/10 border border-primary/20">
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center text-3xl">
+                    🚀
+                  </div>
+                  <div>
+                    <h4 className="text-3xl font-bold text-foreground">Global Vision</h4>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium">
+                      <span className="w-2 h-2 bg-primary rounded-full" />
+                      $1 Trillion Protection Goal
+                    </div>
+                  </div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  Our five-year vision is to protect up to $1 trillion in critical assets across emerging markets, 
+                  establishing Terra Industries as the global leader in infrastructure security.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
+                    <h5 className="text-xl font-bold text-foreground mb-4">Short-Term Goals (2025-2026)</h5>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Network of drone factories across Africa</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Additional African markets expansion</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Strategic alliances with global companies</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/20">
+                    <h5 className="text-xl font-bold text-foreground mb-4">Long-Term Vision (2026-2030)</h5>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Pan-African market leadership</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>Global market penetration</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                        <span>$1 trillion in critical assets protection</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
 
           {/* Bottom CTA */}
           <motion.div
