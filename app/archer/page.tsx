@@ -10,6 +10,9 @@ import { useState, useEffect } from "react"
 
 // Import Archer sections
 import { ArcherHeroSection } from "@/components/archer/archer-hero-section"
+import { ArcherCapabilitiesSection } from "@/components/archer/archer-capabilities-section"
+import { ArcherSpecificationsSection } from "@/components/archer/archer-specifications-section"
+import { ArcherApplicationsSection } from "@/components/archer/archer-applications-section"
 
 export default function ArcherPage() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -37,6 +40,15 @@ export default function ArcherPage() {
 
         {/* Archer Hero Section */}
         <ArcherHeroSection />
+
+        {/* Flight Capabilities Section */}
+        <ArcherCapabilitiesSection />
+
+        {/* Technical Specifications Section */}
+        <ArcherSpecificationsSection />
+
+        {/* Mission Applications Section */}
+        <ArcherApplicationsSection />
 
         <Footer />
       </main>
