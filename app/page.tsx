@@ -9,6 +9,7 @@ import { useState, useEffect } from "react"
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isLoaded, setIsLoaded] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 300], [0, -50])
   const opacity = useTransform(scrollY, [0, 300], [1, 0])
@@ -25,6 +26,19 @@ export default function Home() {
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
+
+  // Slideshow navigation functions
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % 5)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + 5) % 5)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
 
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -305,7 +319,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Leadership Excellence Section */}
+      {/* Leadership Excellence Section - Dynamic Story Slideshow */}
       <section className="relative py-32 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
@@ -388,8 +402,8 @@ export default function Home() {
                 textShadow: '0 0 40px rgba(74, 144, 226, 0.2)'
               }}
             >
-              <span className="block">Led by Africa's</span>
-              <span className="block gradient-text glow-text">Most Influential Leaders</span>
+              <span className="block">The Leadership</span>
+              <span className="block gradient-text glow-text">Journey</span>
             </motion.h2>
 
             {/* Subheadline */}
@@ -400,141 +414,379 @@ export default function Home() {
               transition={{ delay: 0.6, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Royal authority, military expertise, and engineering excellence driving Africa's defense technology revolution
+              From founding to $13B+ infrastructure protection - the real story of Terra Industries' leadership evolution
             </motion.p>
           </motion.div>
 
-          {/* Leadership Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              {
-                name: "His Imperial Majesty, the Ooni of Ife",
-                title: "Board of Directors",
-                description: "One of Africa's most powerful kings, bringing deep passion for Nigeria's industrial and economic prosperity",
-                expertise: "Royal Leadership & Economic Vision",
-                image: "/placeholder-user.jpg",
-                color: "from-yellow-400 to-amber-500",
-                glowColor: "rgba(251, 191, 36, 0.3)"
-              },
-              {
-                name: "Retired Air Vice Marshal Ayoola Jolasinmi",
-                title: "Military Expertise",
-                description: "Distinguished career in the Nigerian Air Force with extensive experience in defense operations and strategic planning",
-                expertise: "Defense Strategy & Military Operations",
-                image: "/placeholder-user.jpg",
-                color: "from-blue-500 to-blue-700",
-                glowColor: "rgba(59, 130, 246, 0.3)"
-              },
-              {
-                name: "Engr. Mansur Ahmed",
-                title: "Engineering Leadership",
-                description: "Extensive technical expertise and engineering leadership driving innovation in autonomous defense systems",
-                expertise: "Technical Innovation & Product Development",
-                image: "/placeholder-user.jpg",
-                color: "from-green-500 to-emerald-600",
-                glowColor: "rgba(16, 185, 129, 0.3)"
-              }
-            ].map((leader, index) => (
-              <motion.div
-                key={index}
-                className="group relative"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.2, duration: 0.8 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-              >
-                {/* Card Container */}
-                <div className="relative p-8 rounded-3xl bg-card/50 backdrop-blur-sm border border-border/20 overflow-hidden">
-                  {/* Animated Border */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{
-                      background: `linear-gradient(135deg, ${leader.glowColor}, transparent, ${leader.glowColor})`,
-                      padding: '2px'
-                    }}
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-full h-full rounded-3xl bg-card/50 backdrop-blur-sm" />
-                  </motion.div>
+          {/* Leadership Journey Slideshow */}
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            {/* Slideshow Container */}
+            <div className="relative w-full h-[600px] bg-gradient-to-br from-card to-charcoal rounded-3xl overflow-hidden border border-border/20">
+              {/* Slide Navigation */}
+              <div className="absolute top-6 left-6 right-6 z-20">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2">
+                    {[0, 1, 2, 3, 4].map((index) => (
+                      <motion.button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                          index === currentSlide ? 'bg-primary' : 'bg-primary/30'
+                        }`}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Leadership Timeline</div>
+                </div>
+              </div>
 
-                  {/* Content */}
-                  <div className="relative z-10">
-                    {/* Portrait Container */}
-                    <motion.div
-                      className="relative w-32 h-32 mx-auto mb-8 rounded-2xl overflow-hidden"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {/* Image */}
-                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 flex items-center justify-center">
-                        <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center">
-                          <span className="text-2xl font-bold text-primary">
-                            {leader.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                          </span>
+              {/* Slide Content */}
+              <div className="relative h-full">
+                {/* Slide 1: Company Founding */}
+                <motion.div
+                  className="absolute inset-0 p-12 flex items-center"
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: currentSlide === 0 ? 1 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1, duration: 0.6 }}
+                      >
+                        <span className="w-2 h-2 bg-yellow-500 rounded-full" />
+                        2024 - Company Founding
+                      </motion.div>
+                      
+                      <h3 className="text-4xl font-bold text-foreground">
+                        <span className="block">The Beginning</span>
+                        <span className="block gradient-text">Terra Industries Founded</span>
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Founded in 2024 with a vision to protect Africa's critical infrastructure through autonomous defense systems. 
+                        The journey from concept to reality began with a clear mission: secure Africa's future.
+                      </p>
+                      
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-primary">2024</div>
+                          <div className="text-sm text-muted-foreground">Founded</div>
+                        </div>
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-primary">$0</div>
+                          <div className="text-sm text-muted-foreground">Initial Value</div>
                         </div>
                       </div>
-                      
-                      {/* Glow Effect */}
+                    </div>
+                    
+                    <div className="relative">
                       <motion.div
-                        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${leader.color} opacity-0`}
-                        whileHover={{ opacity: 0.1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </motion.div>
-
-                    {/* Name */}
-                    <motion.h3
-                      className="text-2xl font-bold text-foreground mb-2 text-center"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {leader.name}
-                    </motion.h3>
-
-                    {/* Title */}
-                    <motion.div
-                      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${leader.color} text-white text-sm font-medium mx-auto mb-6`}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <motion.div
-                        className="w-2 h-2 bg-white rounded-full"
-                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      {leader.title}
-                    </motion.div>
-
-                    {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 text-center">
-                      {leader.description}
-                    </p>
-
-                    {/* Expertise */}
-                    <motion.div
-                      className="text-center"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="text-xs text-primary font-medium uppercase tracking-wider">
-                        {leader.expertise}
-                      </div>
-                    </motion.div>
+                        className="w-full h-80 bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 rounded-2xl flex items-center justify-center"
+                        animate={{ scale: [1, 1.02, 1] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      >
+                        <div className="text-center">
+                          <div className="text-6xl mb-4">🚀</div>
+                          <div className="text-2xl font-bold text-foreground">Vision to Reality</div>
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
+                </motion.div>
 
-                  {/* Hover Effects */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0"
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                {/* Slide 2: Engineering Leadership */}
+                <motion.div
+                  className="absolute inset-0 p-12 flex items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: currentSlide === 1 ? 1 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-500 text-sm font-medium"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1, duration: 0.6 }}
+                      >
+                        <span className="w-2 h-2 bg-green-500 rounded-full" />
+                        Engineering Leadership Addition
+                      </motion.div>
+                      
+                      <h3 className="text-4xl font-bold text-foreground">
+                        <span className="block">Engr. Mansur Ahmed</span>
+                        <span className="block gradient-text">Joins Engineering Team</span>
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Extensive technical expertise and engineering leadership driving innovation in autonomous defense systems. 
+                        Strengthened technical capabilities and product development focus.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          />
+                          <span className="text-muted-foreground">Enhanced technical team capabilities</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                          />
+                          <span className="text-muted-foreground">Advanced product development</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                          />
+                          <span className="text-muted-foreground">Engineering excellence focus</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="relative">
+                      <motion.div
+                        className="w-full h-80 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center"
+                        animate={{ rotate: [0, 2, -2, 0] }}
+                        transition={{ duration: 4, repeat: Infinity }}
+                      >
+                        <div className="text-center">
+                          <div className="text-6xl mb-4">⚙️</div>
+                          <div className="text-2xl font-bold text-foreground">Engineering Excellence</div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Slide 3: Military Leadership */}
+                <motion.div
+                  className="absolute inset-0 p-12 flex items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: currentSlide === 2 ? 1 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-500 text-sm font-medium"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1, duration: 0.6 }}
+                      >
+                        <span className="w-2 h-2 bg-blue-500 rounded-full" />
+                        Military Leadership Addition
+                      </motion.div>
+                      
+                      <h3 className="text-4xl font-bold text-foreground">
+                        <span className="block">Retired Air Vice Marshal</span>
+                        <span className="block gradient-text">Ayoola Jolasinmi</span>
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Distinguished career in the Nigerian Air Force with extensive experience in defense operations and strategic planning. 
+                        Former Director of Operations, Chief of Defence Space Administration.
+                      </p>
+                      
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="p-4 rounded-xl bg-card/50 border border-border/20">
+                          <div className="text-sm text-primary font-medium mb-1">Key Positions</div>
+                          <div className="text-sm text-muted-foreground">Director of Operations, Chief of Defence Space Administration</div>
+                        </div>
+                        <div className="p-4 rounded-xl bg-card/50 border border-border/20">
+                          <div className="text-sm text-primary font-medium mb-1">Strategic Value</div>
+                          <div className="text-sm text-muted-foreground">Enhanced credibility and government relations</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="relative">
+                      <motion.div
+                        className="w-full h-80 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center"
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      >
+                        <div className="text-center">
+                          <div className="text-6xl mb-4">🎖️</div>
+                          <div className="text-2xl font-bold text-foreground">Military Excellence</div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Slide 4: Royal Leadership */}
+                <motion.div
+                  className="absolute inset-0 p-12 flex items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: currentSlide === 3 ? 1 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-500 text-sm font-medium"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1, duration: 0.6 }}
+                      >
+                        <span className="w-2 h-2 bg-yellow-500 rounded-full" />
+                        Royal Leadership Addition
+                      </motion.div>
+                      
+                      <h3 className="text-4xl font-bold text-foreground">
+                        <span className="block">His Imperial Majesty</span>
+                        <span className="block gradient-text">The Ooni of Ife</span>
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        One of Africa's most powerful kings joins the Board of Directors, bringing deep passion for Nigeria's 
+                        industrial and economic prosperity. Enhanced credibility and market positioning.
+                      </p>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-yellow-500">225+</div>
+                          <div className="text-sm text-muted-foreground">LinkedIn Engagement</div>
+                        </div>
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-yellow-500">10+</div>
+                          <div className="text-sm text-muted-foreground">Comments</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="relative">
+                      <motion.div
+                        className="w-full h-80 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-2xl flex items-center justify-center"
+                        animate={{ rotate: [0, 1, -1, 0] }}
+                        transition={{ duration: 5, repeat: Infinity }}
+                      >
+                        <div className="text-center">
+                          <div className="text-6xl mb-4">👑</div>
+                          <div className="text-2xl font-bold text-foreground">Royal Authority</div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Slide 5: Current Impact */}
+                <motion.div
+                  className="absolute inset-0 p-12 flex items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: currentSlide === 4 ? 1 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1, duration: 0.6 }}
+                      >
+                        <span className="w-2 h-2 bg-primary rounded-full" />
+                        Current Impact
+                      </motion.div>
+                      
+                      <h3 className="text-4xl font-bold text-foreground">
+                        <span className="block">$13+ Billion</span>
+                        <span className="block gradient-text">Infrastructure Protected</span>
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Combined leadership excellence has resulted in protecting over $13 billion in critical infrastructure 
+                        across Africa, with the largest contract being $1.2 million for hydroelectric plant security.
+                      </p>
+                      
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-primary">$13B+</div>
+                          <div className="text-sm text-muted-foreground">Infrastructure</div>
+                        </div>
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-primary">$1.2M</div>
+                          <div className="text-sm text-muted-foreground">Largest Contract</div>
+                        </div>
+                        <div className="text-center p-4 rounded-xl bg-card/50">
+                          <div className="text-2xl font-bold text-primary">3</div>
+                          <div className="text-sm text-muted-foreground">Key Leaders</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="relative">
+                      <motion.div
+                        className="w-full h-80 bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 rounded-2xl flex items-center justify-center"
+                        animate={{ scale: [1, 1.03, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <div className="text-center">
+                          <div className="text-6xl mb-4">🛡️</div>
+                          <div className="text-2xl font-bold text-foreground">Protecting Africa</div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Slide Controls */}
+              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center">
+                <motion.button
+                  onClick={prevSlide}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/20 text-sm font-medium hover:bg-card/80 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  ← Previous
+                </motion.button>
+                
+                <div className="flex gap-2">
+                  {[0, 1, 2, 3, 4].map((index) => (
+                    <motion.button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentSlide ? 'bg-primary' : 'bg-primary/30'
+                      }`}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                    />
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </div>
+                
+                <motion.button
+                  onClick={nextSlide}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/20 text-sm font-medium hover:bg-card/80 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Next →
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Bottom CTA */}
           <motion.div
@@ -561,7 +813,7 @@ export default function Home() {
                 whileHover={{ x: '0%' }}
                 transition={{ duration: 0.3 }}
               />
-              <span className="relative z-10">Meet Our Leadership Team</span>
+              <span className="relative z-10">Explore Our Leadership Story</span>
               <motion.div
                 className="relative z-10"
                 animate={{ x: [0, 5, 0] }}
