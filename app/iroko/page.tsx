@@ -14,6 +14,9 @@ import { IrokoApplicationsSection } from "@/components/iroko/iroko-applications-
 import { IrokoSpecificationsSection } from "@/components/iroko/iroko-specifications-section"
 import { IrokoOperationsSection } from "@/components/iroko/iroko-operations-section"
 import { IrokoMarketSection } from "@/components/iroko/iroko-market-section"
+import { MobileIrokoApplicationsSlideshow } from "@/components/mobile-iroko-applications-slideshow"
+import { MobileIrokoSpecificationsSlideshow } from "@/components/mobile-iroko-specifications-slideshow"
+import { MobileIrokoMarketSlideshow } from "@/components/mobile-iroko-market-slideshow"
 
 export default function IrokoPage() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -42,17 +45,29 @@ export default function IrokoPage() {
         {/* Iroko Hero Section */}
         <IrokoHeroSection />
 
-        {/* Mission Applications Section */}
-        <IrokoApplicationsSection />
+        {/* Mobile: Mission Applications Slideshow */}
+        {isMobile ? (
+          <MobileIrokoApplicationsSlideshow />
+        ) : (
+          <IrokoApplicationsSection />
+        )}
 
         {/* Technical Specifications Section */}
-        <IrokoSpecificationsSection />
+        {isMobile ? (
+          <MobileIrokoSpecificationsSlideshow />
+        ) : (
+          <IrokoSpecificationsSection />
+        )}
 
         {/* Operations Section */}
         <IrokoOperationsSection />
 
         {/* Market Section - Use Cases & Competitive Advantages */}
-        <IrokoMarketSection />
+        {isMobile ? (
+          <MobileIrokoMarketSlideshow />
+        ) : (
+          <IrokoMarketSection />
+        )}
 
         <Footer />
       </main>

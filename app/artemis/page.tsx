@@ -7,12 +7,33 @@ import { Loading } from "@/components/loading"
 import { MobileLayout } from "@/components/mobile-layout"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 
-// Import Artemis sections
-import { ArtemisHeroSection } from "@/components/artemis/artemis-hero-section-v2"
-import { ArtemisIntelligenceSection } from "@/components/artemis/artemis-intelligence-section-v2"
-import { ArtemisCapabilitiesSection } from "@/components/artemis/artemis-capabilities-section-v2"
-import { ArtemisIntegrationSection } from "@/components/artemis/artemis-integration-section-v2"
+// Lazy load Artemis sections with threshold for mobile optimization
+const ArtemisHeroSection = dynamic(() => import("@/components/artemis/artemis-hero-section-v2").then(mod => ({ default: mod.ArtemisHeroSection })), {
+  loading: () => <div className="h-screen bg-background" />,
+  ssr: false
+})
+
+const ArtemisIntelligenceSection = dynamic(() => import("@/components/artemis/artemis-intelligence-section-v2").then(mod => ({ default: mod.ArtemisIntelligenceSection })), {
+  loading: () => <div className="h-96 bg-background" />,
+  ssr: false
+})
+
+const ArtemisCapabilitiesSection = dynamic(() => import("@/components/artemis/artemis-capabilities-section-v2").then(mod => ({ default: mod.ArtemisCapabilitiesSection })), {
+  loading: () => <div className="h-96 bg-background" />,
+  ssr: false
+})
+
+const ArtemisIntegrationSection = dynamic(() => import("@/components/artemis/artemis-integration-section-v2").then(mod => ({ default: mod.ArtemisIntegrationSection })), {
+  loading: () => <div className="h-96 bg-background" />,
+  ssr: false
+})
+
+const MobileArtemisSlideshow = dynamic(() => import("@/components/mobile-artemis-slideshow").then(mod => ({ default: mod.MobileArtemisSlideshow })), {
+  loading: () => <div className="h-96 bg-background" />,
+  ssr: false
+})
 
 export default function ArtemisPage() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -38,17 +59,20 @@ export default function ArtemisPage() {
       <main className="min-h-screen bg-background text-foreground overflow-hidden">
         {isMobile ? <MobileHeader /> : <Header />}
 
-        {/* Artemis Hero Section */}
+        {/* Artemis Hero Section - Always visible */}
         <ArtemisHeroSection />
 
-        {/* AI Intelligence Core */}
-        <ArtemisIntelligenceSection />
-
-        {/* Core Capabilities */}
-        <ArtemisCapabilitiesSection />
-
-        {/* System Integration */}
-        <ArtemisIntegrationSection />
+        {/* Mobile: Combined AI Intelligence & System Integration Slideshow */}
+        {isMobile ? (
+          <MobileArtemisSlideshow />
+        ) : (
+          <>
+            {/* Desktop: Individual Sections */}
+            <ArtemisIntelligenceSection />
+            <ArtemisCapabilitiesSection />
+            <ArtemisIntegrationSection />
+          </>
+        )}
 
         <Footer />
       </main>
