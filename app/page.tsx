@@ -23,17 +23,6 @@ const ProductEcosystemSection = dynamic(() => import("@/components/sections/prod
   loading: () => <div className="h-96 bg-gradient-to-b from-background to-charcoal animate-pulse" />
 })
 
-const ManufacturingSection = dynamic(() => import("@/components/sections/manufacturing-section").then(mod => ({ default: mod.ManufacturingSection })), {
-  loading: () => <div className="h-96 bg-gradient-to-b from-charcoal via-background to-charcoal animate-pulse" />
-})
-
-const InfrastructureSection = dynamic(() => import("@/components/sections/infrastructure-section").then(mod => ({ default: mod.InfrastructureSection })), {
-  loading: () => <div className="h-96 bg-gradient-to-b from-background via-charcoal to-background animate-pulse" />
-})
-
-const TechnologySection = dynamic(() => import("@/components/sections/technology-section").then(mod => ({ default: mod.TechnologySection })), {
-  loading: () => <div className="h-96 bg-gradient-to-b from-charcoal via-background to-charcoal animate-pulse" />
-})
 
 const InternationalSection = dynamic(() => import("@/components/sections/international-section").then(mod => ({ default: mod.InternationalSection })), {
   loading: () => <div className="h-96 bg-gradient-to-b from-background via-charcoal to-background animate-pulse" />
@@ -86,14 +75,6 @@ export default function Home() {
           <MobileProductSlideshow />
         )}
 
-        {/* Manufacturing Excellence Section */}
-        <ManufacturingSection />
-
-        {/* Infrastructure Protection Section - Desktop Only */}
-        {!isMobile && <InfrastructureSection />}
-
-        {/* Technology Innovation Section - Desktop Only */}
-        {!isMobile && <TechnologySection />}
 
         {/* International Expansion Section - Desktop Only */}
         {!isMobile && <InternationalSection />}

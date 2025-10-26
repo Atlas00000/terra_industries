@@ -147,59 +147,13 @@ export function WhoWeAreSection() {
           </div>
         </motion.div>
 
-        {/* Key Statistics */}
-        <motion.div
-          className="mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="max-w-6xl mx-auto">
-            <h3 className="text-3xl font-bold text-foreground mb-12 text-center">Key Statistics</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 text-center"
-                whileHover={{ y: -5, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                style={{ willChange: 'transform' }}
-              >
-                <div className="text-4xl font-black text-primary mb-4">$13B+</div>
-                <div className="text-lg font-bold text-foreground mb-2">Infrastructure Protected</div>
-                <div className="text-muted-foreground">Critical assets under our protection</div>
-              </motion.div>
-              
-              <motion.div
-                className="p-8 rounded-3xl bg-gradient-to-br from-terra-steel-blue/20 to-primary/20 border border-terra-steel-blue/30 text-center"
-                whileHover={{ y: -5, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                style={{ willChange: 'transform' }}
-              >
-                <div className="text-4xl font-black text-terra-steel-blue mb-4">20</div>
-                <div className="text-lg font-bold text-foreground mb-2">Drones Per Day</div>
-                <div className="text-muted-foreground">Manufacturing capacity</div>
-              </motion.div>
-              
-              <motion.div
-                className="p-8 rounded-3xl bg-gradient-to-br from-primary/20 to-terra-steel-blue/20 border border-primary/30 text-center"
-                whileHover={{ y: -5, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                style={{ willChange: 'transform' }}
-              >
-                <div className="text-4xl font-black text-primary mb-4">80%</div>
-                <div className="text-lg font-bold text-foreground mb-2">Local Sourcing</div>
-                <div className="text-muted-foreground">African component sourcing</div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Impact Statement */}
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.6 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
           viewport={{ once: true }}
         >
           <div className="max-w-4xl mx-auto">

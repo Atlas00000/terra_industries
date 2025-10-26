@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -36,33 +37,35 @@ export function Header() {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-          <motion.div
-            className="w-12 h-12 rounded-lg flex items-center justify-center border border-terra-silver/30 glow-pulse overflow-hidden"
-            style={{
-              backgroundImage: "linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(46, 91, 186, 0.1) 100%)",
-            }}
-            whileHover={{
-              boxShadow: "0 0 30px rgba(74, 144, 226, 0.5)",
-            }}
-          >
-            <Image
-              src="/terra-logo.png"
-              alt="Terra Industries Logo"
-              width={40}
-              height={40}
-              className="w-full h-full object-cover"
-            />
+        <Link href="/">
+          <motion.div className="flex items-center gap-3 cursor-pointer" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+            <motion.div
+              className="w-12 h-12 rounded-lg flex items-center justify-center border border-terra-silver/30 glow-pulse overflow-hidden"
+              style={{
+                backgroundImage: "linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(46, 91, 186, 0.1) 100%)",
+              }}
+              whileHover={{
+                boxShadow: "0 0 30px rgba(74, 144, 226, 0.5)",
+              }}
+            >
+              <Image
+                src="/terra-logo.png"
+                alt="Terra Industries Logo"
+                width={40}
+                height={40}
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+            <motion.span
+              className="text-2xl font-black text-foreground tracking-widest font-display"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              TERRA INDUSTRIES
+            </motion.span>
           </motion.div>
-          <motion.span
-            className="text-2xl font-black text-foreground tracking-widest font-display"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            TERRAINDUSTRIES
-          </motion.span>
-        </motion.div>
+        </Link>
 
         <nav className="flex items-center gap-8">
           {navItems.map((item, index) => (

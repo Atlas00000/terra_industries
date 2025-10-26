@@ -35,15 +35,13 @@ export function ProductEcosystemSection() {
           className="absolute inset-0 opacity-5"
           style={{
             backgroundImage: `
-              linear-gradient(45deg, rgba(74, 144, 226, 0.1) 25%, transparent 25%),
-              linear-gradient(-45deg, rgba(74, 144, 226, 0.1) 25%, transparent 25%),
-              linear-gradient(45deg, transparent 75%, rgba(74, 144, 226, 0.1) 75%),
-              linear-gradient(-45deg, transparent 75%, rgba(74, 144, 226, 0.1) 75%)
+              linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
             `,
             backgroundSize: '60px 60px'
           }}
           animate={!isReducedMotion ? {
-            backgroundPosition: ['0 0, 0 30px, 30px -30px, -30px 0px', '60px 60px, 60px 90px, 90px 30px, 30px 60px']
+            backgroundPosition: ['0px 0px', '60px 60px']
           } : {}}
           transition={{
             duration: 30, // Slower animation

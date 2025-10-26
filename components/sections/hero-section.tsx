@@ -23,7 +23,7 @@ const generateParticlePositions = (count: number) => {
 };
 
 export function HeroSection() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(2) // Start from slide 3 (index 2)
   const [isPaused, setIsPaused] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   
