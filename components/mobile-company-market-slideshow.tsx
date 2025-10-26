@@ -28,7 +28,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "40% Cost Advantage"
         }
       ],
-      visual: "/stories/Market_Leadership_Announcement.jpeg"
+      visual: "/stories/Largest_Contract_Achievement.jpeg"
     },
     {
       title: "Market Share",
@@ -48,7 +48,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Expanding Base"
         }
       ],
-      visual: "/stories/Market_Share_Growth.jpeg"
+      visual: "/stories/South_Africa_Export_Success.jpeg"
     },
     {
       title: "Growth Strategy",
@@ -68,7 +68,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Strategic Growth"
         }
       ],
-      visual: "/stories/Growth_Strategy_Launch.jpeg"
+      visual: "/stories/Upgraded_Drone_Factory.jpeg"
     },
     {
       title: "Strategic Initiatives",
@@ -88,7 +88,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Ambitious Goals"
         }
       ],
-      visual: "/stories/Strategic_Initiatives_Update.jpeg"
+      visual: "/stories/Innovation_in_Action.jpeg"
     },
     {
       title: "Financial Performance",
@@ -108,7 +108,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Profitable Growth"
         }
       ],
-      visual: "/stories/Financial_Performance_Report.jpeg"
+      visual: "/stories/$13-Billion-Critical_Infrastructure.jpeg"
     },
     {
       title: "Investment Returns",
@@ -128,7 +128,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Robust Health"
         }
       ],
-      visual: "/stories/Investment_Returns_Update.jpeg"
+      visual: "/stories/Made_in_Africa_Innovation.jpeg"
     },
     {
       title: "Future Vision",
@@ -148,7 +148,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Ambitious Goals"
         }
       ],
-      visual: "/stories/Future_Vision_Launch.jpeg"
+      visual: "/stories/Autonomous_Technology_Leadership.jpeg"
     },
     {
       title: "Market Expansion",
@@ -168,7 +168,7 @@ export function MobileCompanyMarketSlideshow() {
           metrics: "Global Strategy"
         }
       ],
-      visual: "/stories/Global_Expansion_Launch.jpeg"
+      visual: "/stories/ArtemisOS_Integration.jpeg"
     }
   ]
 

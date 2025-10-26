@@ -28,7 +28,7 @@ export function MobileCompanyPartnershipsSlideshow() {
           impact: "Strengthened government relationships"
         }
       ],
-      visual: "/stories/Strategic_Partnerships_Announcement.jpeg"
+      visual: "/stories/Milsat_patnership.jpeg"
     },
     {
       title: "Strategic Alliances",
@@ -48,7 +48,7 @@ export function MobileCompanyPartnershipsSlideshow() {
           impact: "Enhanced national security capabilities"
         }
       ],
-      visual: "/stories/Government_Contract_Signing.jpeg"
+      visual: "/stories/Ayoola_Jolasinmi_Joins_Board.jpeg"
     },
     {
       title: "International Expansion",
@@ -68,7 +68,7 @@ export function MobileCompanyPartnershipsSlideshow() {
           impact: "Accelerated regional market growth"
         }
       ],
-      visual: "/stories/African_Expansion_Launch.jpeg"
+      visual: "/stories/South_Africa_Export_Success.jpeg"
     },
     {
       title: "Global Partnerships",
@@ -88,7 +88,7 @@ export function MobileCompanyPartnershipsSlideshow() {
           impact: "Accelerated international growth"
         }
       ],
-      visual: "/stories/Global_Partnership_Announcement.jpeg"
+      visual: "/stories/ArtemisOS_Real_Time_Capabilities_Demonstration.jpeg"
     },
     {
       title: "Technology Partnerships",
@@ -108,7 +108,7 @@ export function MobileCompanyPartnershipsSlideshow() {
           impact: "Accelerated innovation development"
         }
       ],
-      visual: "/stories/Technology_Partnership_Launch.jpeg"
+      visual: "/stories/Innovation_in_Action.jpeg"
     },
     {
       title: "Industry Collaborations",
@@ -128,7 +128,7 @@ export function MobileCompanyPartnershipsSlideshow() {
           impact: "Accelerated market development"
         }
       ],
-      visual: "/stories/Industry_Collaboration_Summit.jpeg"
+      visual: "/stories/Made_in_Africa_Innovation.jpeg"
     }
   ]
 

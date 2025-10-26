@@ -128,7 +128,7 @@ export function MobileCompanyNewsSlideshow() {
           impact: "Industry Leader Status"
         }
       ],
-      visual: "/stories/Media_Coverage_Update.jpeg"
+      visual: "/stories/Technology_and_AI_Innovation_Focus.png"
     },
     {
       title: "Public Awareness",
@@ -148,7 +148,7 @@ export function MobileCompanyNewsSlideshow() {
           impact: "Enhanced Brand Value"
         }
       ],
-      visual: "/stories/Public_Awareness_Campaign.jpeg"
+      visual: "/stories/africa_industralization_role1.png"
     },
     {
       title: "Social Impact",
@@ -168,7 +168,7 @@ export function MobileCompanyNewsSlideshow() {
           impact: "500+ Jobs Created"
         }
       ],
-      visual: "/stories/Community_Engagement_Event.jpeg"
+      visual: "/stories/africa_industralization_role2.png"
     },
     {
       title: "Economic Impact",
@@ -188,7 +188,7 @@ export function MobileCompanyNewsSlideshow() {
           impact: "Regional Economic Growth"
         }
       ],
-      visual: "/stories/Economic_Impact_Report.jpeg"
+      visual: "/stories/africa_industralization_role3.png"
     },
     {
       title: "Industry Recognition",
@@ -208,7 +208,7 @@ export function MobileCompanyNewsSlideshow() {
           impact: "Quality Standards"
         }
       ],
-      visual: "/stories/Industry_Awards_Ceremony.jpeg"
+      visual: "/stories/africa_industralization_role4.png"
     }
   ]
 
