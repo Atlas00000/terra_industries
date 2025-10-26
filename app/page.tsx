@@ -5,22 +5,22 @@ import { MobileHeader } from "@/components/mobile-header"
 import { Footer } from "@/components/footer"
 import { Loading } from "@/components/loading"
 import { MobileLayout } from "@/components/mobile-layout"
+import { MobileLeadershipSlideshow } from "@/components/mobile-leadership-slideshow"
+import { MobileProductSlideshow } from "@/components/mobile-product-slideshow"
+import { MobileExpansionSlideshow } from "@/components/mobile-expansion-slideshow"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 
-// Import desktop sections (unchanged for web view)
+// Import critical sections (Hero, Who We Are, Leadership, Product Ecosystem, International Expansion)
 import { HeroSection } from "@/components/sections/hero-section"
 import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
 import { LeadershipSection } from "@/components/sections/leadership-section"
 import { ProductEcosystemSection } from "@/components/sections/product-ecosystem-section"
 import { InternationalSection } from "@/components/sections/international-section"
 
-// Import mobile-optimized sections (no stuttering)
-import { MobileHeroSection } from "@/components/sections/mobile-hero-section"
-import { MobileWhoWeAreSection } from "@/components/sections/mobile-who-we-are-section"
-import { MobileLeadershipSection } from "@/components/sections/mobile-leadership-section"
-import { MobileProductEcosystemSection } from "@/components/sections/mobile-product-ecosystem-section"
+// Lazy load non-critical sections (5+ - if any future sections are added)
 
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -46,32 +46,24 @@ export default function Home() {
       <main className="min-h-screen bg-background text-foreground overflow-hidden">
         {isMobile ? <MobileHeader /> : <Header />}
 
-        {/* Hero Section - Mobile Optimized */}
-        {isMobile ? (
-          <MobileHeroSection />
-        ) : (
-          <HeroSection />
-        )}
+        {/* Hero Section */}
+        <HeroSection />
 
-        {/* Who We Are Section - Mobile Optimized */}
-        {isMobile ? (
-          <MobileWhoWeAreSection />
-        ) : (
-          <WhoWeAreSection />
-        )}
+        {/* Who We Are Section */}
+        <WhoWeAreSection />
 
-        {/* Leadership Excellence Section - Mobile Optimized */}
-        {isMobile ? (
-          <MobileLeadershipSection />
-        ) : (
+        {/* Leadership Excellence Section */}
+        {!isMobile ? (
           <LeadershipSection />
+        ) : (
+          <MobileLeadershipSlideshow />
         )}
 
-        {/* Product Ecosystem Section - Mobile Optimized */}
-        {isMobile ? (
-          <MobileProductEcosystemSection />
-        ) : (
+        {/* Product Ecosystem Section */}
+        {!isMobile ? (
           <ProductEcosystemSection />
+        ) : (
+          <MobileProductSlideshow />
         )}
 
         {/* International Expansion Section - Desktop Only */}
