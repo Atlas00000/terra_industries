@@ -122,7 +122,7 @@ export function MobileHeader() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex flex-col items-center justify-center h-full px-6 pt-32">
+            <div className="flex flex-col items-center justify-center h-full px-6">
               {/* Close Button */}
               <motion.button
                 className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center"
@@ -135,12 +135,12 @@ export function MobileHeader() {
               </motion.button>
 
               {/* Navigation Items */}
-              <div className="space-y-4 text-center">
+              <div className="space-y-6 text-center">
                 {navItems.map((item, index) => (
                   <motion.a
                     key={item.label}
                     href={item.href}
-                    className="block text-lg font-semibold text-foreground hover:text-primary transition-colors duration-300"
+                    className="block text-xl font-semibold text-foreground hover:text-primary transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-primary/10"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
