@@ -114,10 +114,14 @@ export function MobileKallonApplicationsSlideshow() {
       
       slidesToPreload.forEach((index) => {
         if (!imagesLoaded.has(index)) {
-          const img = new Image()
+          const img = new window.Image()
           img.onload = () => {
             setImagesLoaded(prev => new Set([...prev, index]))
           }
+          img.onerror = () => {
+            // Handle error silently, don't add to loaded set
+          }
+            setImagesLoaded(prev => new Set([...prev, index]))
           img.src = slides[index].visual || slides[index].image
         }
       })
