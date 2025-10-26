@@ -7,6 +7,7 @@ import { Loading } from "@/components/loading"
 import { MobileLayout } from "@/components/mobile-layout"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 
 // Import Iroko sections
 import { IrokoHeroSection } from "@/components/iroko/iroko-hero-section"
@@ -14,9 +15,31 @@ import { IrokoApplicationsSection } from "@/components/iroko/iroko-applications-
 import { IrokoSpecificationsSection } from "@/components/iroko/iroko-specifications-section"
 import { IrokoOperationsSection } from "@/components/iroko/iroko-operations-section"
 import { IrokoMarketSection } from "@/components/iroko/iroko-market-section"
-import { MobileIrokoApplicationsSlideshow } from "@/components/mobile-iroko-applications-slideshow"
-import { MobileIrokoSpecificationsSlideshow } from "@/components/mobile-iroko-specifications-slideshow"
-import { MobileIrokoMarketSlideshow } from "@/components/mobile-iroko-market-slideshow"
+
+// Dynamic imports for mobile slideshows with higher threshold
+const MobileIrokoApplicationsSlideshow = dynamic(
+  () => import("@/components/mobile-iroko-applications-slideshow").then(mod => ({ default: mod.MobileIrokoApplicationsSlideshow })),
+  { 
+    ssr: false,
+    loading: () => <div className="h-96 flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>
+  }
+)
+
+const MobileIrokoSpecificationsSlideshow = dynamic(
+  () => import("@/components/mobile-iroko-specifications-slideshow").then(mod => ({ default: mod.MobileIrokoSpecificationsSlideshow })),
+  { 
+    ssr: false,
+    loading: () => <div className="h-96 flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>
+  }
+)
+
+const MobileIrokoMarketSlideshow = dynamic(
+  () => import("@/components/mobile-iroko-market-slideshow").then(mod => ({ default: mod.MobileIrokoMarketSlideshow })),
+  { 
+    ssr: false,
+    loading: () => <div className="h-96 flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>
+  }
+)
 
 export default function IrokoPage() {
   const [isLoaded, setIsLoaded] = useState(false)
