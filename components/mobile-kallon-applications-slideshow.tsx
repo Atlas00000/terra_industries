@@ -8,6 +8,7 @@ import Image from "next/image"
 export function MobileKallonApplicationsSlideshow() {
   const { isReducedMotion } = useMobileOptimization()
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
 
   const slides = [
     {
@@ -101,6 +102,31 @@ export function MobileKallonApplicationsSlideshow() {
       borderColor: "border-indigo-500/30"
     }
   ]
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Preload current slide and next 2 slides for smoother transitions
+      const slidesToPreload = [
+        currentSlide,
+        (currentSlide + 1) % slides.length,
+        (currentSlide + 2) % slides.length
+      ]
+      
+      slidesToPreload.forEach((index) => {
+        if (!imagesLoaded.has(index)) {
+          const img = new Image()
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, index]))
+          }
+          img.src = slides[index].visual || slides[index].image
+        }
+      })
+    }
+    
+    preloadImages()
+  }, [slides, imagesLoaded, currentSlide])
+
+
 
   // Auto-rotation
   useEffect(() => {
@@ -243,12 +269,23 @@ export function MobileKallonApplicationsSlideshow() {
                 {/* Visual */}
                 <div className="relative">
                   <div className="relative w-full h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-muted/20 to-muted/10 border border-border/20">
+                    {/* Loading State */}
+                    {!imagesLoaded.has(currentSlide) && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-muted/20 to-muted/10 flex items-center justify-center rounded-2xl">
+                        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                      </div>
+                    )}
+                    
                     <Image
                       src={slides[currentSlide].image}
                       alt={slides[currentSlide].title}
                       fill
-                      className="object-contain p-4"
+                      className={`object-contain p-4 transition-opacity duration-300 ${
+                        imagesLoaded.has(currentSlide) ? 'opacity-100' : 'opacity-0'
+                      }`}
                       priority={currentSlide === 0}
+                      loading={currentSlide === 0 ? "eager" : "lazy"}
+                      onLoad={() => setImagesLoaded(prev => new Set([...prev, currentSlide]))}
                     />
                     
                     {/* Floating Indicators */}

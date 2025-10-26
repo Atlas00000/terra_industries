@@ -8,6 +8,7 @@ import Image from "next/image"
 export function MobileCompanyMarketSlideshow() {
   const { isReducedMotion } = useMobileOptimization()
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
 
   const slides = [
     {
@@ -171,6 +172,30 @@ export function MobileCompanyMarketSlideshow() {
       visual: "/stories/ArtemisOS_Integration.jpeg"
     }
   ]
+
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Preload current slide and next 2 slides for smoother transitions
+      const slidesToPreload = [
+        currentSlide,
+        (currentSlide + 1) % slides.length,
+        (currentSlide + 2) % slides.length
+      ]
+      
+      slidesToPreload.forEach((index) => {
+        if (!imagesLoaded.has(index)) {
+          const img = new Image()
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, index]))
+          }
+          img.src = slides[index].visual
+        }
+      })
+    }
+    
+    preloadImages()
+  }, [slides, imagesLoaded, currentSlide])
 
   // Auto-rotation
   useEffect(() => {
@@ -373,12 +398,24 @@ export function MobileCompanyMarketSlideshow() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
                 >
+                  {/* Loading State */}
+                  {!imagesLoaded.has(currentSlide) && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-muted/20 to-muted/10 flex items-center justify-center">
+                      <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                    </div>
+                  )}
+                  
                   <Image
                     src={slides[currentSlide].visual}
                     alt={slides[currentSlide].title}
                     fill
-                    className="object-contain"
+                    className={`object-contain transition-opacity duration-300 ${
+                      imagesLoaded.has(currentSlide) ? 'opacity-100' : 'opacity-0'
+                    }`}
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={currentSlide === 0}
+                    loading={currentSlide === 0 ? "eager" : "lazy"}
+                    onLoad={() => setImagesLoaded(prev => new Set([...prev, currentSlide]))}
                   />
                   
                   {/* Overlay Gradient */}

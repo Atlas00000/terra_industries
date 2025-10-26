@@ -8,6 +8,7 @@ import Image from "next/image"
 export function MobileIrokoApplicationsSlideshow() {
   const { isReducedMotion } = useMobileOptimization()
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
 
   const slides = [
     // Primary Applications - Emergency Response & First Aid
@@ -187,6 +188,31 @@ export function MobileIrokoApplicationsSlideshow() {
       visual: "/Iroko_UAV/Iroko_UAV .png"
     }
   ]
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Preload current slide and next 2 slides for smoother transitions
+      const slidesToPreload = [
+        currentSlide,
+        (currentSlide + 1) % slides.length,
+        (currentSlide + 2) % slides.length
+      ]
+      
+      slidesToPreload.forEach((index) => {
+        if (!imagesLoaded.has(index)) {
+          const img = new Image()
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, index]))
+          }
+          img.src = slides[index].visual || slides[index].image
+        }
+      })
+    }
+    
+    preloadImages()
+  }, [slides, imagesLoaded, currentSlide])
+
+
 
   // Auto-rotation
   useEffect(() => {
@@ -324,12 +350,24 @@ export function MobileIrokoApplicationsSlideshow() {
 
                 {/* Visual */}
                 <div className="w-full md:w-80 h-80 md:h-96 relative">
-                  <Image
-                    src={slides[currentSlide].visual}
-                    alt={slides[currentSlide].title}
-                    fill
-                    className="object-contain rounded-2xl"
-                  />
+                  {/* Loading State */}
+                    {!imagesLoaded.has(currentSlide) && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-muted/20 to-muted/10 flex items-center justify-center rounded-2xl">
+                        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                      </div>
+                    )}
+                    
+                    <Image
+                      src={slides[currentSlide].visual}
+                      alt={slides[currentSlide].title}
+                      fill
+                      className={`object-contain rounded-2xl transition-opacity duration-300 ${
+                        imagesLoaded.has(currentSlide) ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      priority={currentSlide === 0}
+                      loading={currentSlide === 0 ? "eager" : "lazy"}
+                      onLoad={() => setImagesLoaded(prev => new Set([...prev, currentSlide]))}
+                    />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl" />
                 </div>
               </motion.div>

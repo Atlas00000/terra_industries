@@ -50,7 +50,33 @@ const leadershipData = [
 export function MobileLeadershipSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
   const { isMobile, isReducedMotion, getAnimationSettings } = useMobileOptimization()
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Preload current slide and next 2 slides for smoother transitions
+      const slidesToPreload = [
+        currentSlide,
+        (currentSlide + 1) % leadershipData.length,
+        (currentSlide + 2) % leadershipData.length
+      ]
+      
+      slidesToPreload.forEach((index) => {
+        if (!imagesLoaded.has(index)) {
+          const img = new Image()
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, index]))
+          }
+          img.src = leadershipData[index].image
+        }
+      })
+    }
+    
+    preloadImages()
+  }, [leadershipData, imagesLoaded, currentSlide])
+
+
 
   // Auto-rotation for mobile
   useEffect(() => {
@@ -177,12 +203,23 @@ export function MobileLeadershipSlideshow() {
                 <div className="relative h-full bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm border border-border/20">
                   {/* Leader Image */}
                   <div className="relative h-1/2">
+                    {/* Loading State */}
+                    {!imagesLoaded.has(currentSlide) && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-muted/20 to-muted/10 flex items-center justify-center rounded-2xl">
+                        <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                      </div>
+                    )}
+                    
                     <Image
                       src={leadershipData[currentSlide].image}
                       alt={leadershipData[currentSlide].name}
                       fill
-                      className="object-cover"
+                      className={`object-cover transition-opacity duration-300 ${
+                        imagesLoaded.has(currentSlide) ? 'opacity-100' : 'opacity-0'
+                      }`}
                       priority={currentSlide === 0}
+                      loading={currentSlide === 0 ? "eager" : "lazy"}
+                      onLoad={() => setImagesLoaded(prev => new Set([...prev, currentSlide]))}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     

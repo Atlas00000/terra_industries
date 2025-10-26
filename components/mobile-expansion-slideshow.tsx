@@ -48,8 +48,34 @@ const expansionData = [
 
 export function MobileExpansionSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const { isMobile, isReducedMotion, getAnimationSettings } = useMobileOptimization()
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Preload current slide and next 2 slides for smoother transitions
+      const slidesToPreload = [
+        currentSlide,
+        (currentSlide + 1) % slides.length,
+        (currentSlide + 2) % slides.length
+      ]
+      
+      slidesToPreload.forEach((index) => {
+        if (!imagesLoaded.has(index)) {
+          const img = new Image()
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, index]))
+          }
+          img.src = slides[index].visual || slides[index].image
+        }
+      })
+    }
+    
+    preloadImages()
+  }, [slides, imagesLoaded, currentSlide])
+
+
 
   // Auto-rotation for mobile
   useEffect(() => {
