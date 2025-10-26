@@ -8,7 +8,6 @@ import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 
 export function MobileHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isMobile, getTouchSettings, getAnimationSettings } = useMobileOptimization()
 
   useEffect(() => {
@@ -46,16 +45,16 @@ export function MobileHeader() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-2 py-2 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/">
+        <Link href="/" className="flex-shrink-0">
           <motion.div 
-            className="flex items-center gap-2 cursor-pointer" 
+            className="flex items-center gap-1 cursor-pointer" 
             whileHover={{ scale: 1.05 }} 
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className="w-10 h-10 rounded-lg flex items-center justify-center border border-terra-silver/30 overflow-hidden"
+              className="w-6 h-6 rounded-md flex items-center justify-center border border-terra-silver/30 overflow-hidden"
               style={{
                 backgroundImage: "linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(46, 91, 186, 0.1) 100%)",
               }}
@@ -63,13 +62,13 @@ export function MobileHeader() {
               <Image
                 src="/terra-logo.png"
                 alt="Terra Industries Logo"
-                width={32}
-                height={32}
+                width={20}
+                height={20}
                 className="w-full h-full object-cover"
               />
             </motion.div>
             <motion.span
-              className="text-lg font-black text-foreground tracking-wide font-display"
+              className="text-xs font-black text-foreground tracking-wide font-display hidden sm:block"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
@@ -79,82 +78,31 @@ export function MobileHeader() {
           </motion.div>
         </Link>
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          className="relative w-10 h-10 flex items-center justify-center"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          whileTap={{ scale: 0.95 }}
-          style={touchSettings}
-        >
-          <motion.div
-            className="w-6 h-0.5 bg-foreground"
-            animate={{
-              rotate: isMenuOpen ? 45 : 0,
-              y: isMenuOpen ? 0 : -4
-            }}
-            transition={{ duration: 0.3 }}
-          />
-          <motion.div
-            className="absolute w-6 h-0.5 bg-foreground"
-            animate={{
-              opacity: isMenuOpen ? 0 : 1
-            }}
-            transition={{ duration: 0.3 }}
-          />
-          <motion.div
-            className="w-6 h-0.5 bg-foreground"
-            animate={{
-              rotate: isMenuOpen ? -45 : 0,
-              y: isMenuOpen ? 0 : 4
-            }}
-            transition={{ duration: 0.3 }}
-          />
-        </motion.button>
+        {/* Horizontal Navigation */}
+        <nav className="flex items-center gap-1 sm:gap-2 flex-1 justify-center overflow-x-auto scrollbar-hide px-2">
+          {navItems.map((item, index) => (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              className="relative text-xs sm:text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 px-2 sm:px-3 py-1 rounded-md hover:bg-primary/10 whitespace-nowrap flex-shrink-0"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 + index * 0.05, duration: 0.5 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={touchSettings}
+            >
+              {item.label}
+              <motion.span
+                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-terra-steel-blue"
+                initial={{ width: 0 }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.a>
+          ))}
+        </nav>
       </div>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="fixed inset-0 bg-background/95 backdrop-blur-xl z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex flex-col items-center justify-center h-full px-6">
-              {/* Close Button */}
-              <motion.button
-                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center"
-                onClick={() => setIsMenuOpen(false)}
-                whileTap={{ scale: 0.95 }}
-                style={touchSettings}
-              >
-                <div className="w-6 h-0.5 bg-foreground rotate-45" />
-                <div className="w-6 h-0.5 bg-foreground -rotate-45 absolute" />
-              </motion.button>
-
-              {/* Navigation Items */}
-              <div className="space-y-6 text-center">
-                {navItems.map((item, index) => (
-                  <motion.a
-                    key={item.label}
-                    href={item.href}
-                    className="block text-xl font-semibold text-foreground hover:text-primary transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-primary/10"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                    onClick={() => setIsMenuOpen(false)}
-                    style={touchSettings}
-                  >
-                    {item.label}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Scroll indicator */}
       {isScrolled && (
