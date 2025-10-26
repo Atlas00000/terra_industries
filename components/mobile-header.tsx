@@ -135,12 +135,12 @@ export function MobileHeader() {
               </motion.button>
 
               {/* Navigation Items */}
-              <div className="space-y-6 text-center">
+              <div className="space-y-4 text-center">
                 {navItems.map((item, index) => (
                   <motion.a
                     key={item.label}
                     href={item.href}
-                    className="block text-2xl font-bold text-foreground hover:text-primary transition-colors duration-300"
+                    className="block text-lg font-semibold text-foreground hover:text-primary transition-colors duration-300"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
