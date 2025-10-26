@@ -10,23 +10,14 @@ import { MobileProductSlideshow } from "@/components/mobile-product-slideshow"
 import { MobileExpansionSlideshow } from "@/components/mobile-expansion-slideshow"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 
-// Import critical sections (Hero and Who We Are - above the fold)
+// Import critical sections (Hero, Who We Are, Leadership, Product Ecosystem, International Expansion)
 import { HeroSection } from "@/components/sections/hero-section"
 import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
+import { LeadershipSection } from "@/components/sections/leadership-section"
+import { ProductEcosystemSection } from "@/components/sections/product-ecosystem-section"
+import { InternationalSection } from "@/components/sections/international-section"
 
-// Lazy load non-critical sections (3+)
-const LeadershipSection = dynamic(() => import("@/components/sections/leadership-section").then(mod => ({ default: mod.LeadershipSection })), {
-  loading: () => <div className="h-96 bg-gradient-to-b from-background via-charcoal to-background animate-pulse" />
-})
-
-const ProductEcosystemSection = dynamic(() => import("@/components/sections/product-ecosystem-section").then(mod => ({ default: mod.ProductEcosystemSection })), {
-  loading: () => <div className="h-96 bg-gradient-to-b from-background to-charcoal animate-pulse" />
-})
-
-
-const InternationalSection = dynamic(() => import("@/components/sections/international-section").then(mod => ({ default: mod.InternationalSection })), {
-  loading: () => <div className="h-96 bg-gradient-to-b from-background via-charcoal to-background animate-pulse" />
-})
+// Lazy load non-critical sections (5+ - if any future sections are added)
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
@@ -74,7 +65,6 @@ export default function Home() {
         ) : (
           <MobileProductSlideshow />
         )}
-
 
         {/* International Expansion Section - Desktop Only */}
         {!isMobile && <InternationalSection />}

@@ -247,6 +247,41 @@
     animation: glow-pulse 2s ease-in-out infinite;
   }
 
+  /* Disable ALL glow animations on mobile devices to prevent flickering */
+  @media (max-width: 768px) {
+    .glow-pulse {
+      animation: none !important;
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.3), 0 0 40px rgba(74, 144, 226, 0.1);
+    }
+    
+    .glow-text {
+      animation: none !important;
+      text-shadow: 
+        0 0 10px rgba(74, 144, 226, 0.5),
+        0 0 20px rgba(74, 144, 226, 0.3),
+        0 0 40px rgba(74, 144, 226, 0.2);
+    }
+    
+    .gradient-text {
+      animation: none !important;
+      background-position: 0% 50%;
+    }
+    
+    .border-glow {
+      animation: none !important;
+    }
+    
+    .btn-cta {
+      animation: none !important;
+    }
+    
+    /* Disable any other glow-related animations */
+    * {
+      animation-duration: 0s !important;
+      animation-iteration-count: 0 !important;
+    }
+  }
+
   .float-up {
     animation: float-up 0.6s ease-out;
   }

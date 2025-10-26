@@ -36,7 +36,7 @@ const leadershipData = [
     id: 3,
     name: "Engr. Mansur Ahmed",
     title: "Board of Directors", 
-    image: "/stories/Mansur_Ahmed_Joins_Board.jpeg",
+    image: "/stories/Addition_Engr_Mansur_Ahmed.jpeg",
     description: "Former Director General of the Manufacturers Association of Nigeria (MAN) with extensive experience in industrial development and manufacturing policy. Brings deep understanding of Nigeria's manufacturing landscape and economic development.",
     highlights: [
       "Industrial Development",
