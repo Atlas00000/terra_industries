@@ -9,6 +9,8 @@ export function useMobileOptimization() {
   const [isLowEndDevice, setIsLowEndDevice] = useState(false)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const checkDevice = () => {
       const width = window.innerWidth
       setIsMobile(width < 768)
@@ -49,7 +51,7 @@ export function useMobileOptimization() {
     let lastScrollY = 0
 
     const handleScroll = () => {
-      if (timeoutId) return
+      if (timeoutId || typeof window === 'undefined') return
 
       timeoutId = setTimeout(() => {
         const currentScrollY = window.scrollY

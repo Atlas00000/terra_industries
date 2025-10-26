@@ -8,46 +8,6 @@ export function MobileArcherSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
   const { isReducedMotion } = useMobileOptimization()
-  // Preload images
-  useEffect(() => {
-    const preloadImages = () => {
-      // Preload current slide and next 2 slides for smoother transitions
-      const slidesToPreload = [
-        currentSlide,
-        (currentSlide + 1) % slides.length,
-        (currentSlide + 2) % slides.length
-      ]
-      
-      slidesToPreload.forEach((index) => {
-        if (!imagesLoaded.has(index)) {
-          const img = new window.Image()
-          img.onload = () => {
-            setImagesLoaded(prev => new Set([...prev, index]))
-          }
-          img.onerror = () => {
-            // Handle error silently, don't add to loaded set
-          }
-            setImagesLoaded(prev => new Set([...prev, index]))
-          img.src = slides[index].visual || slides[index].image
-        }
-      })
-    }
-    
-    preloadImages()
-  }, [slides, imagesLoaded, currentSlide])
-
-
-
-  // Auto-rotation
-  useEffect(() => {
-    if (isReducedMotion) return
-    
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 8000) // 8 seconds per slide
-
-    return () => clearInterval(interval)
-  }, [isReducedMotion])
 
   const slides = [
     {
@@ -135,6 +95,44 @@ export function MobileArcherSlideshow() {
       ]
     }
   ]
+
+  // Preload images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Preload current slide and next 2 slides for smoother transitions
+      const slidesToPreload = [
+        currentSlide,
+        (currentSlide + 1) % slides.length,
+        (currentSlide + 2) % slides.length
+      ]
+      
+      slidesToPreload.forEach((index) => {
+        if (!imagesLoaded.has(index)) {
+          const img = new window.Image()
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, index]))
+          }
+          img.onerror = () => {
+            // Handle error silently, don't add to loaded set
+          }
+          img.src = slides[index].visual || slides[index].image
+        }
+      })
+    }
+    
+    preloadImages()
+  }, [slides, imagesLoaded, currentSlide])
+
+  // Auto-rotation
+  useEffect(() => {
+    if (isReducedMotion) return
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 8000) // 8 seconds per slide
+
+    return () => clearInterval(interval)
+  }, [isReducedMotion, slides.length])
 
   return (
     <section className="relative py-16 bg-gradient-to-b from-background via-charcoal to-background overflow-hidden">

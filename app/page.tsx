@@ -33,18 +33,20 @@ export default function Home() {
     setIsLoaded(true)
     
     // Preload critical images to prevent stuttering in production
-    const criticalImages = [
-      '/stories/hero-image.jpg',
-      '/stories/company-image.jpg',
-      '/stories/leadership-image.jpg',
-      '/stories/product-image.jpg',
-      '/stories/expansion-image.jpg'
-    ]
-    
-    criticalImages.forEach(src => {
-      const img = new window.Image()
-      img.src = src
-    })
+    if (typeof window !== 'undefined') {
+      const criticalImages = [
+        '/stories/hero-image.jpg',
+        '/stories/company-image.jpg',
+        '/stories/leadership-image.jpg',
+        '/stories/product-image.jpg',
+        '/stories/expansion-image.jpg'
+      ]
+      
+      criticalImages.forEach(src => {
+        const img = new window.Image()
+        img.src = src
+      })
+    }
   }, [])
 
   const handleLoadingComplete = () => {
