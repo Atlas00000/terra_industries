@@ -57,27 +57,19 @@ export function MobileExpansionSlideshow() {
       // Preload current slide and next 2 slides for smoother transitions
       const slidesToPreload = [
         currentSlide,
-        (currentSlide + 1) % slides.length,
-        (currentSlide + 2) % slides.length
+        (currentSlide + 1) % expansionData.length,
+        (currentSlide + 2) % expansionData.length
       ]
       
+      // Note: expansion data doesn't have images, this is text-only
+      // Mark as loaded immediately
       slidesToPreload.forEach((index) => {
-        if (!imagesLoaded.has(index)) {
-          const img = new window.Image()
-          img.onload = () => {
-            setImagesLoaded(prev => new Set([...prev, index]))
-          }
-          img.onerror = () => {
-            // Handle error silently, don't add to loaded set
-          }
-            setImagesLoaded(prev => new Set([...prev, index]))
-          img.src = slides[index].visual || slides[index].image
-        }
+        setImagesLoaded(prev => new Set([...prev, index]))
       })
     }
     
     preloadImages()
-  }, [slides, imagesLoaded, currentSlide])
+  }, [expansionData, imagesLoaded, currentSlide])
 
 
 

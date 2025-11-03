@@ -115,7 +115,7 @@ export function MobileArcherSlideshow() {
           img.onerror = () => {
             // Handle error silently, don't add to loaded set
           }
-          img.src = slides[index].visual || slides[index].image
+          img.src = '/archer_vtol/archer_vtol_1.png' // Placeholder for text-only slides
         }
       })
     }

@@ -619,7 +619,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Deployment Capabilities</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {slides[0].content.deployment.map((capability, index) => (
+                      {slides[0]?.content?.deployment?.map((capability, index) => (
                         <motion.div
                           key={capability.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -663,7 +663,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Training & Maintenance</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[0].content.training.map((system, index) => (
+                      {slides[0]?.content?.training?.map((system, index) => (
                         <motion.div
                           key={system.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -711,7 +711,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Flight Performance</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {slides[1].content.flight.map((metric, index) => (
+                      {slides[1]?.content?.flight?.map((metric, index) => (
                         <motion.div
                           key={metric.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -755,7 +755,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Efficiency Metrics</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[1].content.efficiency.map((efficiency, index) => (
+                      {slides[1]?.content?.efficiency?.map((efficiency, index) => (
                         <motion.div
                           key={efficiency.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -803,7 +803,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Integration Capabilities</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {slides[2].content.integration.map((integration, index) => (
+                      {slides[2]?.content?.integration?.map((integration, index) => (
                         <motion.div
                           key={integration.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -847,7 +847,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Fleet Management</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[2].content.fleet.map((fleet, index) => (
+                      {slides[2]?.content?.fleet?.map((fleet, index) => (
                         <motion.div
                           key={fleet.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -895,7 +895,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Production Capabilities</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {slides[3].content.production.map((production, index) => (
+                      {slides[3]?.content?.production?.map((production, index) => (
                         <motion.div
                           key={production.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -939,7 +939,7 @@ export function IrokoOperationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Optimization</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[3].content.optimization.map((optimization, index) => (
+                      {slides[3]?.content?.optimization?.map((optimization, index) => (
                         <motion.div
                           key={optimization.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

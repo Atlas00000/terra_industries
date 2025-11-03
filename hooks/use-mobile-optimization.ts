@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { easeOut, linear, type Easing } from "@/lib/types"
 
 export function useMobileOptimization() {
   const [isMobile, setIsMobile] = useState(false)
@@ -71,7 +72,7 @@ export function useMobileOptimization() {
     if (isReducedMotion) {
       return {
         duration: 0,
-        ease: 'linear',
+        ease: linear as Easing,
         repeat: 0
       }
     }
@@ -79,7 +80,7 @@ export function useMobileOptimization() {
     if (isLowEndDevice) {
       return {
         duration: 0.3,
-        ease: 'easeOut',
+        ease: easeOut as Easing,
         repeat: 0
       }
     }
@@ -87,14 +88,14 @@ export function useMobileOptimization() {
     if (isMobile) {
       return {
         duration: 0.4,
-        ease: 'easeOut',
+        ease: easeOut as Easing,
         repeat: 0
       }
     }
 
     return {
       duration: 0.6,
-      ease: 'easeOut',
+      ease: easeOut as Easing,
       repeat: 0
     }
   }, [isMobile, isReducedMotion, isLowEndDevice])

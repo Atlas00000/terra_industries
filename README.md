@@ -74,11 +74,46 @@ cd terra-industries
 # Install dependencies
 pnpm install
 
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your configuration
+
 # Start development server
 pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local` and configure the following variables:
+
+```bash
+# Application
+NODE_ENV=development
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# API Configuration (Backend - optional for now)
+NEXT_PUBLIC_API_URL=http://localhost:4000
+
+# Analytics (Optional)
+NEXT_PUBLIC_VERCEL_ANALYTICS_ID=
+
+# Error Tracking (Optional - Sentry)
+NEXT_PUBLIC_SENTRY_DSN=
+
+# Development
+NEXT_TELEMETRY_DISABLED=1
+```
+
+**Required variables:**
+- `NODE_ENV` - Environment mode (development, production, test)
+- `NEXT_PUBLIC_SITE_URL` - Full URL of your application
+
+**Optional variables:**
+- `NEXT_PUBLIC_API_URL` - Backend API endpoint (for future backend integration)
+- `NEXT_PUBLIC_VERCEL_ANALYTICS_ID` - Vercel Analytics ID
+- `NEXT_PUBLIC_SENTRY_DSN` - Sentry error tracking DSN
 
 ### Available Scripts
 
@@ -87,8 +122,16 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 pnpm dev          # Start development server
 pnpm build        # Build for production
 pnpm start        # Start production server
+
+# Code Quality
 pnpm lint         # Run ESLint
-pnpm type-check   # Run TypeScript checks
+pnpm lint:fix     # Fix ESLint issues automatically
+pnpm type-check   # Run TypeScript type checking
+
+# Testing
+pnpm test         # Run tests (watch mode)
+pnpm test:run     # Run tests once
+pnpm test:coverage # Generate coverage report
 
 # Docker
 docker-compose up -d    # Start with Docker

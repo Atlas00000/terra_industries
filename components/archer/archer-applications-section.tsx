@@ -393,7 +393,7 @@ export function ArcherApplicationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-6">Primary Applications</h4>
                     <div className="space-y-6">
-                      {slides[0].content.primary.map((app, index) => (
+                      {slides[0]?.content?.primary?.map((app, index) => (
                         <motion.div
                           key={app.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -441,7 +441,7 @@ export function ArcherApplicationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-6">Secondary Applications</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {slides[0].content.secondary.map((app, index) => (
+                      {slides[0]?.content?.secondary?.map((app, index) => (
                         <motion.div
                           key={app.name}
                           className="p-4 rounded-xl bg-gradient-to-br from-primary/10 to-green-400/10 border border-primary/20"
@@ -472,7 +472,7 @@ export function ArcherApplicationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-6">Flight Performance</h4>
                     <div className="space-y-6">
-                      {slides[1].content.flight.map((metric, index) => (
+                      {slides[1]?.content?.flight?.map((metric, index) => (
                         <motion.div
                           key={metric.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -507,7 +507,7 @@ export function ArcherApplicationsSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-6">Weather & Efficiency</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {slides[1].content.weather.map((metric, index) => (
+                      {slides[1]?.content?.weather?.map((metric, index) => (
                         <motion.div
                           key={metric.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -542,7 +542,7 @@ export function ArcherApplicationsSection() {
 
               {currentSlide === 2 && (
                 <div className="space-y-8">
-                  {slides[2].content.integration.map((integration, index) => (
+                  {slides[2]?.content?.integration?.map((integration, index) => (
                     <motion.div
                       key={integration.name}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

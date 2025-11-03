@@ -1,5 +1,6 @@
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { easeOut, easeInOut, type Easing } from "@/lib/types"
 
 export function useOptimizedAnimations() {
   const { isReducedMotion, isMobile } = useMobileOptimization()
@@ -8,20 +9,22 @@ export function useOptimizedAnimations() {
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
-    transition: { duration: isReducedMotion ? 0 : 0.6, ease: "easeOut" },
+    transition: { duration: isReducedMotion ? 0 : 0.6, ease: easeOut as Easing },
     viewport: { once: true }
   }
 
-  const staggerContainer = {
-    initial: "initial",
-    whileInView: "animate",
-    viewport: { once: true }
+  const staggerContainer: Variants = {
+    initial: {},
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
   }
 
-  const staggerItem = {
+  const staggerItem: Variants = {
     initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: isReducedMotion ? 0 : 0.5, ease: "easeOut" }
+    animate: { opacity: 1, y: 0, transition: { duration: isReducedMotion ? 0 : 0.5, ease: easeOut as Easing } }
   }
 
   // Particle animation
@@ -34,7 +37,7 @@ export function useOptimizedAnimations() {
   const particleTransition = {
     duration: isReducedMotion ? 0 : 3,
     repeat: isReducedMotion ? 0 : Infinity,
-    ease: "easeInOut"
+    ease: easeInOut as Easing
   }
 
   return {

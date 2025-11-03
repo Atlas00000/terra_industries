@@ -270,7 +270,7 @@ export function DumaMarketSection() {
               {/* Manufacturing Excellence Content */}
               {currentSlide === 0 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.manufacturing.map((item, index) => (
+                  {slides[currentSlide]?.content?.manufacturing?.map((item, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -305,7 +305,7 @@ export function DumaMarketSection() {
               {/* Use Cases & Applications Content */}
               {currentSlide === 1 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.applications.map((app, index) => (
+                  {slides[currentSlide]?.content?.applications?.map((app, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -343,7 +343,7 @@ export function DumaMarketSection() {
               {/* Competitive Advantages Content */}
               {currentSlide === 2 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.advantages.map((advantage, index) => (
+                  {slides[currentSlide]?.content?.advantages?.map((advantage, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

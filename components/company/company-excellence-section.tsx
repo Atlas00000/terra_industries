@@ -296,7 +296,7 @@ export function CompanyExcellenceSection() {
               {/* Leadership Excellence Content */}
               {currentSlide === 0 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.leadership.map((leader, index) => (
+                  {slides[currentSlide]?.content?.leadership?.map((leader, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -326,7 +326,7 @@ export function CompanyExcellenceSection() {
               {/* Manufacturing Excellence Content */}
               {currentSlide === 1 && (
                 <div className="grid grid-cols-2 gap-6">
-                  {slides[currentSlide].content.manufacturing.map((capability, index) => (
+                  {slides[currentSlide]?.content?.manufacturing?.map((capability, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -352,7 +352,7 @@ export function CompanyExcellenceSection() {
               {/* Infrastructure Protection Content */}
               {currentSlide === 2 && (
                 <div className="grid grid-cols-2 gap-6">
-                  {slides[currentSlide].content.infrastructure.map((protection, index) => (
+                  {slides[currentSlide]?.content?.infrastructure?.map((protection, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -378,7 +378,7 @@ export function CompanyExcellenceSection() {
               {/* Technology Innovation Content */}
               {currentSlide === 3 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.innovation.map((innovation, index) => (
+                  {slides[currentSlide]?.content?.innovation?.map((innovation, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

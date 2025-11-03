@@ -90,7 +90,7 @@ export function MobileHeader() {
               transition={{ delay: 0.1 + index * 0.05, duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              style={touchSettings}
+              style={touchSettings as React.CSSProperties}
             >
               {item.label}
               <motion.span

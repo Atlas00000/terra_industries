@@ -262,7 +262,7 @@ export function DumaOperationsSection() {
               {/* Dynamic Content Based on Slide */}
               {currentSlide === 0 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.capabilities.map((capability, index) => (
+                  {slides[currentSlide]?.content?.capabilities?.map((capability, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -291,7 +291,7 @@ export function DumaOperationsSection() {
 
               {currentSlide === 1 && (
                 <div className="grid grid-cols-2 gap-6">
-                  {slides[currentSlide].content.metrics.map((metric, index) => (
+                  {slides[currentSlide]?.content?.metrics?.map((metric, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -322,7 +322,7 @@ export function DumaOperationsSection() {
 
               {currentSlide === 2 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.integration.map((feature, index) => (
+                  {slides[currentSlide]?.content?.integration?.map((feature, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

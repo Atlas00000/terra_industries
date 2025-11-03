@@ -270,7 +270,7 @@ export function KallonSupportSection() {
               {/* Installation & Maintenance Content */}
               {currentSlide === 0 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.installation.map((service, index) => (
+                  {slides[currentSlide]?.content?.installation?.map((service, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -299,7 +299,7 @@ export function KallonSupportSection() {
               {/* Integration Capabilities Content */}
               {currentSlide === 1 && (
                 <div className="grid grid-cols-2 gap-6">
-                  {slides[currentSlide].content.integration.map((capability, index) => (
+                  {slides[currentSlide]?.content?.integration?.map((capability, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -325,7 +325,7 @@ export function KallonSupportSection() {
               {/* Security & Compliance Content */}
               {currentSlide === 2 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.security.map((feature, index) => (
+                  {slides[currentSlide]?.content?.security?.map((feature, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

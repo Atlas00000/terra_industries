@@ -270,7 +270,7 @@ export function KallonIntelligenceSection() {
               {/* AI Intelligence Content */}
               {currentSlide === 0 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.intelligence.map((feature, index) => (
+                  {slides[currentSlide]?.content?.intelligence?.map((feature, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -299,7 +299,7 @@ export function KallonIntelligenceSection() {
               {/* Surveillance Operations Content */}
               {currentSlide === 1 && (
                 <div className="grid grid-cols-2 gap-6">
-                  {slides[currentSlide].content.operations.map((operation, index) => (
+                  {slides[currentSlide]?.content?.operations?.map((operation, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -325,7 +325,7 @@ export function KallonIntelligenceSection() {
               {/* Strategic Deployment Content */}
               {currentSlide === 2 && (
                 <div className="space-y-6">
-                  {slides[currentSlide].content.deployment.map((deployment, index) => (
+                  {slides[currentSlide]?.content?.deployment?.map((deployment, index) => (
                     <motion.div
                       key={index}
                       className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"

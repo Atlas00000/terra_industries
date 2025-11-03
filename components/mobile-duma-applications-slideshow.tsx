@@ -122,7 +122,7 @@ export function MobileDumaApplicationsSlideshow() {
             // Handle error silently, don't add to loaded set
           }
             setImagesLoaded(prev => new Set([...prev, index]))
-          img.src = slides[index].visual || slides[index].image
+          img.src = slides[index].image
         }
       })
     }

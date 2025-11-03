@@ -443,7 +443,7 @@ export function IrokoMarketSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Emergency Services Integration</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[0].content.emergency.map((service, index) => (
+                      {slides[0]?.content?.emergency?.map((service, index) => (
                         <motion.div
                           key={service.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -487,7 +487,7 @@ export function IrokoMarketSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Government & Military Applications</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[0].content.government.map((application, index) => (
+                      {slides[0]?.content?.government?.map((application, index) => (
                         <motion.div
                           key={application.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -531,7 +531,7 @@ export function IrokoMarketSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Commercial & Industrial Uses</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[0].content.commercial.map((use, index) => (
+                      {slides[0]?.content?.commercial?.map((use, index) => (
                         <motion.div
                           key={use.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -579,7 +579,7 @@ export function IrokoMarketSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Unique Selling Propositions</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[1].content.unique.map((proposition, index) => (
+                      {slides[1]?.content?.unique?.map((proposition, index) => (
                         <motion.div
                           key={proposition.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -623,7 +623,7 @@ export function IrokoMarketSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Technology Differentiation</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[1].content.technology.map((technology, index) => (
+                      {slides[1]?.content?.technology?.map((technology, index) => (
                         <motion.div
                           key={technology.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
@@ -667,7 +667,7 @@ export function IrokoMarketSection() {
                   <div>
                     <h4 className="text-2xl font-bold text-foreground mb-8">Cost Advantages</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {slides[1].content.cost.map((advantage, index) => (
+                      {slides[1]?.content?.cost?.map((advantage, index) => (
                         <motion.div
                           key={advantage.name}
                           className="p-6 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm"
