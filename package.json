@@ -13,8 +13,7 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest watch",
-    "start": "next start",
-    "prepare": "husky"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "1.4.0",

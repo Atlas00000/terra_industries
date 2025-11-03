@@ -1,3 +1,6 @@
+# Terra Industries - Optimized Production Docker Image
+# Built with Next.js 16, TypeScript strict mode, and performance optimizations
+
 # Use the official Node.js 20 image as base
 FROM node:20-alpine AS base
 
@@ -9,7 +12,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json pnpm-lock.yaml* ./
-RUN corepack enable pnpm && pnpm i --frozen-lockfile
+RUN corepack enable pnpm && pnpm i --frozen-lockfile --prod=false
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -17,12 +20,25 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-ENV NEXT_TELEMETRY_DISABLED 1
+# Environment variables for build
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
+# Build arguments for environment variables (can be overridden)
+ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_SENTRY_DSN
+
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN}
+
+# Build with TypeScript strict checking (no ignoreBuildErrors)
+# This ensures type safety in production
 RUN corepack enable pnpm && pnpm build
+
+# Copy .env.example for reference
+COPY .env.example ./.env.example
 
 # Production image, copy all the files and run next
 FROM base AS runner

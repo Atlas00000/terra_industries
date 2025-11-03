@@ -47,7 +47,26 @@ docker-compose.yml
 
 # Testing
 coverage
+test
+**/__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+vitest.config.mts
 
 # Logs
 logs
 *.log
+
+# Documentation (not needed in container)
+*.md
+!README.md
+
+# Optimization reports
+lighthouse-report.html
+
+# Sentry (build-time only)
+sentry.client.config.ts
+sentry.server.config.ts
+sentry.edge.config.ts
