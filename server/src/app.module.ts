@@ -8,6 +8,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { InquiriesModule } from './modules/inquiries/inquiries.module';
 import { RfqModule } from './modules/rfq/rfq.module';
 import { EmailModule } from './modules/email/email.module';
+import { MediaModule } from './modules/media/media.module';
+import { ActivityLogsModule } from './modules/activity-logs/activity-logs.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { EmailModule } from './modules/email/email.module';
     InquiriesModule,
     RfqModule,
     EmailModule,
+    MediaModule,
+    ActivityLogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

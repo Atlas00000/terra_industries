@@ -39,6 +39,10 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('auth', 'Authentication endpoints')
     .addTag('inquiries', 'Contact inquiries management')
+    .addTag('rfq', 'Request for Quote management')
+    .addTag('email', 'Email queue management')
+    .addTag('media', 'Media file management (Cloudflare R2)')
+    .addTag('activity-logs', 'Activity audit logs')
     .addTag('health', 'Health check endpoints')
     .addBearerAuth()
     .build();

@@ -21,7 +21,9 @@ model User {
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedAt    DateTime  @updatedAt @map("updated_at")
 
-  inquiries Inquiry[]
+  inquiries    Inquiry[]
+  mediaFiles   MediaFile[]
+  activityLogs ActivityLog[]
 
   @@map("users")
 }
@@ -97,5 +99,49 @@ model EmailQueue {
 
   @@index([status, createdAt])
   @@map("email_queue")
+}
+
+model MediaFile {
+  id         String   @id @default(uuid()) @db.Uuid
+  fileName   String   @map("file_name")
+  fileType   String   @map("file_type")
+  mimeType   String   @map("mime_type")
+  fileSize   BigInt   @map("file_size")
+  storagePath String  @map("storage_path")
+  publicUrl  String   @map("public_url")
+  width      Int?
+  height     Int?
+  altText    String?  @map("alt_text")
+  caption    String?
+  tags       String[]
+  uploadedById String @map("uploaded_by") @db.Uuid
+  entityType String?  @map("entity_type")
+  entityId   String?  @map("entity_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  uploadedBy User @relation(fields: [uploadedById], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([uploadedById])
+  @@map("media_files")
+}
+
+model ActivityLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String?  @map("user_id") @db.Uuid
+  action     String
+  entityType String?  @map("entity_type")
+  entityId   String?  @map("entity_id") @db.Uuid
+  changes    Json?
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent") @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([entityType, entityId])
+  @@map("activity_logs")
 }
 
