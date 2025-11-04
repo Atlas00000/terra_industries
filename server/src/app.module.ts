@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { InquiriesModule } from './modules/inquiries/inquiries.module';
+import { RfqModule } from './modules/rfq/rfq.module';
+import { EmailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { InquiriesModule } from './modules/inquiries/inquiries.module';
     // Feature modules
     AuthModule,
     InquiriesModule,
+    RfqModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

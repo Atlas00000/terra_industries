@@ -4,12 +4,16 @@ import { CreateInquiryDto, CreateInquirySchema } from './dto/create-inquiry.dto'
 import { UpdateInquiryDto, UpdateInquirySchema } from './dto/update-inquiry.dto';
 import { QueryInquiryDto, QueryInquirySchema } from './dto/query-inquiry.dto';
 import { LeadScoringService } from './services/lead-scoring.service';
+import { EmailService } from '../email/email.service';
+import { inquiryConfirmationTemplate } from '../email/templates/inquiry-confirmation.template';
+import { adminNotificationTemplate } from '../email/templates/admin-notification.template';
 
 @Injectable()
 export class InquiriesService {
   constructor(
     private prisma: PrismaService,
     private leadScoringService: LeadScoringService,
+    private emailService: EmailService,
   ) {}
 
   /**
@@ -51,6 +55,47 @@ export class InquiriesService {
         },
       },
     });
+
+    // Queue confirmation email to customer
+    const confirmationTemplate = inquiryConfirmationTemplate({
+      fullName: dto.fullName,
+      inquiryId: inquiry.id,
+      inquiryType: dto.inquiryType,
+    });
+
+    await this.emailService.queueEmail({
+      to: dto.email,
+      subject: confirmationTemplate.subject,
+      html: confirmationTemplate.html,
+      text: confirmationTemplate.text,
+      templateName: 'inquiry_confirmation',
+      templateData: { inquiryId: inquiry.id },
+    });
+
+    // Queue notification email to admin (if high priority)
+    if (leadScore >= 40) {
+      const adminTemplate = adminNotificationTemplate({
+        fullName: dto.fullName,
+        email: dto.email,
+        company: dto.company,
+        country: dto.country,
+        inquiryType: dto.inquiryType,
+        leadScore,
+        message: dto.message,
+        inquiryId: inquiry.id,
+      });
+
+      const adminEmail = process.env.ADMIN_EMAIL || 'admin@terraindustries.com';
+      
+      await this.emailService.queueEmail({
+        to: adminEmail,
+        subject: adminTemplate.subject,
+        html: adminTemplate.html,
+        text: adminTemplate.text,
+        templateName: 'admin_notification',
+        templateData: { inquiryId: inquiry.id },
+      });
+    }
 
     return inquiry;
   }

@@ -64,7 +64,7 @@ export function MobileExpansionSlideshow() {
       // Note: expansion data doesn't have images, this is text-only
       // Mark as loaded immediately
       slidesToPreload.forEach((index) => {
-        setImagesLoaded(prev => new Set([...prev, index]))
+            setImagesLoaded(prev => new Set([...prev, index]))
       })
     }
     
