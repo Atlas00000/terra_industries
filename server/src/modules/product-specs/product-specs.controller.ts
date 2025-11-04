@@ -8,6 +8,7 @@ import {
   Query,
   Body,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -17,6 +18,7 @@ import {
   ApiQuery,
   ApiParam,
 } from '@nestjs/swagger';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { ProductSpecsService } from './product-specs.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Public } from '../auth/decorators/public.decorator';
@@ -24,6 +26,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { CreateProductSpecDtoClass } from './dto/create-product-spec.dto';
 import { UpdateProductSpecDtoClass } from './dto/update-product-spec.dto';
 import { QueryProductSpecDtoClass } from './dto/query-product-spec.dto';
+import { CACHE_TTL } from '../../config/cache.config';
 
 @ApiTags('product-specs')
 @Controller('product-specs')
@@ -50,6 +53,8 @@ export class ProductSpecsController {
 
   @Get()
   @Public()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(CACHE_TTL.PRODUCT_LIST)
   @ApiOperation({ summary: 'Get all product specifications (public)' })
   @ApiQuery({ name: 'page', required: false, example: 1 })
   @ApiQuery({ name: 'limit', required: false, example: 20 })
@@ -74,6 +79,8 @@ export class ProductSpecsController {
 
   @Get('category/:category')
   @Public()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(CACHE_TTL.PRODUCT_LIST)
   @ApiOperation({ summary: 'Get specifications by category (public)' })
   @ApiParam({
     name: 'category',
@@ -86,6 +93,8 @@ export class ProductSpecsController {
 
   @Get(':id')
   @Public()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(CACHE_TTL.PRODUCT_SINGLE)
   @ApiOperation({ summary: 'Get product specification by ID (public)' })
   @ApiResponse({ status: 200, description: 'Product specification details' })
   @ApiResponse({ status: 404, description: 'Product specification not found' })

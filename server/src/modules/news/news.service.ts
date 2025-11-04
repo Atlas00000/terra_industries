@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Inject } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import { PrismaService } from '../../prisma/prisma.service';
 import { generateSlug, generateUniqueSlug } from '../../utils/slug.utils';
 
 @Injectable()
 export class NewsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   /**
    * Create news story (as draft)
@@ -186,7 +191,7 @@ export class NewsService {
     category?: string,
     tags?: string[],
   ) {
-    await this.findOne(id); // Check exists
+    const story = await this.findOne(id); // Check exists
 
     const data: any = {};
 
@@ -221,6 +226,10 @@ export class NewsService {
       },
     });
 
+    // Clear cache for this story and related caches
+    await this.cacheManager.del(`/api/v1/news/slug/${story.slug}`);
+    await this.clearNewsCache();
+
     return updated;
   }
 
@@ -252,7 +261,24 @@ export class NewsService {
       },
     });
 
+    // Invalidate news cache
+    await this.clearNewsCache();
+
     return published;
+  }
+
+  /**
+   * Clear news-related cache
+   */
+  private async clearNewsCache() {
+    try {
+      await this.cacheManager.del('/api/v1/news/featured');
+      await this.cacheManager.del('/api/v1/search/global');
+      await this.cacheManager.del('/api/v1/analytics/news');
+    } catch (error) {
+      // Silently fail cache clearing (not critical)
+      console.warn('Cache clearing failed:', error.message);
+    }
   }
 
   /**
@@ -281,6 +307,10 @@ export class NewsService {
         featuredImage: true,
       },
     });
+
+    // Invalidate cache
+    await this.cacheManager.del(`/api/v1/news/slug/${story.slug}`);
+    await this.clearNewsCache();
 
     return unpublished;
   }

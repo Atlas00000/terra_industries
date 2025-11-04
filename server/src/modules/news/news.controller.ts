@@ -8,6 +8,7 @@ import {
   Query,
   Body,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -17,6 +18,7 @@ import {
   ApiQuery,
   ApiParam,
 } from '@nestjs/swagger';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { NewsService } from './news.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Public } from '../auth/decorators/public.decorator';
@@ -24,6 +26,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { CreateNewsDtoClass } from './dto/create-news.dto';
 import { UpdateNewsDtoClass } from './dto/update-news.dto';
 import { QueryNewsDtoClass } from './dto/query-news.dto';
+import { CACHE_TTL } from '../../config/cache.config';
 
 @ApiTags('news')
 @Controller('news')
@@ -72,6 +75,8 @@ export class NewsController {
 
   @Get('featured')
   @Public()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(CACHE_TTL.NEWS_FEATURED)
   @ApiOperation({ summary: 'Get featured news stories for homepage (public)' })
   @ApiQuery({ name: 'limit', required: false, example: 3 })
   @ApiResponse({ status: 200, description: 'Featured news stories' })
@@ -90,6 +95,8 @@ export class NewsController {
 
   @Get('slug/:slug')
   @Public()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(CACHE_TTL.NEWS_SINGLE)
   @ApiOperation({ summary: 'Get published news story by slug (public)' })
   @ApiParam({ name: 'slug', example: 'terra-industries-launches-archer-vtol' })
   @ApiResponse({ status: 200, description: 'News story details' })

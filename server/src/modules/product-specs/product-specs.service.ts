@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class ProductSpecsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   /**
    * Create product specification
@@ -38,7 +43,23 @@ export class ProductSpecsService {
       },
     });
 
+    // Clear product cache
+    await this.clearProductCache();
+
     return spec;
+  }
+
+  /**
+   * Clear product-related cache
+   */
+  private async clearProductCache() {
+    try {
+      await this.cacheManager.del('/api/v1/product-specs');
+      await this.cacheManager.del('/api/v1/search/global');
+      await this.cacheManager.del('/api/v1/analytics/products');
+    } catch (error) {
+      console.warn('Cache clearing failed:', error.message);
+    }
   }
 
   /**
@@ -165,6 +186,10 @@ export class ProductSpecsService {
       },
     });
 
+    // Clear cache
+    await this.cacheManager.del(`/api/v1/product-specs/${id}`);
+    await this.clearProductCache();
+
     return updated;
   }
 
@@ -177,6 +202,10 @@ export class ProductSpecsService {
     await this.prisma.productSpecification.delete({
       where: { id },
     });
+
+    // Clear cache
+    await this.cacheManager.del(`/api/v1/product-specs/${id}`);
+    await this.clearProductCache();
 
     return {
       message: 'Product specification deleted successfully',

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
@@ -12,6 +13,9 @@ import { MediaModule } from './modules/media/media.module';
 import { ActivityLogsModule } from './modules/activity-logs/activity-logs.module';
 import { NewsModule } from './modules/news/news.module';
 import { ProductSpecsModule } from './modules/product-specs/product-specs.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { SearchModule } from './modules/search/search.module';
+import { cacheConfig } from './config/cache.config';
 
 @Module({
   imports: [
@@ -19,6 +23,12 @@ import { ProductSpecsModule } from './modules/product-specs/product-specs.module
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env', '../.env'],
+    }),
+
+    // Cache module (Redis)
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: cacheConfig,
     }),
 
     // Rate limiting
@@ -41,6 +51,8 @@ import { ProductSpecsModule } from './modules/product-specs/product-specs.module
     ActivityLogsModule,
     NewsModule,
     ProductSpecsModule,
+    AnalyticsModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

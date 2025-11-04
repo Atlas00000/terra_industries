@@ -45,6 +45,8 @@ async function bootstrap() {
     .addTag('activity-logs', 'Activity audit logs')
     .addTag('news', 'News/Stories CMS')
     .addTag('product-specs', 'Product Specifications')
+    .addTag('analytics', 'Analytics & Dashboard')
+    .addTag('search', 'Search & Advanced Filtering')
     .addTag('health', 'Health check endpoints')
     .addBearerAuth()
     .build();
