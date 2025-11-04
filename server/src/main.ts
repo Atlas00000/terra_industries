@@ -43,6 +43,8 @@ async function bootstrap() {
     .addTag('email', 'Email queue management')
     .addTag('media', 'Media file management (Cloudflare R2)')
     .addTag('activity-logs', 'Activity audit logs')
+    .addTag('news', 'News/Stories CMS')
+    .addTag('product-specs', 'Product Specifications')
     .addTag('health', 'Health check endpoints')
     .addBearerAuth()
     .build();

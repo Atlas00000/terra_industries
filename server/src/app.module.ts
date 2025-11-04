@@ -10,6 +10,8 @@ import { RfqModule } from './modules/rfq/rfq.module';
 import { EmailModule } from './modules/email/email.module';
 import { MediaModule } from './modules/media/media.module';
 import { ActivityLogsModule } from './modules/activity-logs/activity-logs.module';
+import { NewsModule } from './modules/news/news.module';
+import { ProductSpecsModule } from './modules/product-specs/product-specs.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { ActivityLogsModule } from './modules/activity-logs/activity-logs.module
     EmailModule,
     MediaModule,
     ActivityLogsModule,
+    NewsModule,
+    ProductSpecsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

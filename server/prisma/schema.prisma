@@ -21,9 +21,11 @@ model User {
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedAt    DateTime  @updatedAt @map("updated_at")
 
-  inquiries    Inquiry[]
-  mediaFiles   MediaFile[]
-  activityLogs ActivityLog[]
+  inquiries           Inquiry[]
+  mediaFiles          MediaFile[]
+  activityLogs        ActivityLog[]
+  newsStories         NewsStory[]
+  productSpecs        ProductSpecification[]
 
   @@map("users")
 }
@@ -119,7 +121,8 @@ model MediaFile {
   entityId   String?  @map("entity_id") @db.Uuid
   createdAt  DateTime @default(now()) @map("created_at")
 
-  uploadedBy User @relation(fields: [uploadedById], references: [id])
+  uploadedBy       User        @relation(fields: [uploadedById], references: [id])
+  featuredInStories NewsStory[]
 
   @@index([entityType, entityId])
   @@index([uploadedById])
@@ -143,5 +146,50 @@ model ActivityLog {
   @@index([createdAt])
   @@index([entityType, entityId])
   @@map("activity_logs")
+}
+
+model NewsStory {
+  id               String    @id @default(uuid()) @db.Uuid
+  title            String
+  slug             String    @unique
+  content          String    @db.Text
+  excerpt          String?
+  authorId         String    @map("author_id") @db.Uuid
+  status           String    @default("draft")
+  publishedAt      DateTime? @map("published_at")
+  featuredImageId  String?   @map("featured_image_id") @db.Uuid
+  category         String?
+  tags             String[]
+  viewCount        Int       @default(0) @map("view_count")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  author         User       @relation(fields: [authorId], references: [id])
+  featuredImage  MediaFile? @relation(fields: [featuredImageId], references: [id])
+
+  @@index([status, publishedAt])
+  @@index([authorId])
+  @@index([slug])
+  @@index([category])
+  @@map("news_stories")
+}
+
+model ProductSpecification {
+  id                 String   @id @default(uuid()) @db.Uuid
+  productName        String   @map("product_name")
+  category           String
+  specifications     Json
+  performanceMetrics Json     @map("performance_metrics")
+  technicalDetails   Json     @map("technical_details")
+  mediaGalleryIds    String[] @map("media_gallery_ids")
+  createdById        String   @map("created_by") @db.Uuid
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  createdBy User @relation(fields: [createdById], references: [id])
+
+  @@index([category])
+  @@index([createdById])
+  @@map("product_specifications")
 }
 
