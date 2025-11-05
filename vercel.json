@@ -1,8 +1,8 @@
 {
-  "buildCommand": "cd client && pnpm build",
-  "devCommand": "cd client && pnpm dev",
-  "installCommand": "cd client && pnpm install",
+  "buildCommand": "cd client && pnpm install && pnpm build",
+  "installCommand": "pnpm install --filter client",
   "framework": "nextjs",
-  "outputDirectory": "client/.next"
+  "outputDirectory": "client/.next",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD client/"
 }
 
