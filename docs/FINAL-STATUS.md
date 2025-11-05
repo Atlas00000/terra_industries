@@ -140,7 +140,7 @@ pnpm dev:all
 
 ## 📞 **QUICK REFERENCE**
 
-**Frontend:** https://terra-industries-seven.vercel.app/  
+**Frontend:** https://terra-industries-drab.vercel.app/  
 **Backend:** Ready for deployment  
 **Structure:** Clean monorepo ✅  
 **Services:** All stopped ✅  

@@ -154,7 +154,7 @@ cd server && pnpm install
 ## 🎊 Production Deployment (When Ready)
 
 ### Frontend
-Already deployed: https://terra-industries-seven.vercel.app/
+Already deployed: https://terra-industries-drab.vercel.app/
 
 ### Backend (Not Yet Deployed)
 **Recommended Platforms:**

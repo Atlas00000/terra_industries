@@ -31,7 +31,7 @@ Terra Industries full-stack application has been successfully completed and is *
 - ✅ Sentry error tracking integrated
 - ✅ Zero TypeScript errors (strict mode)
 - ✅ 82% test coverage (66 tests passing)
-- ✅ **Live at:** https://terra-industries-seven.vercel.app/
+- ✅ **Live at:** https://terra-industries-drab.vercel.app/
 
 ### **Backend API (Production-Ready)**
 - ✅ **Authentication System**
@@ -233,7 +233,7 @@ Terra Industries full-stack application has been successfully completed and is *
 ### Frontend
 **Status:** ✅ **LIVE IN PRODUCTION**
 - Platform: Vercel
-- URL: https://terra-industries-seven.vercel.app/
+- URL: https://terra-industries-drab.vercel.app/
 - Build: Optimized for production
 - Analytics: Vercel Analytics enabled
 - Error Tracking: Sentry integrated
@@ -488,7 +488,7 @@ Terra Industries full-stack application has been successfully completed and is *
 **Status:** ✅ PRODUCTION-READY
 
 **Live URLs:**
-- Frontend: https://terra-industries-seven.vercel.app/
+- Frontend: https://terra-industries-drab.vercel.app/
 - Backend: Ready for deployment
 - API Docs: Available at `/api-docs` when backend is running
 
@@ -575,7 +575,7 @@ pnpm dev
 ```
 
 **Production Status:**
-- Frontend: Still live on Vercel (https://terra-industries-seven.vercel.app/)
+- Frontend: Still live on Vercel (https://terra-industries-drab.vercel.app/)
 - Backend: Ready for deployment (not yet deployed)
 - Database: Local only (production DB pending)
 

@@ -19,7 +19,7 @@
 - ✅ Component cleanup (removed 7 duplicates)
 - ✅ ESLint configuration
 - ✅ Environment validation
-- ✅ **Deployed to Vercel** (https://terra-industries-seven.vercel.app/)
+- ✅ **Deployed to Vercel** (https://terra-industries-drab.vercel.app/)
 
 ### **Phase 3+: Backend Development - COMPLETE ✅**
 - ✅ Contact & Inquiry API (6 endpoints)

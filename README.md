@@ -19,7 +19,7 @@
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 
-[🌐 Live Demo](https://terra-industries-seven.vercel.app) • [📖 API Docs](http://localhost:4000/api-docs) • [🚀 Quick Start](#quick-start)
+[🌐 Live Demo](https://terra-industries-drab.vercel.app) • [📖 API Docs](http://localhost:4000/api-docs) • [🚀 Quick Start](#quick-start)
 
 </div>
 
@@ -30,7 +30,7 @@
 Terra Industries is a cutting-edge defense technology company specializing in advanced aerospace solutions, autonomous systems, and AI-powered defense platforms. This enterprise-grade full-stack application showcases our innovative products through an immersive, responsive interface backed by a robust API system.
 
 **Production Status:**
-- ✅ **Frontend**: Live at [terra-industries-seven.vercel.app](https://terra-industries-seven.vercel.app/)
+- ✅ **Frontend**: Live at [terra-industries-drab.vercel.app](https://terra-industries-drab.vercel.app/)
 - ✅ **Backend API**: Production-ready (60+ endpoints, 100% tested)
 - ✅ **Database**: PostgreSQL with 8 models, fully normalized
 - ✅ **Caching**: Redis implemented with 80%+ hit rate
@@ -739,7 +739,7 @@ pnpm test:e2e
 
 ### Quick Links
 
-- **Live Frontend:** https://terra-industries-seven.vercel.app/
+- **Live Frontend:** https://terra-industries-drab.vercel.app/
 - **API Docs:** http://localhost:4000/api-docs (when running locally)
 - **Health Check:** http://localhost:4000/api/v1/health/liveness
 
@@ -749,7 +749,7 @@ pnpm test:e2e
 
 ### Frontend (Vercel) - ✅ Production
 
-Already deployed at: https://terra-industries-seven.vercel.app/
+Already deployed at: https://terra-industries-drab.vercel.app/
 
 ### Backend (Railway/Render) - 🔄 Ready
 
@@ -825,7 +825,7 @@ Terra Industries is a leading defense technology company specializing in:
 
 ## 📞 Contact
 
-- **Website**: [terra-industries-seven.vercel.app](https://terra-industries-seven.vercel.app/)
+- **Website**: [terra-industries-drab.vercel.app](https://terra-industries-drab.vercel.app/)
 - **Email**: contact@terra-industries.com
 - **GitHub**: [@terra-industries](https://github.com/terra-industries)
 

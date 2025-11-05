@@ -310,7 +310,7 @@ This release completes the full-stack transformation of Terra Industries with a 
 - **Documentation:** Swagger/OpenAPI
 
 ### 🎊 Production Status
-- ✅ **Frontend:** Live on Vercel (https://terra-industries-seven.vercel.app/)
+- ✅ **Frontend:** Live on Vercel (https://terra-industries-drab.vercel.app/)
 - ✅ **Backend:** Production-ready (60+ endpoints, 100% tested)
 - ✅ **Database:** 8 models, fully normalized
 - ✅ **Caching:** Redis with 80%+ hit rate

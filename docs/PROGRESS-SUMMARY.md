@@ -30,7 +30,7 @@ Complete transformation of Terra Industries from a working prototype to a **prod
 - ✅ Security headers (7 production headers)
 - ✅ Component cleanup (removed 7 duplicates)
 - ✅ ESLint + environment validation
-- ✅ **Live on Vercel:** https://terra-industries-seven.vercel.app/
+- ✅ **Live on Vercel:** https://terra-industries-drab.vercel.app/
 
 ### **Backend Development (Weeks 3-10)** ✅ COMPLETE
 - ✅ **Authentication System** (3 endpoints)
@@ -453,7 +453,7 @@ terra-industries/
 ### **Frontend**
 **Status:** ✅ **LIVE**
 - Platform: Vercel
-- URL: https://terra-industries-seven.vercel.app/
+- URL: https://terra-industries-drab.vercel.app/
 - Performance: Optimized
 - Monitoring: Sentry + Vercel Analytics
 
@@ -542,7 +542,7 @@ terra-industries/
 **Duration:** 10 weeks  
 
 **Live URLs:**
-- Frontend: https://terra-industries-seven.vercel.app/
+- Frontend: https://terra-industries-drab.vercel.app/
 - Backend: Ready for deployment
 - API Docs: `/api-docs` when running
 

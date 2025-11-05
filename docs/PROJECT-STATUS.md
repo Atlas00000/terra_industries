@@ -10,7 +10,7 @@
 ## 🎯 CURRENT STATE
 
 ### **✅ Services Status**
-- **Frontend:** Live on Vercel (https://terra-industries-seven.vercel.app/)
+- **Frontend:** Live on Vercel (https://terra-industries-drab.vercel.app/)
 - **Backend:** Stopped (development complete, ready for deployment)
 - **PostgreSQL:** Stopped (Docker container removed)
 - **Redis:** Stopped (Docker container removed)
@@ -159,7 +159,7 @@ pnpm dev
 
 ## 📞 QUICK REFERENCE
 
-**Frontend URL:** https://terra-industries-seven.vercel.app/  
+**Frontend URL:** https://terra-industries-drab.vercel.app/  
 **Backend Status:** Ready for deployment  
 **Next Steps:** See `integration.md`  
 **Resume Guide:** See `RESUME-DEVELOPMENT.md`
