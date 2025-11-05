@@ -37,6 +37,12 @@ Terra Industries is a cutting-edge defense technology company specializing in ad
 - ✅ **Monitoring**: Sentry error tracking + health checks
 - 🎯 **Status**: **PRODUCTION-READY (100%)**
 
+**Current State:** 🛑 **SERVICES PAUSED FOR PROJECT BREAK**
+- All Docker services stopped (ports freed: 3000, 4000, 5432, 6379)
+- Backend development: 100% complete
+- Next phase: Frontend-backend integration (see `integration.md`)
+- Ready to resume or deploy to production
+
 ### ✨ Key Features
 
 **Frontend (Production):**
@@ -223,6 +229,34 @@ pnpm dev
 - Backend API: [http://localhost:4000/api/v1](http://localhost:4000/api/v1)
 - API Documentation: [http://localhost:4000/api-docs](http://localhost:4000/api-docs)
 - Prisma Studio: Run `cd server && pnpm prisma:studio` (opens on port 5555)
+
+---
+
+### Resume Development (After Break)
+
+**Quick Resume:**
+```bash
+# 1. Start Docker services
+docker-compose up -d postgres redis
+
+# 2. Start backend (Terminal 1)
+cd server && pnpm start:dev
+
+# 3. Start frontend (Terminal 2)
+pnpm dev
+```
+
+**Verify Services:**
+```bash
+# Check Docker containers
+docker ps
+
+# Test backend
+curl http://localhost:4000/api/v1/health/liveness
+
+# Test frontend
+curl http://localhost:3000
+```
 
 ---
 
