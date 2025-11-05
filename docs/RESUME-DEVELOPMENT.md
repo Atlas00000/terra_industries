@@ -19,22 +19,33 @@
 
 ## 🚀 Quick Resume (3 Commands)
 
+**From project root:**
+
 ### Step 1: Start Docker Services
 ```bash
 cd /Users/celestineemili/Desktop/Code\ Root/terra_industries
-docker-compose up -d postgres redis
+pnpm docker:up
 ```
 
-### Step 2: Start Backend (Terminal 1)
+### Step 2: Start Both Services (Single Command)
 ```bash
-cd /Users/celestineemili/Desktop/Code\ Root/terra_industries/server
-pnpm start:dev
+pnpm dev:all
 ```
 
-### Step 3: Start Frontend (Terminal 2)
+**Or use separate terminals:**
+
+### Option B: Separate Terminals
+
+**Terminal 1 - Backend:**
 ```bash
 cd /Users/celestineemili/Desktop/Code\ Root/terra_industries
-pnpm dev
+pnpm dev:server
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd /Users/celestineemili/Desktop/Code\ Root/terra_industries
+pnpm dev:client
 ```
 
 ---

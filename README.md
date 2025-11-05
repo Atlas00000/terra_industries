@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Terra Industries Logo](public/terra-logo.png)
+![Terra Industries Logo](client/public/terra-logo.png)
 
 **Advanced Defense Technology & Aerospace Solutions**
 
@@ -180,7 +180,7 @@ git clone https://github.com/your-username/terra-industries.git
 cd terra-industries
 ```
 
-**2. Install frontend dependencies:**
+**2. Install all dependencies (from root):**
 ```bash
 pnpm install
 ```
@@ -188,62 +188,71 @@ pnpm install
 **3. Set up environment variables:**
 ```bash
 # Frontend
-cp .env.example .env.local
-# Edit .env.local with your configuration
+cp client/.env.example client/.env.local
+# Edit client/.env.local with your configuration
 
 # Backend
-cd server
-cp .env.example .env
-# Edit .env with your configuration
-cd ..
+cp server/.env.example server/.env
+# Edit server/.env with your configuration
 ```
 
 **4. Start database services:**
 ```bash
-docker-compose up -d postgres redis
+pnpm docker:up
+# Or: docker-compose up -d postgres redis
 ```
 
-**5. Setup backend:**
+**5. Setup backend database:**
 ```bash
-cd server
-pnpm install
-pnpm prisma:generate
-pnpm prisma migrate dev --name init
+pnpm --filter server prisma:generate
+pnpm --filter server prisma migrate dev
 ```
 
-**6. Run development servers (in separate terminals):**
+**6. Run development servers:**
+
+**Option A - Both services (single command):**
+```bash
+pnpm dev:all
+```
+
+**Option B - Separate terminals:**
 
 **Terminal 1 - Backend API:**
 ```bash
-cd server
-pnpm start:dev
+pnpm dev:server
 ```
 
 **Terminal 2 - Frontend:**
 ```bash
-pnpm dev
+pnpm dev:client
 ```
 
 **Access the application:**
 - Frontend: [http://localhost:3000](http://localhost:3000)
 - Backend API: [http://localhost:4000/api/v1](http://localhost:4000/api/v1)
 - API Documentation: [http://localhost:4000/api-docs](http://localhost:4000/api-docs)
-- Prisma Studio: Run `cd server && pnpm prisma:studio` (opens on port 5555)
+- Prisma Studio: `pnpm prisma:studio` (opens on port 5555)
 
 ---
 
 ### Resume Development (After Break)
 
-**Quick Resume:**
+**Quick Resume (from root):**
 ```bash
 # 1. Start Docker services
-docker-compose up -d postgres redis
+pnpm docker:up
 
-# 2. Start backend (Terminal 1)
-cd server && pnpm start:dev
+# 2. Start both servers
+pnpm dev:all
+```
 
-# 3. Start frontend (Terminal 2)
-pnpm dev
+**Or manually:**
+```bash
+# Terminal 1 - Backend
+pnpm dev:server
+
+# Terminal 2 - Frontend
+pnpm dev:client
 ```
 
 **Verify Services:**
@@ -320,65 +329,83 @@ SENTRY_DSN=your_sentry_dsn
 
 ---
 
-### Available Scripts
+### Available Scripts (From Root)
 
-#### Frontend:
+#### Workspace Commands:
 ```bash
+# Development (run from root)
+pnpm dev:all      # Start both client and server
+pnpm dev:client   # Start frontend only (port 3000)
+pnpm dev:server   # Start backend only (port 4000)
+
+# Build
+pnpm build        # Build frontend
+pnpm build:client # Build frontend
+pnpm build:server # Build backend
+
+# Start Production
+pnpm start        # Start frontend production
+pnpm start:client # Start frontend production
+pnpm start:server # Start backend production
+
+# Testing
+pnpm test         # Run all tests (frontend + backend)
+pnpm test:client  # Run frontend tests
+pnpm test:server  # Run backend unit tests
+pnpm test:e2e     # Run backend E2E tests
+
+# Code Quality
+pnpm lint         # Lint all packages
+pnpm lint:client  # Lint frontend
+pnpm lint:server  # Lint backend
+
+# Docker
+pnpm docker:up    # Start PostgreSQL + Redis
+pnpm docker:down  # Stop Docker services
+pnpm docker:reset # Reset database (CAUTION: deletes data)
+
+# Database
+pnpm prisma:studio   # Open Prisma Studio (port 5555)
+pnpm prisma:migrate  # Run database migrations
+```
+
+#### Frontend Commands (from client/):
+```bash
+cd client
+
 # Development
-pnpm dev          # Start development server (port 3000)
+pnpm dev          # Start dev server (port 3000)
 pnpm build        # Build for production
 pnpm start        # Start production server
 
-# Code Quality
-pnpm lint         # Run ESLint
-pnpm lint:fix     # Fix ESLint issues automatically
-pnpm type-check   # Run TypeScript type checking
-
 # Testing
 pnpm test         # Run tests (watch mode)
-pnpm test:run     # Run tests once
 pnpm test:coverage # Generate coverage report
+
+# Code Quality
+pnpm lint         # Run ESLint
+pnpm lint:fix     # Fix ESLint issues
+pnpm type-check   # TypeScript validation
 ```
 
-#### Backend:
+#### Backend Commands (from server/):
 ```bash
 cd server
 
 # Development
-pnpm start:dev    # Start backend API (port 4000, hot-reload)
+pnpm start:dev    # Start API (port 4000, hot-reload)
 pnpm build        # Build for production
 pnpm start:prod   # Start production server
-
-# Database
-pnpm prisma:generate  # Generate Prisma client
-pnpm prisma migrate dev # Run database migrations
-pnpm prisma:studio    # Open database GUI (port 5555)
-pnpm prisma:reset     # Reset database (CAUTION: deletes all data)
 
 # Testing
 pnpm test         # Run unit tests
 pnpm test:e2e     # Run E2E tests
-pnpm test:cov     # Generate coverage report
+pnpm test:cov     # Coverage report
 
-# Code Quality
-pnpm lint         # Run ESLint
-pnpm format       # Format code with Prettier
-```
-
-#### Docker:
-```bash
-# Start database services only (recommended for development)
-docker-compose up -d postgres redis
-
-# View logs
-docker-compose logs -f postgres
-docker-compose logs -f redis
-
-# Stop services
-docker-compose down
-
-# Reset database (CAUTION: deletes all data)
-docker-compose down -v
+# Database
+pnpm prisma:generate  # Generate Prisma client
+pnpm prisma migrate dev # Run migrations
+pnpm prisma:studio    # Database GUI
 ```
 
 ---
@@ -386,37 +413,45 @@ docker-compose down -v
 ## 📁 Project Structure
 
 ```
-terra-industries/
-├── 📁 app/                            # Next.js App Router (Frontend)
-│   ├── 📁 (routes)/                  # Route groups
-│   ├── 📄 layout.tsx                 # Root layout
-│   ├── 📄 page.tsx                   # Home page
-│   └── 📄 globals.css                # Global styles
+terra-industries/                       # Root (Monorepo)
 │
-├── 📁 components/                     # Reusable React components
-│   ├── 📁 sections/                  # Page sections
-│   ├── 📁 mobile-*                   # Mobile-specific components
-│   ├── 📁 ui/                        # UI components
-│   └── 📄 error-boundary.tsx         # Error boundary
+├── 📁 client/                          # Frontend Application
+│   ├── 📁 app/                        # Next.js App Router
+│   │   ├── 📁 archer/                # Product pages
+│   │   ├── 📁 artemis/
+│   │   ├── 📁 company/
+│   │   ├── 📁 duma/
+│   │   ├── 📁 iroko/
+│   │   ├── 📁 kallon/
+│   │   ├── 📄 layout.tsx             # Root layout
+│   │   ├── 📄 page.tsx               # Home page
+│   │   └── 📄 globals.css            # Global styles
+│   ├── 📁 components/                 # React components (141 files)
+│   │   ├── 📁 sections/              # Page sections (8)
+│   │   ├── 📁 mobile-*/              # Mobile components (15)
+│   │   ├── 📁 ui/                    # shadcn/ui components (57)
+│   │   ├── 📁 __tests__/             # Component tests (4)
+│   │   └── 📄 error-boundary.tsx     # Error handling
+│   ├── 📁 hooks/                      # Custom hooks (4)
+│   │   └── 📁 __tests__/             # Hook tests (2)
+│   ├── 📁 lib/                        # Utilities (3)
+│   │   └── 📁 __tests__/             # Util tests (2)
+│   ├── 📁 public/                     # Static assets
+│   │   ├── 📁 archer_vtol/           # Product images
+│   │   ├── 📁 ArtemisOS/
+│   │   ├── 📁 stories/
+│   │   └── 📄 terra-logo.png
+│   ├── 📁 test/                       # Test setup
+│   ├── 📁 utils/                      # Animation utilities
+│   ├── 📄 package.json                # Frontend dependencies
+│   ├── 📄 next.config.mjs             # Next.js config
+│   ├── 📄 tsconfig.json               # TypeScript config
+│   ├── 📄 vitest.config.mts           # Vitest config
+│   ├── 📄 tailwind.config.ts          # Tailwind config
+│   ├── 📄 Dockerfile                  # Frontend Docker
+│   └── 📄 .env.example                # Env template
 │
-├── 📁 hooks/                          # Custom React hooks
-│   ├── 📄 use-mobile.ts              # Mobile detection
-│   └── 📄 use-mobile-optimization.ts # Performance optimization
-│
-├── 📁 lib/                            # Utilities and helpers
-│   ├── 📄 config.ts                  # Environment config
-│   ├── 📄 types.ts                   # TypeScript types
-│   └── 📄 utils.ts                   # Utility functions
-│
-├── 📁 public/                         # Static assets
-│   ├── 📁 images/                    # Image assets
-│   └── 📄 terra-logo.png             # Company logo
-│
-├── 📁 test/                           # Frontend tests
-│   ├── 📄 setup.ts                   # Test setup
-│   └── 📁 __tests__/                 # Test files
-│
-├── 📁 server/                         # Backend (NestJS)
+├── 📁 server/                          # Backend Application
 │   ├── 📁 src/
 │   │   ├── 📁 modules/               # Feature modules
 │   │   │   ├── 📁 auth/              # ✅ Authentication (JWT, bcrypt)
@@ -456,31 +491,47 @@ terra-industries/
 │   │   ├── 📄 product-specs.e2e-spec.ts # Product tests
 │   │   ├── 📄 analytics-search.e2e-spec.ts # Analytics tests
 │   │   └── 📄 comprehensive.e2e-spec.ts # Comprehensive suite
-│   ├── 🐳 Dockerfile                 # Docker configuration
-│   ├── 📄 package.json               # Backend dependencies
-│   ├── 📄 tsconfig.json              # TypeScript config
-│   ├── 📄 nest-cli.json              # NestJS CLI config
-│   └── 📄 .env.example               # Environment template
+│   ├── 📄 package.json                # Backend dependencies
+│   ├── 📄 Dockerfile                  # Backend Docker
+│   ├── 📄 tsconfig.json               # TypeScript config
+│   ├── 📄 nest-cli.json               # NestJS CLI
+│   └── 📄 .env.example                # Env template
 │
-├── 🐳 docker-compose.yml              # Docker orchestration
-├── 📄 .env.example                    # Environment template
-├── 📄 next.config.mjs                 # Next.js configuration
-├── 📄 tailwind.config.js              # Tailwind configuration
-├── 📄 tsconfig.json                   # TypeScript configuration
-├── 📄 vitest.config.mts               # Vitest configuration
-├── 📄 package.json                    # Frontend dependencies
+├── 📁 docs/                            # Documentation (13 files)
+│   ├── 📄 BACKEND-PROGRESS.md         # Backend report
+│   ├── 📄 PROJECT-COMPLETION-REPORT.md # Final report
+│   ├── 📄 PROGRESS-SUMMARY.md         # Full-stack summary
+│   ├── 📄 integration.md              # Integration roadmap
+│   ├── 📄 CHANGELOG.md                # Version history
+│   ├── 📄 development-roadmap.md      # Project roadmap
+│   ├── 📄 backend-database-integration.md # Architecture
+│   ├── 📄 RESUME-DEVELOPMENT.md       # Resume guide
+│   ├── 📄 PROJECT-STATUS.md           # Current status
+│   ├── 📄 CONTRIBUTING.md             # Contributing guide
+│   ├── 📄 DOCKER.md                   # Docker guide
+│   └── 📄 structural-opt.md           # Optimization guide
 │
-├── 📖 README.md                       # This file
-├── 📖 BACKEND-PROGRESS.md             # Backend development report
-├── 📖 BE and DB interagtion.md        # Architecture documentation
-└── 📖 development-roadmap.md          # Project roadmap
+├── 📁 scripts/                         # Utility scripts
+│   ├── 📄 test-week*.sh               # Test scripts (10)
+│   └── 📄 run-tests.sh                # Test runner
+│
+├── 🐳 docker-compose.yml               # Docker orchestration
+├── 🐳 docker-compose.dev.yml           # Dev overrides
+├── 📄 pnpm-workspace.yaml              # Monorepo config
+├── 📄 vercel.json                      # Vercel deployment
+├── 📄 package.json                     # Workspace scripts
+├── 📄 .env.example                     # Root env template
+├── 📄 LICENSE                          # MIT License
+└── 📄 README.md                        # This file
 ```
 
-**Status:**
-- ✅ **Frontend**: Production-ready, deployed to Vercel
-- ✅ **Backend**: Production-ready (60+ endpoints, 100% tested)
-- ✅ **Database**: 8 models, fully normalized, indexed
-- ✅ **Docker**: PostgreSQL + Redis containerized
+**Structure:**
+- ✅ **Monorepo**: Clean separation (client/, server/, docs/, scripts/)
+- ✅ **Client**: All frontend code organized
+- ✅ **Server**: All backend code organized
+- ✅ **Docs**: All documentation centralized
+- ✅ **Scripts**: All test scripts organized
+- ✅ **Root**: Only workspace config and orchestration
 
 ---
 
