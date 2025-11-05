@@ -5,8 +5,12 @@ import { WinstonModule } from 'nest-winston';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 import { winstonConfig } from './common/logger/winston.config';
+import { initializeSentry } from './config/sentry.config';
 
 async function bootstrap() {
+  // Initialize Sentry first for error tracking
+  initializeSentry();
+
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger(winstonConfig),
   });

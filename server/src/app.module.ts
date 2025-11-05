@@ -15,6 +15,7 @@ import { NewsModule } from './modules/news/news.module';
 import { ProductSpecsModule } from './modules/product-specs/product-specs.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { SearchModule } from './modules/search/search.module';
+import { HealthModule } from './modules/health/health.module';
 import { cacheConfig } from './config/cache.config';
 
 @Module({
@@ -53,6 +54,7 @@ import { cacheConfig } from './config/cache.config';
     ProductSpecsModule,
     AnalyticsModule,
     SearchModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

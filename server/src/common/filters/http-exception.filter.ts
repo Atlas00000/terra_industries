@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as Sentry from '@sentry/node';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -46,6 +47,24 @@ export class AllExceptionsFilter implements ExceptionFilter {
       console.error('❌ Server Error:', {
         ...errorResponse,
         stack: exception instanceof Error ? exception.stack : undefined,
+      });
+
+      // Send to Sentry for production monitoring
+      Sentry.captureException(exception, {
+        tags: {
+          endpoint: request.url,
+          method: request.method,
+          statusCode: status,
+        },
+        user: {
+          id: (request as any).user?.id,
+          email: (request as any).user?.email,
+        },
+        extra: {
+          body: request.body,
+          query: request.query,
+          params: request.params,
+        },
       });
     }
 
