@@ -40,11 +40,13 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/package.json ./
 COPY --from=build /app/package-lock.json* ./
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/.pnpm/@prisma+client* ./node_modules/.pnpm/ || true
-COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 
 # Install only production dependencies using npm
 RUN npm ci --only=production || npm install --only=production
+
+# Copy pre-generated Prisma Client from build stage
+COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 
 EXPOSE 4000
 CMD ["node", "dist/main.js"]
