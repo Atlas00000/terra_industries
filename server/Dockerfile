@@ -26,7 +26,7 @@ FROM base AS build
 # Install build dependencies for native modules (bcrypt)
 RUN apk add --no-cache python3 make g++
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile --prod || pnpm install --prod
+RUN pnpm install --frozen-lockfile || pnpm install
 COPY . .
 RUN pnpm prisma:generate || echo "Prisma not configured yet"
 RUN pnpm build
@@ -38,9 +38,15 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./
+COPY --from=build /app/pnpm-lock.yaml ./
 COPY --from=build /app/prisma ./prisma
+
+# Install only production dependencies
+RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
+
+# Generate Prisma Client
+RUN pnpm prisma:generate
 
 EXPOSE 4000
 CMD ["node", "dist/main.js"]
