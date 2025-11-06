@@ -2,7 +2,10 @@
 nixPkgs = ["nodejs_22", "pnpm"]
 
 [phases.install]
-cmds = ["pnpm install --frozen-lockfile"]
+cmds = [
+  "pnpm install --frozen-lockfile",
+  "cd server && pnpm prisma generate"
+]
 
 [phases.build]
 cmds = ["cd server && pnpm build"]
