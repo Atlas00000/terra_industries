@@ -3,6 +3,7 @@
  * 
  * Main layout for admin dashboard
  * Includes sidebar navigation and header
+ * Bypasses auth check for login page
  */
 
 'use client';
@@ -11,12 +12,24 @@ import { useRequireAuth } from '@/hooks/use-auth';
 import { AdminSidebar } from '@/components/admin/sidebar';
 import { AdminHeader } from '@/components/admin/admin-header';
 import { Loading } from '@/components/loading';
+import { usePathname } from 'next/navigation';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
+  const pathname = usePathname();
+  
+  // Don't apply auth check to login page
+  const isLoginPage = pathname === '/admin/login';
+  
+  if (isLoginPage) {
+    // Login page gets rendered without layout
+    return <>{children}</>;
+  }
+
+  // All other admin pages require authentication
   const { user, isLoading } = useRequireAuth();
 
   if (isLoading) {

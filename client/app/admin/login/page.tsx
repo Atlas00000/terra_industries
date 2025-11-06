@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
@@ -26,13 +26,16 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
+  const [hasRedirected, setHasRedirected] = useState(false);
 
-  // Redirect if already authenticated
-  if (isAuthenticated) {
-    const redirect = searchParams?.get('redirect') || '/admin/dashboard';
-    router.push(redirect);
-    return null;
-  }
+  // Redirect if already authenticated (only once, and only if still on login page)
+  useEffect(() => {
+    if (isAuthenticated && !hasRedirected && !isLoggingIn && window.location.pathname === '/admin/login') {
+      setHasRedirected(true);
+      const redirect = searchParams?.get('redirect') || '/admin/dashboard';
+      router.replace(redirect); // Use replace instead of push to avoid back button issues
+    }
+  }, [isAuthenticated, hasRedirected, isLoggingIn, router, searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,10 +43,7 @@ export default function AdminLoginPage() {
 
     try {
       await login({ email, password });
-      
-      // Redirect to dashboard or requested page
-      const redirect = searchParams?.get('redirect') || '/admin/dashboard';
-      router.push(redirect);
+      // useEffect above will handle redirect when isAuthenticated becomes true
     } catch (error) {
       setShowError(true);
     }
@@ -154,31 +154,6 @@ export default function AdminLoginPage() {
                 'Sign In'
               )}
             </Button>
-
-            {/* Dev Mode Helper */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className="pt-4 border-t border-border">
-                <p className="text-xs text-muted-foreground text-center mb-2">
-                  Development credentials:
-                </p>
-                <div className="bg-muted/50 rounded-md p-3 text-xs font-mono space-y-1">
-                  <div>Email: admin@terraindustries.com</div>
-                  <div>Password: SecurePass123!</div>
-                </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="w-full mt-2"
-                  onClick={() => {
-                    setEmail('admin@terraindustries.com');
-                    setPassword('SecurePass123!');
-                  }}
-                >
-                  Auto-fill credentials
-                </Button>
-              </div>
-            )}
           </form>
         </CardContent>
 

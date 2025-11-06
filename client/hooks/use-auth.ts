@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { apiClient } from '@/lib/api-client';
@@ -140,7 +140,10 @@ export function useAuth(): UseAuthReturn {
 
   const handleLogin = useCallback(
     async (credentials: LoginCredentials) => {
-      await loginMutation.mutateAsync(credentials);
+      const result = await loginMutation.mutateAsync(credentials);
+      // Force update the local user state immediately
+      setUser(result.user);
+      return result;
     },
     [loginMutation]
   );
@@ -152,10 +155,13 @@ export function useAuth(): UseAuthReturn {
     router.push('/admin/login');
   }, [router, queryClient]);
 
+  // Use the most up-to-date user state
+  const effectiveUser = currentUser || user;
+
   return {
-    user: currentUser || user,
-    isAuthenticated: authManager.isAuthenticated(),
-    isAdmin: authManager.isAdmin(),
+    user: effectiveUser,
+    isAuthenticated: !!effectiveUser && authManager.isAuthenticated(),
+    isAdmin: !!effectiveUser && authManager.isAdmin(),
     login: handleLogin,
     logout: handleLogout,
     isLoggingIn: loginMutation.isPending,
@@ -184,9 +190,12 @@ export function useRequireAuth(): { user: AuthUser; isLoading: boolean } {
   const router = useRouter();
   const { user, isAuthenticated, isLoadingUser } = useAuth();
 
-  if (!isLoadingUser && !isAuthenticated) {
-    router.push('/admin/login');
-  }
+  // Use useEffect to avoid calling router.push during render
+  useEffect(() => {
+    if (!isLoadingUser && !isAuthenticated) {
+      router.push('/admin/login');
+    }
+  }, [isLoadingUser, isAuthenticated, router]);
 
   return {
     user: user!,

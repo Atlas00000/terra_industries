@@ -26,9 +26,9 @@ export const apiClient: AxiosInstance = axios.create({
 // Request interceptor (for auth tokens, etc.)
 apiClient.interceptors.request.use(
   (config) => {
-    // Add auth token if available (for admin routes in Week 4)
+    // Add auth token if available (from localStorage)
     if (typeof window !== 'undefined') {
-      const token = sessionStorage.getItem('auth_token');
+      const token = localStorage.getItem('terra_auth_token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -80,10 +80,12 @@ apiClient.interceptors.response.use(
 
     switch (status) {
       case 401:
-        // Unauthorized - redirect to login for admin routes
-        if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
-          console.warn('[API] Unauthorized - redirecting to login');
-          window.location.href = '/admin/login';
+        // Unauthorized - log but don't auto-redirect (let components handle it)
+        console.warn('[API] Unauthorized:', url);
+        // Clear invalid token
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('terra_auth_token');
+          localStorage.removeItem('terra_auth_user');
         }
         break;
 
