@@ -27,12 +27,13 @@ FROM base AS build
 # Install build dependencies for native modules (bcrypt)
 RUN apk add --no-cache python3 make g++
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile || pnpm install
+# Install all dependencies (no cache issues)
+RUN pnpm install --frozen-lockfile
 COPY . .
-# Generate Prisma Client using direct binary path
-RUN ./node_modules/.bin/prisma generate
-# Build NestJS app using direct binary path
-RUN ./node_modules/.bin/nest build
+# Verify node_modules exists and generate Prisma
+RUN ls -la node_modules/.bin/ && \
+    pnpm prisma generate && \
+    pnpm build
 
 # Production stage
 FROM node:20-alpine AS production
