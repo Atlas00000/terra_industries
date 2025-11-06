@@ -34,6 +34,8 @@ RUN pnpm build
 # Production stage
 FROM node:20-alpine AS production
 RUN npm install -g pnpm
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl
 WORKDIR /app
 ENV NODE_ENV=production
 
