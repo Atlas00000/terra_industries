@@ -1,4 +1,5 @@
 # Multi-stage build for NestJS backend
+# Updated: 2025-11-06
 
 # Base stage
 FROM node:20-alpine AS base
