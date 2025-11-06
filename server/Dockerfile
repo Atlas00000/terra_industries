@@ -29,10 +29,10 @@ RUN apk add --no-cache python3 make g++
 COPY package.json pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile || pnpm install
 COPY . .
-# Generate Prisma Client explicitly
-RUN npx prisma generate
-# Build NestJS app explicitly
-RUN npx nest build
+# Generate Prisma Client using installed version
+RUN pnpm exec prisma generate
+# Build NestJS app using installed NestJS CLI
+RUN pnpm exec nest build
 
 # Production stage
 FROM node:20-alpine AS production
