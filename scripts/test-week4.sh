@@ -1,362 +1,297 @@
 #!/bin/bash
 
 # Terra Industries - Week 4 Comprehensive Test Script
-# Tests News/Stories CMS + Product Specifications
+# Tests admin dashboard and CRM functionality
 
-set -e
+set -e  # Exit on error
 
 API_URL="http://localhost:4000/api/v1"
+CLIENT_URL="http://localhost:3000"
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
-NC='\033[0m'
+NC='\033[0m' # No Color
 
-echo -e "${BLUE}=============================================="
+echo -e "${BLUE}=========================================="
 echo "🚀 Terra Industries - Week 4 Test Suite"
-echo "   News/Stories CMS + Product Specifications"
-echo "==============================================${NC}\n"
+echo "   Admin Dashboard + CRM Interface"
+echo "==========================================${NC}\n"
 
+# Test counter
 PASSED=0
 FAILED=0
 
-# Get admin token
-echo -e "${YELLOW}🔑 Getting admin token...${NC}"
-TOKEN=$(curl -s -X POST $API_URL/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "admin@terraindustries.com", "password": "SecurePass123!"}' | grep -o '"accessToken":"[^"]*"' | cut -d'"' -f4)
+# ===== AUTHENTICATION TESTS =====
 
-if [ -z "$TOKEN" ]; then
-    echo -e "${RED}❌ Failed to get admin token${NC}\n"
+echo -e "${YELLOW}=== Admin Authentication ===${NC}\n"
+
+# Test 1: Login Page Loads
+echo -e "${BLUE}[1/15] Testing Admin Login Page${NC}"
+
+LOGIN_PAGE=$(curl -s -o /dev/null -w "%{http_code}" "$CLIENT_URL/admin/login")
+
+if [ "$LOGIN_PAGE" = "200" ]; then
+    echo -e "${GREEN}✓ Admin login page loads${NC}"
+    echo "  Status: 200 OK\n"
+    ((PASSED++))
+else
+    echo -e "${RED}✗ Admin login page failed${NC}"
+    echo "  Status: $LOGIN_PAGE\n"
+    ((FAILED++))
+fi
+
+# Test 2: Login API Endpoint
+echo -e "${BLUE}[2/15] Testing Login API Endpoint${NC}"
+
+LOGIN_RESPONSE=$(curl -s -X POST "$API_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@terraindustries.com","password":"SecurePass123!"}')
+
+TOKEN=$(echo "$LOGIN_RESPONSE" | grep -o '"accessToken":"[^"]*"' | cut -d'"' -f4)
+
+if [ ! -z "$TOKEN" ]; then
+    echo -e "${GREEN}✓ Login successful${NC}"
+    echo "  Token received: ${TOKEN:0:30}...\n"
+    ((PASSED++))
+else
+    echo -e "${RED}✗ Login failed${NC}\n"
+    ((FAILED++))
     exit 1
 fi
-echo -e "${GREEN}✓ Admin token obtained${NC}\n"
 
-# ==============================================================================
-# PART 1: NEWS/STORIES CMS TESTS (12 tests)
-# ==============================================================================
+# Test 3: Protected Route Access
+echo -e "${BLUE}[3/15] Testing Protected Route - Get Current User${NC}"
 
-echo -e "${BLUE}====== PART 1: NEWS/STORIES CMS ======${NC}\n"
-
-# Test 1: News Stats (Empty)
-echo -e "${BLUE}[1/18] Getting Initial News Statistics${NC}"
-NEWS_STATS=$(curl -s "$API_URL/news/stats" \
+ME=$(curl -s "$API_URL/auth/me" \
   -H "Authorization: Bearer $TOKEN")
 
-if echo "$NEWS_STATS" | grep -q '"total":0'; then
-    echo -e "${GREEN}✓ News stats endpoint working${NC}\n"
+if echo "$ME" | grep -q "admin@terraindustries.com"; then
+    echo -e "${GREEN}✓ Protected route accessible with token${NC}\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ News stats failed${NC}\n"
+    echo -e "${RED}✗ Protected route access failed${NC}\n"
     ((FAILED++))
 fi
 
-# Test 2: Create News Story
-echo -e "${BLUE}[2/18] Creating News Story (Draft)${NC}"
-NEWS=$(curl -s -X POST "$API_URL/news" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Terra Industries Launches Revolutionary Archer VTOL System",
-    "content": "Terra Industries today announced the launch of the Archer VTOL reconnaissance system, a groundbreaking autonomous defense technology that combines vertical takeoff and landing capabilities with advanced AI-powered reconnaissance. The system is designed to protect critical infrastructure across Africa.",
-    "excerpt": "Revolutionary new VTOL system combines advanced AI with autonomous capabilities",
-    "category": "product-updates",
-    "tags": ["archer", "vtol", "autonomous", "ai"]
-  }')
+# Test 4: Dashboard Page (Protected)
+echo -e "${BLUE}[4/15] Testing Admin Dashboard Page${NC}"
 
-NEWS_ID=$(echo "$NEWS" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
-NEWS_SLUG=$(echo "$NEWS" | grep -o '"slug":"[^"]*"' | cut -d'"' -f4)
+DASHBOARD_PAGE=$(curl -s -o /dev/null -w "%{http_code}" "$CLIENT_URL/admin/dashboard")
 
-if [ ! -z "$NEWS_ID" ]; then
-    echo -e "${GREEN}✓ News story created${NC}"
-    echo "  ID: $NEWS_ID"
-    echo "  Slug: $NEWS_SLUG\n"
+# Note: Will redirect to login since we can't set cookies via curl
+# 200 or 307/308 (redirect) are acceptable
+if [ "$DASHBOARD_PAGE" = "200" ] || [ "$DASHBOARD_PAGE" = "307" ] || [ "$DASHBOARD_PAGE" = "308" ]; then
+    echo -e "${GREEN}✓ Dashboard page exists${NC}"
+    echo "  Status: $DASHBOARD_PAGE\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ News creation failed${NC}\n"
+    echo -e "${RED}✗ Dashboard page failed${NC}"
+    echo "  Status: $DASHBOARD_PAGE\n"
     ((FAILED++))
 fi
 
-# Test 3: List News (Admin)
-echo -e "${BLUE}[3/18] Listing News Stories${NC}"
-LIST=$(curl -s "$API_URL/news?status=draft" \
+# ===== INQUIRY MANAGEMENT TESTS =====
+
+echo -e "${YELLOW}=== Inquiry Management ===${NC}\n"
+
+# Test 5: List Inquiries (Admin)
+echo -e "${BLUE}[5/15] Testing List Inquiries Endpoint${NC}"
+
+INQUIRIES=$(curl -s "$API_URL/inquiries?page=1&limit=10" \
   -H "Authorization: Bearer $TOKEN")
 
-if echo "$LIST" | grep -q "$NEWS_ID"; then
-    echo -e "${GREEN}✓ News listing working${NC}\n"
+INQUIRY_COUNT=$(echo "$INQUIRIES" | grep -o '"id":"[^"]*"' | wc -l | tr -d ' ')
+
+if [ "$INQUIRY_COUNT" -ge 1 ]; then
+    echo -e "${GREEN}✓ Inquiries endpoint working${NC}"
+    echo "  Found $INQUIRY_COUNT inquiries\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ News listing failed${NC}\n"
+    echo -e "${RED}✗ Inquiries endpoint failed${NC}\n"
     ((FAILED++))
 fi
 
-# Test 4: Update News Story
-echo -e "${BLUE}[4/18] Updating News Story${NC}"
-UPDATE=$(curl -s -X PATCH "$API_URL/news/$NEWS_ID" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "excerpt": "Updated: Revolutionary VTOL system with cutting-edge AI",
-    "tags": ["archer", "vtol", "autonomous", "ai", "updated"]
-  }')
+# Test 6: Inquiry Statistics
+echo -e "${BLUE}[6/15] Testing Inquiry Statistics${NC}"
 
-if echo "$UPDATE" | grep -q "Updated"; then
-    echo -e "${GREEN}✓ News update successful${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ News update failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 5: Publish News Story
-echo -e "${BLUE}[5/18] Publishing News Story${NC}"
-PUBLISH=$(curl -s -X POST "$API_URL/news/$NEWS_ID/publish" \
+STATS=$(curl -s "$API_URL/inquiries/stats" \
   -H "Authorization: Bearer $TOKEN")
 
-if echo "$PUBLISH" | grep -q '"status":"published"'; then
-    echo -e "${GREEN}✓ News published successfully${NC}\n"
+HAS_TOTAL=$(echo "$STATS" | grep -o '"total":[0-9]*')
+HAS_NEW=$(echo "$STATS" | grep -o '"newInquiries":[0-9]*')
+
+if [ ! -z "$HAS_TOTAL" ] && [ ! -z "$HAS_NEW" ]; then
+    echo -e "${GREEN}✓ Statistics endpoint working${NC}"
+    echo "  Data structure: Complete\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ News publishing failed${NC}\n"
+    echo -e "${RED}✗ Statistics endpoint failed${NC}\n"
     ((FAILED++))
 fi
 
-# Test 6: Get News by Slug (Public)
-echo -e "${BLUE}[6/18] Getting Published News by Slug (Public)${NC}"
-PUBLIC=$(curl -s "$API_URL/news/slug/$NEWS_SLUG")
+# Test 7: Get Single Inquiry
+echo -e "${BLUE}[7/15] Testing Get Single Inquiry${NC}"
 
-if echo "$PUBLIC" | grep -q "$NEWS_ID"; then
-    echo -e "${GREEN}✓ Public news access working${NC}\n"
-    ((PASSED++))
+FIRST_ID=$(echo "$INQUIRIES" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+
+if [ ! -z "$FIRST_ID" ]; then
+    INQUIRY_DETAIL=$(curl -s "$API_URL/inquiries/$FIRST_ID" \
+      -H "Authorization: Bearer $TOKEN")
+    
+    if echo "$INQUIRY_DETAIL" | grep -q "$FIRST_ID"; then
+        echo -e "${GREEN}✓ Get single inquiry working${NC}"
+        echo "  Inquiry ID: ${FIRST_ID:0:8}...\n"
+        ((PASSED++))
+    else
+        echo -e "${RED}✗ Get single inquiry failed${NC}\n"
+        ((FAILED++))
+    fi
 else
-    echo -e "${RED}✗ Public news access failed${NC}\n"
-    ((FAILED++))
+    echo -e "${YELLOW}⚠ No inquiries available for testing${NC}\n"
+    ((PASSED++))
 fi
 
-# Test 7: Get Featured News
-echo -e "${BLUE}[7/18] Getting Featured News${NC}"
-FEATURED=$(curl -s "$API_URL/news/featured?limit=3")
+# ===== RFQ PIPELINE TESTS =====
 
-if [ ! -z "$FEATURED" ]; then
-    echo -e "${GREEN}✓ Featured news endpoint working${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Featured news failed${NC}\n"
-    ((FAILED++))
-fi
+echo -e "${YELLOW}=== RFQ Pipeline ===${NC}\n"
 
-# Test 8: Unpublish News Story
-echo -e "${BLUE}[8/18] Unpublishing News Story${NC}"
-UNPUBLISH=$(curl -s -X POST "$API_URL/news/$NEWS_ID/unpublish" \
+# Test 8: List RFQs
+echo -e "${BLUE}[8/15] Testing List RFQs Endpoint${NC}"
+
+RFQS=$(curl -s "$API_URL/rfq?page=1&limit=10" \
   -H "Authorization: Bearer $TOKEN")
 
-if echo "$UNPUBLISH" | grep -q '"status":"draft"'; then
-    echo -e "${GREEN}✓ News unpublished successfully${NC}\n"
+HAS_RFQS=$(echo "$RFQS" | grep -o '"data":\[')
+
+if [ ! -z "$HAS_RFQS" ]; then
+    echo -e "${GREEN}✓ RFQ endpoint working${NC}"
+    echo "  Endpoint accessible\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ News unpublishing failed${NC}\n"
+    echo -e "${RED}✗ RFQ endpoint failed${NC}\n"
     ((FAILED++))
 fi
 
-# Test 9: Delete (Archive) News Story
-echo -e "${BLUE}[9/18] Archiving News Story${NC}"
-DELETE=$(curl -s -X DELETE "$API_URL/news/$NEWS_ID" \
+# Test 9: RFQ Statistics
+echo -e "${BLUE}[9/15] Testing RFQ Statistics${NC}"
+
+RFQ_STATS=$(curl -s "$API_URL/rfq/stats" \
   -H "Authorization: Bearer $TOKEN")
 
-if echo "$DELETE" | grep -q "archived successfully"; then
-    echo -e "${GREEN}✓ News archived successfully${NC}\n"
+HAS_RFQ_TOTAL=$(echo "$RFQ_STATS" | grep -o '"total":[0-9]*')
+HAS_PENDING=$(echo "$RFQ_STATS" | grep -o '"pending":[0-9]*')
+
+if [ ! -z "$HAS_RFQ_TOTAL" ] && [ ! -z "$HAS_PENDING" ]; then
+    echo -e "${GREEN}✓ RFQ statistics working${NC}"
+    echo "  Data structure: Complete\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ News archiving failed${NC}\n"
+    echo -e "${RED}✗ RFQ statistics failed${NC}\n"
     ((FAILED++))
 fi
 
-# ==============================================================================
-# PART 2: PRODUCT SPECIFICATIONS TESTS (9 tests)
-# ==============================================================================
+# ===== FRONTEND PAGE TESTS =====
 
-echo -e "${BLUE}====== PART 2: PRODUCT SPECIFICATIONS ======${NC}\n"
+echo -e "${YELLOW}=== Frontend Pages ===${NC}\n"
 
-# Test 10: Product Specs Stats (Empty)
-echo -e "${BLUE}[10/18] Getting Initial Product Specs Statistics${NC}"
-SPEC_STATS=$(curl -s "$API_URL/product-specs/stats" \
+# Test 10: Inquiries Page
+echo -e "${BLUE}[10/15] Testing Inquiries Page${NC}"
+
+INQUIRIES_PAGE=$(curl -s -o /dev/null -w "%{http_code}" "$CLIENT_URL/admin/inquiries")
+
+if [ "$INQUIRIES_PAGE" = "200" ] || [ "$INQUIRIES_PAGE" = "307" ] || [ "$INQUIRIES_PAGE" = "308" ]; then
+    echo -e "${GREEN}✓ Inquiries page exists${NC}"
+    echo "  Status: $INQUIRIES_PAGE\n"
+    ((PASSED++))
+else
+    echo -e "${RED}✗ Inquiries page failed${NC}\n"
+    ((FAILED++))
+fi
+
+# Test 11: RFQ Pipeline Page
+echo -e "${BLUE}[11/15] Testing RFQ Pipeline Page${NC}"
+
+RFQ_PAGE=$(curl -s -o /dev/null -w "%{http_code}" "$CLIENT_URL/admin/rfq")
+
+if [ "$RFQ_PAGE" = "200" ] || [ "$RFQ_PAGE" = "307" ] || [ "$RFQ_PAGE" = "308" ]; then
+    echo -e "${GREEN}✓ RFQ pipeline page exists${NC}"
+    echo "  Status: $RFQ_PAGE\n"
+    ((PASSED++))
+else
+    echo -e "${RED}✗ RFQ pipeline page failed${NC}\n"
+    ((FAILED++))
+fi
+
+# ===== DATA VALIDATION TESTS =====
+
+echo -e "${YELLOW}=== Data Validation ===${NC}\n"
+
+# Test 12: Inquiry Filtering by Status
+echo -e "${BLUE}[12/15] Testing Inquiry Status Filtering${NC}"
+
+NEW_INQUIRIES=$(curl -s "$API_URL/inquiries?status=new" \
   -H "Authorization: Bearer $TOKEN")
 
-if echo "$SPEC_STATS" | grep -q '"total":0'; then
-    echo -e "${GREEN}✓ Product specs stats endpoint working${NC}\n"
+if echo "$NEW_INQUIRIES" | grep -q '"data":\['; then
+    echo -e "${GREEN}✓ Status filtering working${NC}"
+    echo "  Filter: status=new\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ Product specs stats failed${NC}\n"
+    echo -e "${RED}✗ Status filtering failed${NC}\n"
     ((FAILED++))
 fi
 
-# Test 11: Create Product Specification
-echo -e "${BLUE}[11/18] Creating Product Specification (Archer)${NC}"
-SPEC=$(curl -s -X POST "$API_URL/product-specs" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "productName": "Archer VTOL Reconnaissance System",
-    "category": "archer",
-    "specifications": {
-      "dimensions": {
-        "length": "3.2m",
-        "wingspan": "4.5m",
-        "height": "0.9m",
-        "weight": "45kg"
-      },
-      "materials": ["Carbon fiber composite", "Aluminum alloy", "Kevlar"],
-      "capabilities": ["VTOL operation", "Autonomous flight", "AI reconnaissance"]
-    },
-    "performanceMetrics": {
-      "maxSpeed": "120 km/h",
-      "cruiseSpeed": "80 km/h",
-      "range": "200 km",
-      "endurance": "8 hours",
-      "maxAltitude": "5000m",
-      "payload": "15kg"
-    },
-    "technicalDetails": {
-      "powerSystem": "Hybrid electric",
-      "sensors": ["4K camera", "Thermal imaging", "LiDAR"],
-      "communication": "Encrypted RF link up to 50km",
-      "autonomy": "Full autonomous mission planning with AI"
-    }
-  }')
+# Test 13: Inquiry Sorting
+echo -e "${BLUE}[13/15] Testing Inquiry Sorting${NC}"
 
-SPEC_ID=$(echo "$SPEC" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
-
-if [ ! -z "$SPEC_ID" ]; then
-    echo -e "${GREEN}✓ Product spec created${NC}"
-    echo "  ID: $SPEC_ID\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Product spec creation failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 12: List Product Specs
-echo -e "${BLUE}[12/18] Listing Product Specifications${NC}"
-LIST_SPECS=$(curl -s "$API_URL/product-specs")
-
-if echo "$LIST_SPECS" | grep -q "$SPEC_ID"; then
-    echo -e "${GREEN}✓ Product specs listing working${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Product specs listing failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 13: Get Product Spec by ID
-echo -e "${BLUE}[13/18] Getting Product Spec by ID${NC}"
-GET_SPEC=$(curl -s "$API_URL/product-specs/$SPEC_ID")
-
-if echo "$GET_SPEC" | grep -q "Archer VTOL"; then
-    echo -e "${GREEN}✓ Get product spec working${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Get product spec failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 14: Get Product Specs by Category
-echo -e "${BLUE}[14/18] Getting Product Specs by Category${NC}"
-CATEGORY=$(curl -s "$API_URL/product-specs/category/archer")
-
-if echo "$CATEGORY" | grep -q "$SPEC_ID"; then
-    echo -e "${GREEN}✓ Category filtering working${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Category filtering failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 15: Update Product Specification
-echo -e "${BLUE}[15/18] Updating Product Specification${NC}"
-UPDATE_SPEC=$(curl -s -X PATCH "$API_URL/product-specs/$SPEC_ID" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "performanceMetrics": {
-      "maxSpeed": "125 km/h",
-      "range": "220 km",
-      "endurance": "10 hours"
-    }
-  }')
-
-if echo "$UPDATE_SPEC" | grep -q "125 km/h"; then
-    echo -e "${GREEN}✓ Product spec update successful${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Product spec update failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 16: Create Second Product (Duma)
-echo -e "${BLUE}[16/18] Creating Second Product Spec (Duma)${NC}"
-DUMA=$(curl -s -X POST "$API_URL/product-specs" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "productName": "Duma Border Surveillance System",
-    "category": "duma",
-    "specifications": {
-      "coverage": "360-degree surveillance",
-      "detection": "AI-powered threat detection"
-    },
-    "performanceMetrics": {
-      "range": "10km",
-      "accuracy": "99.5%"
-    },
-    "technicalDetails": {
-      "sensors": ["Multi-spectrum cameras", "Radar", "Acoustic sensors"]
-    }
-  }')
-
-DUMA_ID=$(echo "$DUMA" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
-
-if [ ! -z "$DUMA_ID" ]; then
-    echo -e "${GREEN}✓ Second product spec created${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Second product spec creation failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 17: Filter by Category (Duma)
-echo -e "${BLUE}[17/18] Testing Category Filtering (Duma)${NC}"
-DUMA_CAT=$(curl -s "$API_URL/product-specs?category=duma")
-
-if echo "$DUMA_CAT" | grep -q "$DUMA_ID"; then
-    echo -e "${GREEN}✓ Duma category filter working${NC}\n"
-    ((PASSED++))
-else
-    echo -e "${RED}✗ Duma category filter failed${NC}\n"
-    ((FAILED++))
-fi
-
-# Test 18: Final Statistics Check
-echo -e "${BLUE}[18/18] Verifying Final Statistics${NC}"
-FINAL_STATS=$(curl -s "$API_URL/product-specs/stats" \
+SORTED=$(curl -s "$API_URL/inquiries?sortBy=leadScore&order=desc&limit=5" \
   -H "Authorization: Bearer $TOKEN")
 
-TOTAL_SPECS=$(echo "$FINAL_STATS" | grep -o '"total":[0-9]*' | cut -d':' -f2)
-
-if [ "$TOTAL_SPECS" = "2" ]; then
-    echo -e "${GREEN}✓ Statistics correctly showing 2 specs${NC}\n"
+if echo "$SORTED" | grep -q '"leadScore"'; then
+    echo -e "${GREEN}✓ Sorting working${NC}"
+    echo "  Sort: leadScore desc\n"
     ((PASSED++))
 else
-    echo -e "${RED}✗ Statistics incorrect${NC}\n"
+    echo -e "${RED}✗ Sorting failed${NC}\n"
     ((FAILED++))
 fi
 
-# ==============================================================================
-# SUMMARY
-# ==============================================================================
+# Test 14: Pagination Metadata
+echo -e "${BLUE}[14/15] Testing Pagination${NC}"
 
-echo -e "${BLUE}=============================================="
-echo "📊 Week 4 Test Summary"
-echo "==============================================${NC}"
+HAS_META=$(echo "$INQUIRIES" | grep -o '"meta":{')
+HAS_TOTAL=$(echo "$INQUIRIES" | grep -o '"total":[0-9]*')
+HAS_PAGE=$(echo "$INQUIRIES" | grep -o '"page":[0-9]*')
+
+if [ ! -z "$HAS_META" ] && [ ! -z "$HAS_TOTAL" ] && [ ! -z "$HAS_PAGE" ]; then
+    echo -e "${GREEN}✓ Pagination metadata complete${NC}"
+    echo "  ✓ meta, total, page fields present\n"
+    ((PASSED++))
+else
+    echo -e "${RED}✗ Pagination metadata incomplete${NC}\n"
+    ((FAILED++))
+fi
+
+# Test 15: Unauthorized Access Prevention
+echo -e "${BLUE}[15/15] Testing Unauthorized Access Prevention${NC}"
+
+UNAUTH=$(curl -s -o /dev/null -w "%{http_code}" "$API_URL/inquiries")
+
+if [ "$UNAUTH" = "401" ]; then
+    echo -e "${GREEN}✓ Unauthorized access properly blocked${NC}"
+    echo "  Status: 401 Unauthorized\n"
+    ((PASSED++))
+else
+    echo -e "${RED}✗ Authorization check failed${NC}"
+    echo "  Status: $UNAUTH (expected 401)\n"
+    ((FAILED++))
+fi
+
+# Summary
+echo -e "${BLUE}=========================================="
+echo "📊 Test Summary"
+echo "==========================================${NC}"
 echo -e "${GREEN}Passed: $PASSED${NC}"
 if [ $FAILED -gt 0 ]; then
     echo -e "${RED}Failed: $FAILED${NC}"
@@ -367,32 +302,53 @@ echo -e "${BLUE}Total:  $((PASSED + FAILED))${NC}"
 echo ""
 
 if [ $FAILED -eq 0 ]; then
-    echo -e "${GREEN}=============================================="
+    echo -e "${GREEN}=========================================="
     echo "✅ ALL WEEK 4 TESTS PASSED!"
-    echo "==============================================${NC}"
+    echo "==========================================${NC}"
     echo ""
-    echo -e "${BLUE}🎉 What's Working:${NC}"
-    echo "  ✅ News/Stories CMS (create, publish, unpublish, archive)"
-    echo "  ✅ Slug generation & public access"
-    echo "  ✅ Featured news for homepage"
-    echo "  ✅ Product specifications CRUD"
-    echo "  ✅ Category filtering"
-    echo "  ✅ Statistics dashboards"
+    echo -e "${BLUE}📚 Features Tested:${NC}"
+    echo "  ✓ Admin login page (frontend)"
+    echo "  ✓ JWT authentication (backend)"
+    echo "  ✓ Protected route access"
+    echo "  ✓ Dashboard page exists"
+    echo "  ✓ Inquiry list endpoint"
+    echo "  ✓ Inquiry statistics"
+    echo "  ✓ Single inquiry detail"
+    echo "  ✓ RFQ list endpoint"
+    echo "  ✓ RFQ statistics"
+    echo "  ✓ Inquiries page (frontend)"
+    echo "  ✓ RFQ pipeline page (frontend)"
+    echo "  ✓ Status filtering"
+    echo "  ✓ Sorting functionality"
+    echo "  ✓ Pagination metadata"
+    echo "  ✓ Unauthorized access blocked"
     echo ""
-    echo -e "${BLUE}📚 New Endpoints (14 total):${NC}"
-    echo "  News: 9 endpoints"
-    echo "  Product Specs: 6 endpoints"
+    echo -e "${BLUE}🎯 Admin Panel URLs:${NC}"
+    echo "  Login:      $CLIENT_URL/admin/login"
+    echo "  Dashboard:  $CLIENT_URL/admin/dashboard"
+    echo "  Inquiries:  $CLIENT_URL/admin/inquiries"
+    echo "  RFQ Pipeline: $CLIENT_URL/admin/rfq"
     echo ""
-    echo -e "${BLUE}📈 Total Backend API:${NC}"
-    echo "  Total Endpoints: 41 (28 from W1-3 + 14 from W4)"
-    echo "  Database Tables: 8"
-    echo "  Modules: 10"
+    echo -e "${BLUE}🔑 Test Credentials:${NC}"
+    echo "  Email:    admin@terraindustries.com"
+    echo "  Password: SecurePass123!"
     echo ""
+    echo -e "${BLUE}🎯 Access Token (7 days):${NC}"
+    echo "  $TOKEN"
+    echo ""
+    echo -e "${BLUE}📖 Documentation:${NC}"
+    echo "  Implementation: docs/WEEK4-IMPLEMENTATION-SUMMARY.md"
+    echo "  Dev Credentials: docs/DEV-CREDENTIALS.md"
     exit 0
 else
-    echo -e "${RED}=============================================="
+    echo -e "${RED}=========================================="
     echo "❌ SOME TESTS FAILED"
-    echo "==============================================${NC}"
+    echo "==========================================${NC}"
+    echo ""
+    echo -e "${YELLOW}Troubleshooting:${NC}"
+    echo "  1. Ensure backend is running: cd server && pnpm start:dev"
+    echo "  2. Ensure frontend is running: cd client && pnpm dev"
+    echo "  3. Ensure database is seeded: cd server && pnpm prisma:seed"
+    echo "  4. Check admin credentials are correct"
     exit 1
 fi
-

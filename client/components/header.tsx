@@ -4,9 +4,14 @@ import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { SearchBar } from "@/components/search/search-bar"
+import { SearchModal } from "@/components/search/search-modal"
+import { Search as SearchIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,6 +92,23 @@ export function Header() {
               />
             </motion.a>
           ))}
+          
+          {/* Search Button */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+          >
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsSearchOpen(true)}
+              className="relative hover:bg-primary/10"
+              aria-label="Search"
+            >
+              <SearchIcon className="h-5 w-5" />
+            </Button>
+          </motion.div>
         </nav>
 
       </div>
@@ -99,6 +121,9 @@ export function Header() {
           transition={{ duration: 0.3 }}
         />
       )}
+      
+      {/* Search Modal */}
+      <SearchModal open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </motion.header>
   )
 }

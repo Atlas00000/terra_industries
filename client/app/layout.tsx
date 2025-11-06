@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter, JetBrains_Mono, Orbitron } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ErrorBoundary } from "@/components/error-boundary"
+import { QueryProvider } from "@/providers/query-provider"
 import "./globals.css"
 
 const inter = Inter({ 
@@ -40,9 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${orbitron.variable}`}>
       <body className={`font-sans antialiased bg-background text-foreground`}>
+        <QueryProvider>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
+        </QueryProvider>
         <Analytics />
       </body>
     </html>

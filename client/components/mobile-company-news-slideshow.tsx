@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { useFeaturedNews } from "@/hooks/use-featured-news"
+import { NewsSlideshowSkeleton } from "@/components/ui/skeleton"
 import Image from "next/image"
 
 export function MobileCompanyNewsSlideshow() {
@@ -10,7 +12,21 @@ export function MobileCompanyNewsSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set())
 
-  const slides = [
+  // Fetch news from backend (or use fallback data)
+  const { data: slides, isLoading } = useFeaturedNews()
+
+  // Show loading skeleton while fetching
+  if (isLoading) {
+    return <NewsSlideshowSkeleton />
+  }
+
+  // If no slides (shouldn't happen due to fallback), return null
+  if (!slides || slides.length === 0) {
+    return null
+  }
+
+  // Original hardcoded slides (now as fallback - not used since hook has fallback)
+  const fallbackSlides = [
     {
       title: "Board Leadership",
       subtitle: "Royal & Military Command",

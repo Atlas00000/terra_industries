@@ -2,10 +2,26 @@
 
 import { motion } from "framer-motion"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { useFeaturedNews } from "@/hooks/use-featured-news"
+import { NewsSlideshowSkeleton } from "@/components/ui/skeleton"
 import Image from "next/image"
 
 export function CompanyNewsSection() {
   const { isMobile, isReducedMotion } = useMobileOptimization()
+  
+  // Fetch news from backend (or use fallback data)
+  const { data: newsData, isLoading } = useFeaturedNews()
+  
+  // Transform news data to flat array of milestones
+  const milestones = newsData?.flatMap(story => 
+    story.items?.map(item => ({
+      title: item.title,
+      description: item.description,
+      details: item.details || [],
+      image: story.visual || '/placeholder.jpg',
+      impact: item.impact
+    })) || []
+  ).slice(0, 6) || [] // Take first 6 milestones
 
   return (
     <section className="py-24 relative overflow-hidden">
@@ -117,51 +133,21 @@ export function CompanyNewsSection() {
           viewport={{ once: true }}
         >
           <h3 className="text-3xl font-bold text-foreground mb-12 text-center">Recent Milestones</h3>
+          
+          {/* Show loading state */}
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="h-64 bg-gray-800 rounded-lg mb-4" />
+                  <div className="h-6 bg-gray-800 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-800 rounded w-full" />
+                </div>
+              ))}
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Ooni of Ife Joins Board",
-                description: "His Imperial Majesty, the Ooni of Ife joins Board of Directors",
-                details: ["Royal leadership", "Strategic positioning", "Enhanced credibility", "Market influence"],
-                image: "/stories/Ooni_to_Board1.jpeg",
-                impact: "Enhanced credibility and market positioning"
-              },
-              {
-                title: "AVM Jolasinmi Appointment",
-                description: "AVM Ayoola Jolasinmi joins Board of Directors",
-                details: ["Military expertise", "Defense leadership", "Strategic guidance", "Industry knowledge"],
-                image: "/stories/Ayoola_Jolasinmi_Joins_Board.jpeg",
-                impact: "Strengthened defense capabilities"
-              },
-              {
-                title: "Engr. Mansur Ahmed Addition",
-                description: "Engr. Mansur Ahmed joins Board of Directors",
-                details: ["Engineering excellence", "Technical leadership", "Industry expertise", "Innovation focus"],
-                image: "/stories/Addition_Engr_Mansur_Ahmed.jpeg",
-                impact: "Enhanced technical capabilities"
-              },
-              {
-                title: "Largest Contract Achievement",
-                description: "Major contract win demonstrating market leadership",
-                details: ["Contract success", "Market leadership", "Business growth", "Strategic positioning"],
-                image: "/stories/Largest_Contract_Achievement.jpeg",
-                impact: "Significant business growth"
-              },
-              {
-                title: "South Africa Export Success",
-                description: "Successful export to South Africa expanding international presence",
-                details: ["International expansion", "Export success", "Market growth", "Global presence"],
-                image: "/stories/South_Africa_Export_Success.jpeg",
-                impact: "Expanded international market"
-              },
-              {
-                title: "Upgraded Drone Factory",
-                description: "Major factory upgrade enhancing manufacturing capabilities",
-                details: ["Manufacturing upgrade", "Capacity expansion", "Technology advancement", "Production optimization"],
-                image: "/stories/Upgraded_Drone_Factory.jpeg",
-                impact: "Enhanced manufacturing capabilities"
-              }
-            ].map((milestone, index) => (
+              {milestones.map((milestone, index) => (
               <motion.div
                 key={index}
                 className="group relative p-6 rounded-3xl bg-gradient-to-br from-card/50 to-card/30 border border-border/20 backdrop-blur-sm hover:border-primary/30 transition-all duration-500"
@@ -211,6 +197,7 @@ export function CompanyNewsSection() {
               </motion.div>
             ))}
           </div>
+          )}
         </motion.div>
 
         {/* Media Coverage & Social Impact */}

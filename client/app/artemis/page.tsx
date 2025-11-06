@@ -6,6 +6,9 @@ import { Footer } from "@/components/footer"
 import { Loading } from "@/components/loading"
 import { MobileLayout } from "@/components/mobile-layout"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { useProductCategory } from "@/hooks/use-product-category"
+import { ProductDetailSkeleton } from "@/components/ui/product-skeleton"
+import { useTrackProductView } from "@/hooks/use-track-event"
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
 
@@ -41,6 +44,12 @@ export default function ArtemisPage() {
   
   // Mobile optimization
   const { isMobile } = useMobileOptimization()
+  
+  // Fetch Artemis product data from backend
+  const { product, isLoading: isLoadingProduct, isFallback } = useProductCategory('Artemis')
+  
+  // Track product view for analytics
+  useTrackProductView('Artemis', product?.id)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -53,24 +62,44 @@ export default function ArtemisPage() {
   if (showLoading) {
     return <Loading onComplete={handleLoadingComplete} />
   }
+  
+  // Show skeleton while product data loads
+  if (isLoadingProduct) {
+    return (
+      <MobileLayout>
+        <main className="min-h-screen bg-background text-foreground">
+          {isMobile ? <MobileHeader /> : <Header />}
+          <ProductDetailSkeleton />
+          <Footer />
+        </main>
+      </MobileLayout>
+    )
+  }
 
   return (
     <MobileLayout>
       <main className="min-h-screen bg-background text-foreground overflow-hidden">
         {isMobile ? <MobileHeader /> : <Header />}
+        
+        {/* Fallback data indicator (dev only) */}
+        {isFallback && process.env.NODE_ENV === 'development' && (
+          <div className="bg-yellow-500/10 border-b border-yellow-500/20 px-4 py-2 text-center text-sm text-yellow-600 dark:text-yellow-400">
+            Using fallback data - Backend API unavailable
+          </div>
+        )}
 
         {/* Artemis Hero Section - Always visible */}
-        <ArtemisHeroSection />
+        <ArtemisHeroSection product={product} />
 
         {/* Mobile: Combined AI Intelligence & System Integration Slideshow */}
         {isMobile ? (
-          <MobileArtemisSlideshow />
+          <MobileArtemisSlideshow product={product} />
         ) : (
           <>
             {/* Desktop: Individual Sections */}
-            <ArtemisIntelligenceSection />
-            <ArtemisCapabilitiesSection />
-            <ArtemisIntegrationSection />
+            <ArtemisIntelligenceSection product={product} />
+            <ArtemisCapabilitiesSection product={product} />
+            <ArtemisIntegrationSection product={product} />
           </>
         )}
 
