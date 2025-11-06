@@ -43,12 +43,11 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/package.json ./
 COPY --from=build /app/pnpm-lock.yaml ./
 COPY --from=build /app/prisma ./prisma
+COPY --from=build /app/node_modules/.pnpm/@prisma+client* ./node_modules/.pnpm/
+COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 
 # Install only production dependencies
 RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
-
-# Generate Prisma Client
-RUN pnpm prisma:generate
 
 EXPOSE 4000
 CMD ["node", "dist/main.js"]
